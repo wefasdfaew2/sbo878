@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>ผลบอล ผลบอลสด ผลฟุตบอลล่าสุด - url.com</title>
+  <meta name="description" content="ผลบอล ผลบอลสดจากสนาม ทุกนัด ทุกประเทศ รู้ผลบอลก่อนใครๆ รวดเร็วทันใจ พิสูจน์ด้วยตัวเองได้ที่นี่ url.com. รายงานผลบอลวันนี้ ผลบอลสด ผลบอลย้อนหลัง เปรียบเทียบราคาต่อรองฟุตบอลทุกลีก ทั่วโลก." />
+  <meta name="keywords" content="ผลบอล, ผลบอลสด, live score, ผลบอลวันนี้, ฟุตบอล" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <!-- For this page CSS -->
+
+
+  <!-- <link href="chan_css/hover-min.css" rel="stylesheet">-->
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="chan_css/bootstrap.min.css">
+  <link rel="stylesheet" href="chan_css/fontstyle.css">
+
+
+  <!-- <link rel="stylesheet" href="chan_css/bootstrap-theme.min.css">-->
+
+  <!-- For this page CSS -->
+  <link rel="stylesheet" href="chan_css/sbolive_first_page.css">
+  <!--<link rel="stylesheet" href="chan_css/channel_preview.css"> -->
+  <!--<link href="chan_css/lightbox.min.css" rel="stylesheet"> -->
+  <!-- Bootstrap JavaScript -->
+  <script data-cfasync="false" src="chan_js/jquery.min.js"></script>
+  <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+  <script data-cfasync="false" src="chan_js/bootstrap.min.js"></script>
+  <!--AngularJS Javascript -->
+
+  <link rel="stylesheet" type="text/css" href="chan_css/angular-material.css">
+  <script data-cfasync="false" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+
+  <!--<script src="../chan_js/angular.min.js"></script>-->
+  <script data-cfasync="false" src="chan_js/angular-animate.min.js"></script>
+  <script data-cfasync="false" src="chan_js/angular-aria.min.js"></script>
+  <script data-cfasync="false" src="chan_js/angular-messages.min.js"></script>
+  <!--<script data-cfasync="false" src="../chan_js/angular-material.min.js"></script>-->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.1/angular-material.min.js"></script>
+  <!-- <script data-cfasync="false" src="../chan_js/load-screenshot-preview.js"></script>-->
+  <script data-cfasync="false" src="chan_js/angular-filter.min.js"></script>
+
+  <script data-cfasync="false" type="text/javascript">
+    var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'angular.filter']);
+  </script>
+
+  <script data-cfasync="false" src="chan_js/contract-from-user.js"></script>
+  <script data-cfasync="false" src="chan_js/setting_live_option.js"></script>
+
+  <!--  <script type="text/javascript" src="../chan_js/jquery.cycle2.min.js"></script>-->
+
+
+</head>
+
+<body>
+
+  <style>
+    .text-team {
+      font-size: 150%;
+    }
+
+    .text-live_url {
+      font-size: 80%;
+    }
+
+    .row-hover:hover {
+      background-color: #f5f5f5;
+    }
+
+    p {
+      color: white;
+      text-align: right;
+    }
+
+  </style>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      //$(function() {
+      $.getJSON('php/get-lang.php', function(data) {
+        var language = data.lang;
+        $.ajax({
+          url: 'translate/sbolive-ads-translate.xml',
+          success: function(xml) {
+            $(xml).find('sbolive').each(function() {
+              var id = $(this).attr('id');
+              var text = $(this).find(language).text();
+              $("#" + id).html(text);
+            });
+          }
+        });
+      });
+      //});
+    });
+  </script>
+
+
+
+  <div id="bg">
+    <img src="chan_image/sbolive-1-bg.jpg" alt="">
+  </div>
+
+  <div ng-app="MyApp" class="md-padding" id="" ng-cloak="">
+    <div class="container-fluid">
+      <div class="row">
+        <div ng-controller="ChannelCtrl" ng-init="match_list('id_92_English_Premier_League');live_stream_list('all channel')">
+          <div class="col-lg-9 col-md-9 col-sm-9  scrollit">
+            <div ng-include="'sbo_header.html'" class="row"></div>
+
+
+            <br/>
+            <md-toolbar class="md-primary">
+              <div id="live_match" class="md-toolbar-tools    ">
+                <span flex="0"></span>
+                <md-button    class="md-raised md-primary   ">
+                  เลือกชมถ่ายทอดสดตามลีก
+                </md-button>
+                <md-button   class="md-raised md-warn    " target="_self" href="#live_stream">
+                  เลือกชมถ่ายทอดสดตามหมวด
+                </md-button>
+                <md-progress-circular ng-show="load == '0'" class="md-hue-1" md-mode="indeterminate"></md-progress-circular>
+              </div>
+            </md-toolbar>
+
+            <md-content>
+
+
+              <md-tabs md-dynamic-height="" md-border-bottom="" >
+
+                <!-- ng-if="lang == 'en'" <md-tab ng-repeat="(key, value) in channel_category | groupBy: 'channel_group' | orderBy: 'c_sort'" label="{{key}}">  | toArray | orderBy:'-c_sort'-->
+               <md-tab ng-repeat="x in json_live_match" label="{{x.name_th}}" ng-click="match_list(x.table_name)">
+
+      <div class="text-team row-hover" style="padding-top:2px;padding-bottom:2px;" layout="row" layout-wrap layout-align="center center" class="md-1-line" ng-repeat-start="xx in json_match_list">
+
+                      <div ng-if="xx.sbolive_url == 'no_match'">
+                        <div ng-if="lang == 'en'">Waiting Update</div>
+                        <div ng-if="lang == 'th'">รอการอัพเดต</div>
+                      </div>
+
+                      <div ng-if="xx.sbolive_url != 'no_match'" class="md-1-line row-hover" layout="row" layout-wrap layout-align="center center" flex>
+                        <span flex></span>
+                    		 <div flex="10" style="font-size:70%;" ng-if="lang == 'th' && xx.th_show_date =='1' && xx.th_show[0] !='-'">คืนนี้ เวลา {{xx.th_show_time }}</div>
+						 <div flex="10" style="font-size:70%;" ng-if="lang == 'th' && xx.th_show_date =='1' && xx.th_show[0] =='-'">{{xx.time_start}}</div>
+						 <div flex="10" style="font-size:70%;" ng-if="lang == 'th' && xx.th_show_date > '1'">{{xx.time_start}}</div>
+						 <div flex="10" style="font-size:70%;" ng-if="lang == 'en'">{{xx.time_start}}</div>
+
+                        <span flex="5"></span>
+
+                        <div layout="row" layout-align="end center">
+                          <img ng-src="{{ xx.name1_logo }}" class="md-avatar" alt="{{ xx.team1 }}" height="30" width="30" />
+                        </div>
+                        <span flex="5"></span>
+
+                        <div layout="row" layout-align="end center" flex="15">
+                          <div ng-if="lang == 'en'" style="font-size:90%;">{{xx.team1}}</div>
+                          <div ng-if="lang == 'th'" style="font-size:90%;">
+                            {{ (team_th | filter:{team_name: xx.team1}:true | limitTo:1)[0].team_name_th }}
+                          </div>
+                        </div>
+
+                        <span flex="5"></span>
+                        <div layout="row" flex="5" layout-align="center center">
+                          <div>vs</div>
+                        </div>
+                        <span flex="5"></span>
+
+                        <div layout="row" layout-align="start center" flex="15">
+                          <div ng-if="lang == 'en'" style="font-size:90%;">{{xx.team2}}</div>
+                          <div ng-if="lang == 'th'" style="font-size:90%;">
+                            {{ (team_th | filter:{team_name: xx.team2}:true | limitTo:1)[0].team_name_th }}
+                          </div>
+                        </div>
+
+                        <span flex="5"></span>
+                        <div layout="row" layout-align="start center">
+                          <img ng-src="{{ xx.name2_logo }}" class="md-avatar" alt="{{ xx.team2 }}" height="30" width="30" />
+                        </div>
+                        <span flex="5"></span>
+
+                        <div flex="10" layout="column" style="font-size:80%;">
+                          <div class="text-live_url" ng-repeat="link in xx.sbolive_url.split(',')" ng-show="{{xx.sbolive_url.length}}>0">
+
+                            <!-- {{mySplit(link,0)}}  0== link 1==txt 2==img1 3==img2 -->
+                            <div align="center">
+                              <img ng-src={{mySplit(link,2)}} class="md-avatar" ng-if="mySplit(link,2)" height="20" width="20" alt="sbolive_link" />
+                              <img ng-src={{mySplit(link,3)}} class="md-avatar" ng-if="mySplit(link,3)" height="20" width="20" alt="sbolive_link" />
+                              <a ng-href={{mySplit(link,0)}} target='_blank'>
+                               {{mySplit(link,1)}}
+                             </a>
+                            </div>
+                          </div>
+                        </div>
+                        <span flex></span>
+                      </div>
+                    </div>
+
+
+                    <div align="center" class="md-1-line" layout-align="center center" ng-repeat-end ng-show="{{$index+1}}=={{((json_match_list.length)/2) | number:0}}">
+
+                      <div ng-repeat="ads in json_live_match_ads">
+
+                        <a ng-href={{ads.ads_url_mid}} target='_blank'>
+                          <img ng-src={{ads.ads_img_mid}} class="md-avatar" class="img-responsive center-block" alt="sbolive_ads" style="padding-top:5px;padding-bottom:5px;" />
+                        </a>
+                      </div>
+
+                    </div>
+
+            </md-content>
+
+
+            <md-toolbar class="md-primary md-warn  ">
+              <div id="live_stream" class="md-toolbar-tools  ">
+                <md-button   class="md-raised md-warn   ">
+                  เลือกชมถ่ายทอดสดตามหมวด
+                </md-button>
+
+                <md-button   class="md-raised md-primary   " target="_self" href="#live_match">
+                  เลือกชมถ่ายทอดสดตามลีก
+                </md-button>
+
+                <md-progress-circular ng-show="load == '0'" class="md-hue-1" md-mode="indeterminate"></md-progress-circular>
+
+                <span flex></span>
+                <a ng-href="http://www.sbogroup.asia" target='_blank'>รับชมแบบ VIP ไม่มีโฆษณาในสนาม คลิก!!</a>
+
+                <a ng-href="http://www.sbogroup.asia" target='_blank'><img ng-src="../images/vipMember.png" alt="sbolive_vip" /></a>
+
+
+              </div>
+            </md-toolbar>
+            <md-content>
+              <md-tabs md-dynamic-height="" md-border-bottom="">
+
+                <md-tab ng-repeat="cat in json_live_stream_url" label="{{cat.category_name_th}}" ng-click="live_stream_list(cat.category_name_en)">
+
+
+                  <div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:40px;">
+
+                    <div ng-repeat="cat_channel in json_live_stream_list">
+						&nbsp;
+                      <a ng-href={{cat_channel.link_url}} target='_blank'>
+                        <img ng-src={{cat_channel.logo_url}} class="md-avatar" class="img-responsive center-block" alt="sbolive_stream" style="padding-top:10px;" />
+                      </a>
+                    </div>
+
+                  </div>
+
+            </md-content>
+
+
+          </div>
+        </div>
+
+        <div ng-controller="AppCtrl" ng-include="'component/sbo-ads-right.html'" class="col-lg-3 col-md-3 col-sm-3 fixed"></div>
+
+
+      </div>
+    </div>
+  </div>
+
+</body>
+<html>
