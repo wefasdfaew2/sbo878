@@ -25,7 +25,7 @@ html {
 body, button, input, select, textarea {
     font: 14px/23px 'Droid Sans', sans-serif;
     color: #555;
-    background-image: url("http://thaikkattilgardens.com/img/Grass-Stripe110.jpeg");
+    
     background-color: #000000;
 	  margin: 0;
     padding: 0;
@@ -2245,7 +2245,7 @@ html {
     }
 }
 @media screen and (max-width:650px) {
-    .trending-articles { display: none }
+    .trending-articles { display: auto; }
     .firstpost {
         width: 100%;
         margin-right: 0;

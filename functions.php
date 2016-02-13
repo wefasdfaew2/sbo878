@@ -251,7 +251,7 @@ function angular_scripts() {
 
 	wp_register_script( 'jwplayer', 'https://content.jwplatform.com/libraries/tO4hwnMO.js', true );
 	wp_enqueue_script( 'jwplayer' );
-  
+
 //content.jwplatform.com/libraries/eX4mp13.js
 	wp_register_script('angular-animate', get_template_directory_uri() . '/js/angular-animate.min.js', true);
   wp_enqueue_script('angular-animate');
@@ -282,6 +282,9 @@ function angular_scripts() {
 
   wp_register_script('bootstrap-js', get_template_directory_uri() . '/js/bootstrap.min.js', true);
   wp_enqueue_script('bootstrap-js');
+
+  wp_register_script('test-play-js', get_template_directory_uri() . '/js/test-play.js', true);
+  wp_enqueue_script('test-play-js');
 
   wp_localize_script('angular-app', 'WPURLS', array( 'templateurl' => get_template_directory_uri() ));
 }

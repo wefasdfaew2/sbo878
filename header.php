@@ -36,13 +36,65 @@
 		<div class="trending-articles">
 
 			<div class="row">
-				<div class="col-md-9" style="float:left;padding:20px;padding-left:40px;">
+			<div class="col-md-6 col-sm-6 col-xs-12" style="float:left;padding:20px;padding-left:40px;">
 					<img src="<?php echo get_template_directory_uri()?>/images/Header.gif">
 				</div>
 			<!--<h3 style="color:white;float:left;margin-left:25px;padding-top:5px;">สมัครสมาชิกใหม่วันนี้รับทันทีโบนัส 200%</h2>-->
-				<div class="col-md-2" style="float:right;padding:20px;">
-			<button type="button" class="btn btn-danger">สมัครสมาชิก</button>
-		</div>
+				<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top:20px;">
+					<div class="row">
+						<?php if(is_user_logged_in()){ ?>
+							<table style="border:0px;">
+
+				        <tr style="border:0px;white-space:nowrap;">
+				            <td style="border:0px;float:right;padding-right:5px;white-space:nowrap;">
+											<a href="<?php echo  get_permalink(29); ?>?cmd=update">
+												<button type="button" class="btn btn-success">แก้ไข้ข้อมูลส่วนตัว</button>
+											</a>
+									</td>
+				            <td style="border:0px;float:right;padding-right:5px;white-space:nowrap;">
+											<a href="<?php echo  get_permalink(121); ?>">
+												<button type="button" class="btn btn-primary" >ทดลองเล่น</button>
+											</a>
+										</td>
+				            <td style="border:0px;white-space:nowrap;">
+											<a href="<?php echo wp_logout_url( home_url() ); ?>">
+												<button type="button" class="btn btn-danger">ออกจากระบบ</button>
+											</a>
+									</td>
+				        </tr>
+
+							</table>
+						<!--	<div class="col-md-1 col-sm-1 col-lg-1 col-xs-1"></div>
+
+							<div class="col-md-3 col-sm-3 col-lg-3 col-xs-3 text-right" style="padding:0px;">
+								<a href="<?php echo ""; ?>">
+									<button type="button" class="btn btn-primary" >ทดลองเล่น</button>
+								</a>
+							</div>
+							<div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 text-right" style="padding:0px;">
+								<a href="<?php echo ""; ?>">
+									<button type="button" class="btn btn-success">แก้ไข้ข้อมูลส่วนตัว</button>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-3 col-lg-3 col-xs-4 text-right" style="padding:0px;">
+								<a href="<?php echo wp_logout_url( home_url() ); ?>">
+									<button type="button" class="btn btn-danger">ออกจากระบบ</button>
+								</a>
+							</div>-->
+						<?php }else{ ?>
+							<div class="col-md-5 col-sm-5 col-xs-5" style=""></div>
+							<div class="col-md-3 col-sm-3 col-xs-3 text-right" style="">
+								<button type="button" class="btn btn-danger">สมัครสมาชิก</button>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3 text-right" style="">
+								<a href="<?php echo  get_permalink(121); ?>">
+									<button type="button" class="btn btn-primary">ทดลองเล่น</button>
+								</a>
+							</div>
+
+						<?php } ?>
+					</div>
+				</div>
 	</div>
 		</div>
 	<?php } ?>
@@ -94,7 +146,7 @@
 				<div class="col-md-2 col-md-offset-1" style="">
       			<img style="float: right;" src="http://upic.me/i/eg/flexible-top-up_icon.png" alt="เติมเครดิตเพื่อแทงบอลได้ที่นี่" title="เติมเครดิตแทงบอล"/>
   			</div>
-				<div class="col-md-9" style="padding-left:0px;padding-top:12px;font-size:140%;">
+				<div class="col-md-9" style="padding-left:0px;padding-top:15px;font-size:140%;">
 					<div style="float: left;">เติมเครดิตผ่านระบบอัตโนมัติง่าย ๆ 4 ช่องทาง (อย่าลืมสมัครสมาชิกก่อนเติมเครดิต)</div>
 				</div>
 			</div>
@@ -102,13 +154,45 @@
 
 		<div layout="row" layout-align="space-around center" style="">
 		<span flex></span>
-		<a class="button_tm" href="" target="_blank" style="text-decoration: none;"><center><img src="http://upic.me/i/a8/kbank.png" alt="" title="">&nbsp;<img src="http://upic.me/i/on/logo-scb.png" alt="" title="">&nbsp;<img src="http://upic.me/i/2x/ushj1.png" alt="" title="">&nbsp;<img src="http://upic.me/i/fi/krungsri_logo_icon.png" alt="" title="">&nbsp;<img src="http://upic.me/i/ok/ktb-logo-1024x1024.jpg" alt="" title=""><br/>ผ่านธนาคารทางอินเตอร์เน็ต<br/>(Ebank,ATM,Mobile App)</center></a>
-		<span flex></span>
+		<a class="button_tm" style="text-decoration: none;">
+			<center>
+				<img src="http://upic.me/i/a8/kbank.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/on/logo-scb.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/2x/ushj1.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/fi/krungsri_logo_icon.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/ok/ktb-logo-1024x1024.jpg" alt="" title="">
+				<br/><br/>ผ่านธนาคารทางอินเตอร์เน็ต<br/>(Ebank,ATM,Mobile App)
+			</center>
+		</a>
+	<!--	<span flex></span>
 		<a class="button_sms" href="" target="_blank" style="text-decoration: none;"><center><img src="http://upic.me/i/s9/logo-7-eleven.png" alt="" title=""><br/>ผ่านเซเว่น<br/>ทุกสาขาใกล้บ้านคุณ</center></a>
+-->
 		<span flex></span>
-		<a class="button_cc" href="" target="_blank" style="text-decoration: none;"><center><img src="http://upic.me/i/vv/visa-mastercard-logo11.png" alt="" title=""><br/>ผ่านบัตรเครดิต<br/>(VISA,MasterCard,JCB)</center></a>
+		<a class="button_sms" style="text-decoration: none;">
+			<center>
+				<img src="http://upic.me/i/8g/familymart_logo.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/7z/logo_tesco_lotus.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/50/bigc_logo.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/k2/qmpay.png" alt="" title="">
+				<br/><br/>ผ่านจุดรับชำระทุกสาขาใกล้บ้านคุณ<br/>(แจ๋ว,ดีแทค,ปณ.ไทย,Cenpay,Justpay)
+			</center>
+		</a>
+
 		<span flex></span>
-		<a class="button_pp" href="" target="_blank" style="text-decoration: none;"><center><img src="http://upic.me/i/4i/paypal_2014_logo.png" alt="" title=""><br/>ผ่าน Paypal<br/>(เพย์พาลวอลเล็ต)</center></a>
+		<a class="button_cc" style="text-decoration: none;">
+			<center>
+				<img src="http://upic.me/i/vv/visa-mastercard-logo11.png" alt="" title="">&nbsp;
+				<img src="http://upic.me/i/vd/china-unionpay-logo.png" alt="" title="">
+				<br/><br/>ผ่านบัตรเครดิต<br/>(VISA,MasterCard,UnionPay)
+			</center>
+		</a>
+		<span flex></span>
+		<a class="button_pp" style="text-decoration: none;">
+			<center>
+				<img src="http://upic.me/i/4i/paypal_2014_logo.png" alt="" title="">
+				<br/><br/>ผ่าน Paypal<br/>(เพย์พาลวอลเล็ต)
+			</center>
+		</a>
 		<span flex></span>
 	</div>
 </center>

@@ -68,7 +68,7 @@ app.controller('Player', function($scope, $http, ipCookie, $filter) {
     //console.log(bitrate);
     //console.log(mode);
 
-    if(server == 'no-promote'){      
+    if(server == 'no-promote'){
       return;
     }
     if(mode == 'flash'){
@@ -290,7 +290,7 @@ app.controller('Player', function($scope, $http, ipCookie, $filter) {
   $scope.set_cookies = function(cookies_id, cookies_value) {
     ipCookie(cookies_id, cookies_value);
 
-    console.log($scope.channel_id);
+    //console.log($scope.channel_id);
     if($scope.channel_id != null){
       $scope.get_player_link($scope.channel_id);
     }
