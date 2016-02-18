@@ -239,6 +239,9 @@ function angular_scripts() {
   wp_register_script('md5', get_template_directory_uri() . '/js/md5.js', true);
   wp_enqueue_script('md5');
 
+  wp_register_script('flipcounter', get_template_directory_uri() . '/js/flipcounter.js', true);
+  wp_enqueue_script('flipcounter');
+
 	wp_register_script('angularjs', get_template_directory_uri() . '/js/angular.min.js', true);
   wp_enqueue_script('angularjs');
 
@@ -277,14 +280,37 @@ function angular_scripts() {
 	wp_register_style( 'payment-style', get_template_directory_uri() . '/css/payment-style.css' );
 	wp_enqueue_style( 'payment-style' );
 
+  wp_register_script('jquery-point', get_template_directory_uri() . '/js/jquery.min.js', true);
+  wp_enqueue_script('jquery-point');
+
   wp_register_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css' );
 	wp_enqueue_style( 'bootstrap-css' );
+
+  //wp_register_style( 'flipcounter-css', get_template_directory_uri() . '/css/flip-counter.css' );
+	//wp_enqueue_style( 'flipcounter-css' );
+  wp_register_style( 'car', get_template_directory_uri() . '/css/odometer-theme-car.css' );
+	wp_enqueue_style( 'car' );
+  //wp_register_style( 'slot-machine', get_template_directory_uri() . '/css/slot-machine.css' );
+	//wp_enqueue_style( 'slot-machine' );
+  wp_register_script('odometer-js', get_template_directory_uri() . '/js/odometer.min.js', true);
+  wp_enqueue_script('odometer-js');
 
   wp_register_script('bootstrap-js', get_template_directory_uri() . '/js/bootstrap.min.js', true);
   wp_enqueue_script('bootstrap-js');
 
   wp_register_script('test-play-js', get_template_directory_uri() . '/js/test-play.js', true);
   wp_enqueue_script('test-play-js');
+
+  wp_register_script('re-tree', get_template_directory_uri() . '/js/re-tree.min.js', true);
+  wp_enqueue_script('re-tree');
+
+  wp_register_script('device-detector', get_template_directory_uri() . '/js/ng-device-detector.min.js', true);
+  wp_enqueue_script('device-detector');
+
+  wp_register_script('angular-sanitize', get_template_directory_uri() . '/js/angular-sanitize.min.js', true);
+  wp_enqueue_script('angular-sanitize');
+
+
 
   wp_localize_script('angular-app', 'WPURLS', array( 'templateurl' => get_template_directory_uri() ));
 }

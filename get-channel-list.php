@@ -24,10 +24,10 @@ if ($conn->connect_error)
 //$sql = "SELECT * FROM channel_category GROUP BY channel_group ORDER BY c_sort";
 
 
-if($cat_id == '0'){
-  $sql = "SELECT * FROM channel";
+if($cat_id == 0){
+  $sql = "SELECT * FROM channel ORDER BY sort ASC";
 }else {
-  $sql = "SELECT * FROM channel WHERE category_id = $cat_id";
+  $sql = "SELECT * FROM channel WHERE category_id = $cat_id ORDER BY sort ASC";
 }
 //$sql = "SELECT channel_group FROM channel_category";
 $result = $conn->query($sql);

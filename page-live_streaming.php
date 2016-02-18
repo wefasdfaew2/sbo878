@@ -40,58 +40,96 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
  <div id="page" class="single">
  <div class="content">
 <div ng-app="MyApp" ng-controller="Player" ng-cloak="" style="margin-top:10px;"
-				ng-init="gen_token('<?php echo $userIP ?>'); get_channel_list(0); promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');">
+				ng-init="gen_token('<?php echo $userIP ?>'); get_channel_list('0'); promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');">
 
-<div layout="row" style="padding-left:16px;padding-right:16px;">
-	<div layout="row" layout-align="start center">
-		<div>เลือกเซิฟเวอร์ &nbsp;</div>
-		<md-input-container>
-	    <label>รายชื่อเซิฟเวอร์</label>
-	      <md-select ng-model="serverurl" ng-change="set_cookies('serverurl',serverurl)">
-	        <md-option ng-repeat="server in server_list | orderBy: '+id' | filter:{enable: 'true'}:true" value="{{server.server_url}}">
-	             {{server.server_name}}
-	        </md-option>
-	    </md-select>
-	  </md-input-container>
-	</div>
-	<span flex></span>
-	<div layout="row" layout-align="end center">
-		<div>Bitrate &nbsp;</div>
-    <md-input-container>
-	    <label></label>
-	      <md-select ng-model="bitrate" ng-change="set_cookies('bitrate',bitrate)">
-	        <md-option value="720p">720p</md-option>
-          <md-option value="480p">480p</md-option>
-          <md-option value="360p">360p</md-option>
-          <md-option value="3g">3G/4G (ประหยัด Data)</md-option>
-	    </md-select>
-	  </md-input-container>
-		<!--<md-radio-group layout="row" ng-model="bitrate" ng-change="set_cookies('bitrate',bitrate)">
-	    <md-radio-button value="720p" class="md-primary">720p</md-radio-button>
-			<md-radio-button value="480p" class="md-primary">480</md-radio-button>
-			<md-radio-button value="360p" class="md-primary">360p</md-radio-button>
-			<md-radio-button value="3g" class="md-primary">3G/4G (ประหยัด Data)</md-radio-button>
-	  </md-radio-group>-->
-	</div>
+<div layout="row" layout-align="center center">
+    <h2 ng-bind-html="channel_title_html"></h2>
+</div>
+<div ng-show="youtube_id == false" layout="column" style="padding-left:16px;padding-right:16px;">
+
+  <div layout="row">
+  	<div layout="row" layout-align="start center">
+  		<div>เลือกเซิฟเวอร์ &nbsp;</div>
+  		<md-input-container>
+  	    <label>รายชื่อเซิฟเวอร์</label>
+  	      <md-select ng-model="serverurl" ng-change="set_cookies('serverurl',serverurl)">
+  	        <md-option ng-repeat="server in server_list | orderBy: '+id' | filter:{enable: 'true'}:true" value="{{server.server_url}}">
+  	             {{server.server_name}}
+  	        </md-option>
+  	    </md-select>
+  	  </md-input-container>
+  	</div>
+  	<span flex></span>
+  	<div layout="row" layout-align="end center">
+  		<div>เลือกระดับความคมชัด &nbsp;</div>
+      <md-input-container>
+  	    <label></label>
+  	      <md-select ng-model="bitrate" ng-change="set_cookies('bitrate',bitrate)" aria-label="bitrate">
+  	        <md-option value="720p">720p</md-option>
+            <md-option value="480p">480p</md-option>
+            <md-option value="360p">360p</md-option>
+            <md-option value="3g">3G/4G (ประหยัด Data)</md-option>
+  	    </md-select>
+  	  </md-input-container>
+  		<!--<md-radio-group layout="row" ng-model="bitrate" ng-change="set_cookies('bitrate',bitrate)">
+  	    <md-radio-button value="720p" class="md-primary">720p</md-radio-button>
+  			<md-radio-button value="480p" class="md-primary">480</md-radio-button>
+  			<md-radio-button value="360p" class="md-primary">360p</md-radio-button>
+  			<md-radio-button value="3g" class="md-primary">3G/4G (ประหยัด Data)</md-radio-button>
+  	  </md-radio-group>-->
+  	</div>
+  </div>
 </div>
 <div layout="row" layout-align="center center">
-	<div id='playerKXSDPIwKERSva'></div>
+  <div ng-style="{ 'display' : jwplayer_display }">
+	   <div id='playerKXSDPIwKERSva'></div>
+  </div>
+  <div ng-style="{ 'display' : ios_android_display }" >
+    <img ng-if="(deviceDetector == 'ios') && (from_promote_link == false)" ng-src="{{ siteurl + '/images/Safari-player.jpg' }}" >
+    <!--<img ng-if="(deviceDetector == 'android') == (from_promote_link == false)" ng-src="{{ siteurl + '/images/android-player.jpg' }}">-->
+    <div ng-if="(deviceDetector == 'android') && (from_promote_link == false)">
+      <table width="940" height="230" border="0" cellpadding="0" cellspacing="0">
+      	<tr>
+      		<td colspan="3">
+      			<img src="<?php echo get_template_directory_uri(); ?>/images/MXInstall_01.jpg" width="940" height="150" alt=""></td>
+      	</tr>
+      	<tr>
+      		<td rowspan="2">
+      			<img src="<?php echo get_template_directory_uri(); ?>/images/MXInstall_02.jpg" width="684" height="80" alt=""></td>
+      		<td>
+      			<a href="https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad" target="_blank">
+      				<img src="<?php echo get_template_directory_uri(); ?>/images/InstallMXPlayer.jpg" width="220" height="53" border="0" alt=""></a></td>
+      		<td rowspan="2">
+      			<img src="<?php echo get_template_directory_uri(); ?>/images/MXInstall_04.jpg" width="36" height="80" alt=""></td>
+      	</tr>
+      	<tr>
+      		<td>
+      			<img src="<?php echo get_template_directory_uri(); ?>/images/MXInstall_05.jpg" width="220" height="27" alt=""></td>
+      	</tr>
+      </table>
+    </div>
+  </div>
+  <div ng-bind-html="link_promote_player" ></div>
+
+  <div ng-style="{ 'display' : youtube_display }">
+    <iframe width="940" height="534" ng-src="{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>
+  </div>
 </div>
-<div layout="row" class="md-padding" layout-align="end center" style="">
+<div ng-show="youtube_id == false" layout="row" class="md-padding" layout-align="end center" style="">
 	<div layout="row" layout-align="end center">
 	<div>เลือกรุปแบบ Stream: &nbsp;</div>
-  <md-input-container>
+  <!--<md-input-container>
     <label></label>
       <md-select ng-model="player_protocol" ng-change="set_cookies('player_protocol',player_protocol)">
         <md-option value="rtmp">FLASH (ดูได้เฉพาะบน PC)</md-option>
         <md-option value="http">HTTP (ดูได้ทุกอุปกรณ์)</md-option>
     </md-select>
-  </md-input-container>
+  </md-input-container>-->
 
-<!--	<md-radio-group layout="row" ng-model="player_protocol" ng-change="set_cookies('player_protocol',player_protocol)">
+	<md-radio-group layout="row" ng-model="player_protocol" ng-change="set_cookies('player_protocol',player_protocol)">
     <md-radio-button value="rtmp" class="md-primary">FLASH (ดูได้เฉพาะบน PC)</md-radio-button>
 		<md-radio-button value="http" class="md-primary">HTTP (ดูได้ทุกอุปกรณ์)</md-radio-button>
-  </md-radio-group>-->
+  </md-radio-group>
 	</div>
 </div>
 

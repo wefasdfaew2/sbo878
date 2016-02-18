@@ -17,8 +17,9 @@ Template Name: test_play
         </div>
         <!--<md-progress-linear class="md-accent" md-mode="indeterminate"></md-progress-linear>-->
       </br>
+      <div style="background-color:#f0f0f0;border-radius:10px;">
         <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar1.png">
-         <md-content class="md-padding" style="padding-top:0px;" layout-wrap>
+         <div class="md-padding" style="padding-top:0px;" layout-wrap>
            <div layout="row" layout-align="center center">
               <div flex="none">
                 <img ng-src="<?php echo get_template_directory_uri()?>/images/SBOBET.png"/>
@@ -36,10 +37,12 @@ Template Name: test_play
                 <code style="font-size:110%">Password: aa123456++</code>
              </div>
            </div>
-         </md-content>
+         </div>
+       </div>
 
+       <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
          <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar2.png">
-          <md-content class="md-padding" style="padding-top:0px;" layout-wrap>
+          <div class="md-padding" style="padding-top:0px;" layout-wrap>
             <div layout="row" layout-align="center center">
                <div flex="none">
                  <img ng-src="<?php echo get_template_directory_uri()?>/images/VEGUS168.png"/>
@@ -57,10 +60,11 @@ Template Name: test_play
                  <code style="font-size:110%">Password: aa123456++</code>
               </div>
             </div>
-          </md-content>
-
+          </div>
+        </div>
+        <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
           <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar3.png">
-           <md-content class="md-padding" style="padding-top:0px;" layout-wrap>
+           <div class="md-padding" style="padding-top:0px;" layout-wrap>
              <div layout="row" layout-align="center center">
                 <div flex="none">
                   <img ng-src="<?php echo get_template_directory_uri()?>/images/IBCBET.png"/>
@@ -80,10 +84,12 @@ Template Name: test_play
                   <code style="font-size:110%">Password: aa123456++</code>
                </div>
              </div>
-           </md-content>
+           </div>
+         </div>
 
+         <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
            <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar4.png">
-            <md-content class="md-padding" style="padding-top:0px;" layout-wrap>
+            <div class="md-padding" style="padding-top:0px;" layout-wrap>
               <div layout="row" layout-align="center center">
                  <div flex="none">
                    <img ng-src="<?php echo get_template_directory_uri()?>/images/Royal-GClub.png"/>
@@ -102,7 +108,8 @@ Template Name: test_play
                    <code style="font-size:110%">Password: 1234</code>
                 </div>
               </div>
-            </md-content>
+            </div>
+          </div>
        </md-content>
      </div>
 
