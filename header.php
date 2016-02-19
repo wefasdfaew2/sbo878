@@ -37,10 +37,10 @@
 
 		<div class="trending-articles">
 
-
+			<div style="height:80px;"></div>
 			<div id="sticky-anchor"></div>
 			<!--<div class="sticky-text" >ยอดสมาชิกแทงได้วันนี้</div>-->
-			<div id="sticky" class="box2" >
+			<div id="sticky" class="box2 stick" >
 				<div class="row text-center" style="">
 
 					<div class="col-md-5 col-xs-5 text-right" style="padding:0px;padding-top:5px;margin-left:15px;">
@@ -57,44 +57,17 @@
 				</div>
 				<div class="row" style="padding:0px;">
 					<div class="col-md-12 col-xs-12">
-						<marquee style="color:#FFFF00;font-size:70%;font-weight: bold" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
+						<marquee style="color:#FFFF00;font-size:70%;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
 							Sbobet878.com ตัวแทนโดยตรงจาก sbobet มั่นคง ปลอดภัย ระบบอัตโนมัติทั้งเว็บ ไม่ต้องรอ Call center, รีบสร้างความมั่นคงให้กับชีวิตของคุณเดี๋ยวนี้ กดสมัครได้เลย
 						</marquee>
 					</div>
 				</div>
-				<!--<table style="border:0px;margin:auto;" class="table-responsive">
-					<tr style="border:0px;overflow: visible;">
-						<td style="border:0px;" class="text-right">
-							<div>ยอดสมาชิกแทงได้วันนี้</div>
-						</td>
-						<td style="border:0px;overflow: visible;" class="text-right">
-							<center>
-							<div class="counter-wrapper" style="margin-top:0px;">
-								<ul class="flip-counter small" id="c1"></ul>
-							</div>
-						</center>
-						<div id="odometer" class="odometer">123000</div>
-						</td>
-						<td style="border:0px;overflow: visible;" class="text-left">
-							<div>บาท</div>
-						</td>
-					</tr>
-				</table>-->
-
-
-
-
 			</div>
-			<!--<div class="sticky-text2">บาท</div>-->
-
-				<!--<center><div id="sticky-anchor"></div></center>
-				<center><div id="sticky" style="width:100px;height:50px;background-color:red;"></div></center>-->
 
 			<div class="row">
-			<div class="col-md-6 col-sm-6 col-xs-12" style="float:left;padding:20px;padding-left:40px;">
+				<div class="col-md-6 col-sm-6 col-xs-12" style="float:left;padding:20px;padding-left:40px;">
 					<img src="<?php echo get_template_directory_uri()?>/images/Header.gif">
 				</div>
-			<!--<h3 style="color:white;float:left;margin-left:25px;padding-top:5px;">สมัครสมาชิกใหม่วันนี้รับทันทีโบนัส 200%</h2>-->
 
 			<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top:20px;">
 					<div class="row">
@@ -120,23 +93,7 @@
 
 				        </tr>
 							</table>
-						<!--	<div class="col-md-1 col-sm-1 col-lg-1 col-xs-1"></div>
 
-							<div class="col-md-3 col-sm-3 col-lg-3 col-xs-3 text-right" style="padding:0px;">
-								<a href="<?php echo ""; ?>">
-									<button type="button" class="btn btn-primary" >ทดลองเล่น</button>
-								</a>
-							</div>
-							<div class="col-md-4 col-sm-4 col-lg-4 col-xs-4 text-right" style="padding:0px;">
-								<a href="<?php echo ""; ?>">
-									<button type="button" class="btn btn-success">แก้ไข้ข้อมูลส่วนตัว</button>
-								</a>
-							</div>
-							<div class="col-md-3 col-sm-3 col-lg-3 col-xs-4 text-right" style="padding:0px;">
-								<a href="<?php echo wp_logout_url( home_url() ); ?>">
-									<button type="button" class="btn btn-danger">ออกจากระบบ</button>
-								</a>
-							</div>-->
 						<?php }else{ ?>
 
 							<table style="border:0px;float:right;">
@@ -153,19 +110,6 @@
 									</td>
 								</tr>
 							</table>
-
-						<!--	<div class="col-md-6 col-sm-6 col-xs-6" style=""></div>
-							<div class="col-md-3 col-sm-3 col-xs-3 text-right" style="">
-								<a href="<?php echo  get_permalink(129); ?>">
-									<button type="button" class="btn btn-danger">สมัครสมาชิก</button>
-								</a>
-							</div>
-							<div class="col-md-3 col-sm-3 col-xs-3 text-right" style="padding-left:0px;">
-								<a href="<?php echo  get_permalink(121); ?>">
-									<button type="button" class="btn btn-primary">ทดลองเล่น</button>
-								</a>
-							</div>-->
-
 						<?php } ?>
 					</div>
 				</div>
@@ -215,17 +159,8 @@
 	</header><!-- #masthead -->
 
 <center>
-		<!--<div class="button_example container" style="width:100%;margin:5px;display: table;">
-			<div class="row" style="display: table-cell;vertical-align: middle;">
-				<div class="col-md-2 col-md-offset-1" style="">
-      			<img style="float: right;" src="http://upic.me/i/eg/flexible-top-up_icon.png" alt="เติมเครดิตเพื่อแทงบอลได้ที่นี่" title="เติมเครดิตแทงบอล"/>
-  			</div>
-				<div class="col-md-9" style="padding-left:0px;padding-top:15px;font-size:140%;">
-					<div style="float: left;">เติมเครดิตผ่านระบบอัตโนมัติง่าย ๆ 4 ช่องทาง (อย่าลืมสมัครสมาชิกก่อนเติมเครดิต)</div>
-				</div>
-			</div>
-		</div>-->
-		<table style="border:0px;margin-top:5px;margin-bottom:5px;">
+
+		<table id="Table_01" style="border:0px;margin-top:5px;margin-bottom:5px;">
 			<tr>
 				<td colspan="5">
 					<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/BarPayment_01.gif" width="940" height="6" alt=""></td>
@@ -252,15 +187,6 @@
 			</tr>
 		</table>
 
-		<!--<div class="row" style="padding:0px;margin:0px">
-			<div class="col-md-12">
-			<img style="display:inline-block;" width="273" height="117" class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
-			 <img style="display:inline-block;" width="360" height="117" class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment2.jpg">
-			 <img style="display:inline-block;" width="186" height="117" class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
-			 <img style="display:inline-block;" width="109" height="117" class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment4.jpg">
-		</div>
-	</div>-->
-
 		<table style="border:0px;margin:0px;">
 			<tr style="border:0px;white-space:nowrap;">
 				<td align="right" style="border:0px;margin:4px;padding-right: 4px;">
@@ -283,22 +209,50 @@
 		</table>
 
 </center>
-</br>
 
-<?php $postid = get_the_ID();
-if($postid=='46'){
-//echo "hit";
-echo '<center>
-<div layout="row" layout-align="center center">
-  <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Promo1.jpg" alt="" title="">&nbsp;&nbsp;
-  <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Promo2.jpg" alt="" title="">&nbsp;&nbsp;
-  <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Promo4.jpg" alt="" title="">&nbsp;&nbsp;
-   <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Promo3.jpg" alt="" title="">
-</div>
-</center>';
+<?php $postid = get_the_ID(); if($postid=='46') {
 
-}
+	$agent = $_SERVER['HTTP_USER_AGENT'];
+	if(preg_match('/Android/',$agent)) $os = 'Android';
+	elseif(preg_match('/iPhone/',$agent)) $os = 'mobile';
+	elseif(preg_match('/iPad/',$agent)) $os = 'mobile';
+	elseif(preg_match('/Linux/',$agent)) $os = 'Linux';
+	elseif(preg_match('/Win/',$agent)) $os = 'Windows';
+	elseif(preg_match('/Mac/',$agent)) $os = 'Mac';
+	else $os = 'UnKnown';
+	$promote_class_for_mobile = "zoomin";
+	$promote_class_for_pc = "hover08 zoomin";
+
 ?>
+<center>
+	<a href="<?php echo  get_permalink(133); ?>">
+		<table style="border:0px;margin:0px;width:100%;margin-top:7px;" class="<?php echo $os == 'mobile' ? $promote_class_for_mobile : $promote_class_for_pc ?>">
+			<tr style="border:0px;white-space:nowrap;">
+				<td align="center" style="border:0px;">
+					<figure>
+						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo1.png" alt="" title="">
+					</figure>
+				</td>
+				<td align="center" style="border:0px;">
+					<figure>
+						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo2.png" alt="" title="">
+					</figure>
+				</td>
+				<td align="center" style="border:0px;">
+					<figure>
+						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo4.png" alt="" title="">
+					</figure>
+				</td>
+				<td align="center" style="border:0px;">
+					<figure>
+						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo3.png" alt="" title="">
+					</figure>
+				</td>
+			</tr>
+		</table>
+	</a>
+</center>
+<?php } ?>
 
 
 	<?php

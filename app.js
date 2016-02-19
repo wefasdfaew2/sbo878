@@ -66,11 +66,11 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $mdDia
       rtmp: {
         bufferlength: 3
       },
-      file: "http://www.youtube.com/v/vRecQYI9_kM", //www.youtube.com/v/ylLzyHk54Z0
-      title: "",
+      file: "", //www.youtube.com/v/ylLzyHk54Z0
+      title: "SBOBET878.COM PLAYER",
       fallback: true,
-      width: "950",
-      height: "534",
+      width: "848",
+      height: "480",
       autostart: false,
       aspectratio: "16:9",
 

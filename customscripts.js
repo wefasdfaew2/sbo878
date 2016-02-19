@@ -118,7 +118,14 @@ jQuery(document).ready(function($) {
       $('#sticky').removeClass('stick');
     }
   }
-  
+
+  $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
+      option: "get"
+    },
+    function(data, status){
+        //console.log(data[0].user_money);
+        odometer.innerHTML = data[0].user_money;
+  });
   var money = 0;
   setInterval(function(){
 
@@ -139,7 +146,7 @@ jQuery(document).ready(function($) {
 
     //money += Math.floor(Math.random() * 3000);
 
-  }, 5000);
+  }, 60000);
 //  odometer.innerHTML = 456000;
   /**var defaults = {
   value: 100000,
@@ -150,6 +157,6 @@ jQuery(document).ready(function($) {
   var c1 = new flipCounter('c1', defaults);**/
 
   //$('#sticky').text('วันนี้มีสมาชิกแทงได้รวม 5 บาท');
-  $(window).scroll(sticky_relocate);
-    sticky_relocate();
+  //$(window).scroll(sticky_relocate);
+    //sticky_relocate();
 });

@@ -15,7 +15,30 @@ Point is distributed under the terms of the GNU General Public License v3
 /*--------------------------------------------------------------
 # Normalize
 --------------------------------------------------------------*/
+/* Gray Scale */
+.hover08 figure img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover08 figure:hover img {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+}
 
+.zoomin img {
+  height: 202px;
+  width: 201px;
+  -webkit-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -ms-transition: all 2s ease;
+  transition: all 2s ease;
+}
+.zoomin img:hover {
+  width: 252px;
+  height: 251px;
+}
 
 .show-tag{
   display: block;
@@ -32,7 +55,7 @@ Point is distributed under the terms of the GNU General Public License v3
     position:relative;
     /*background: webkit-gradient(linear, 0% 20%, 0% 92%, from(#f3f3f3), to(#fff), color-stop(.1,#f3f3f3));*/
     /*background: linear-gradient(#EF9A9A, red);*/
-    background: linear-gradient(#E53935, #E53935);
+    background: linear-gradient(#8A0808, #8A0808);
     border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
     -webkit-border-bottom-right-radius: 40px 40px;
@@ -90,7 +113,7 @@ Point is distributed under the terms of the GNU General Public License v3
 }
 #sticky {
     /*padding: 0.5ex;*/
-    width: 60%;
+    width: 600px;
     background-color: #333;
     color: #fff;
     font-size: 1.5em;
@@ -99,11 +122,14 @@ Point is distributed under the terms of the GNU General Public License v3
 }
 #sticky.stick {
     position: fixed;
-    top: 6%;
+    top: 5%;
     z-index: 10000;
     /*border-radius: 0 0 0.5em 0.5em;*/
-    left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-left: 50%;
+		-moz-left: 50%;
+		left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
 }
 
 html {
@@ -2037,7 +2063,11 @@ html {
 /*-----------------------------------------------
 /* @media {      } queries
 /*---------------------------------------------*/
+
+
+
 @media screen and (max-width:1230px) {
+
     .shareit {
         position: relative!important;
         width: 100%!important;
@@ -2049,7 +2079,10 @@ html {
         border: none !important;
     }
 }
+
+
 @media screen and (max-width:1000px) {
+
     #move-to-top {
         margin-right: 0;
         right: 5px;
@@ -2061,14 +2094,7 @@ html {
     font-size: 1.5em;
 
   }
-  #sticky.stick {
-      position: fixed;
-      top: 5%;
-      z-index: 10000;
-      /*border-radius: 0 0 0.5em 0.5em;*/
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
+
     img {
         max-width: 100%;
         height: auto!important;
@@ -2082,12 +2108,15 @@ html {
     }
 }
 @media screen and (max-width:900px) {
+
     .widget-header { max-width: 70% }
 }
 @media screen and (min-width:865px) {
+
     #navigation.mobile-only { display: none }
 }
 @media screen and (max-width:865px) {
+
     #page, .main-container { max-width: 96% }
     #site-footer .main-container { padding: 0 2% }
     .site-branding {
@@ -2312,6 +2341,7 @@ html {
     font-size: 1.0em;
 
   }
+
     .article { width: 100% }
     #content_box {
         padding-right: 0px;
@@ -2358,6 +2388,7 @@ html {
     }
 }
 @media screen and (max-width:650px) {
+
     .trending-articles { display: auto; }
     .firstpost {
         width: 100%;
@@ -2379,6 +2410,7 @@ html {
     .thirdpost img { width: 100% }
 }
 @media screen and (max-width:600px) {
+
     .featured-thumbnail img { width: 100% }
     .admin-bar .pace .pace-progress { top: 0px }
     .carousel .excerpt { width: 23.4% }
@@ -2386,6 +2418,7 @@ html {
     .carousel .excerpt:nth-last-child(2) { display: none }
 }
 @media screen and (max-width:550px) {
+
     .sbutton { float: right }
     .f-widget, .widgets-num-4 .f-widget {
         width: 100%;
@@ -2465,4 +2498,12 @@ html {
         width: 100%;
     }
     #navigation li a { border-bottom: 1px solid #576979 }
+}
+@media screen and (min-width:360px) {
+	#sticky.stick {
+      top: 35px;
+			
+
+			transform: translate(-50%, -50%);
+  }
 }
