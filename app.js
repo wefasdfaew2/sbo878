@@ -11,13 +11,14 @@ app.config(function($mdThemingProvider) {
     .accentPalette('green');
 });
 
-app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $mdDialog, $window, deviceDetector) {
+app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compile, $mdDialog, $window, deviceDetector) {
 
   $scope.deviceDetector = deviceDetector.os;
   $scope.siteurl = WPURLS.templateurl;
   $scope.youtube_id = false;
   $scope.youtube_display = 'none';
   $scope.from_promote_link = false;
+  $scope.fastTabs = '';
 
   $scope.gen_token = function(userIP) {
 
@@ -66,7 +67,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $mdDia
       rtmp: {
         bufferlength: 3
       },
-      file: "", //www.youtube.com/v/ylLzyHk54Z0
+      file: "http://www.youtube.com/v/ylLzyHk54Z0", //www.youtube.com/v/ylLzyHk54Z0
       title: "SBOBET878.COM PLAYER",
       fallback: true,
       width: "848",
@@ -286,14 +287,92 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $mdDia
     });
     request_channel_list.success(function(channel_list) {
       $scope.channel_list = channel_list;
-
+      $scope.channel_list2 = channel_list;
+      console.log( $filter('filter')(channel_list, {category_id: '14'}) );
       //alert(channel_list.ip);
+    });
+  }
+
+  $scope.get_channel_list2 = function(cat_id) {
+    //console.log(cat_id);
+    //$scope.channel_list = $filter('filter')($scope.channel_list2, {category_id: cat_id});
+    //console.log($scope.channel_list);
+  }
+
+  $scope.get_fast_tabs = function() {
+    var request_channel_cat = $http({
+      method: "get",
+      url: WPURLS.templateurl + "/php/get-channel-cat.php",
+      data: {},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    request_channel_cat.success(function(channel_cat) {
+      var request_channel_list = $http({
+        method: "get",
+        url: WPURLS.templateurl + "/php/get-channel-list.php?cat_id=" + '0',
+        data: {},
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+      request_channel_list.success(function(channel_list) {
+        //console.log(channel_list);
+          var tabs = '<md-tabs  md-dynamic-height md-border-bottom>';
+
+        angular.forEach(channel_cat, function(value, key) {
+          //var tabs = '';
+          if(value.id != '0' && value.id != '10000'){
+
+
+          tabs += '<md-tab label="' + value.cat_name + '">';
+          tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
+          tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
+
+
+          //console.log(channelByCat);
+          angular.forEach(channel_list, function(value2, key2) {
+
+            if(value2.category_id == value.id){
+
+              tabs += '<div style="padding:5px;">';
+              tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
+              tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
+              tabs += '</a>';
+              tabs += '</div>';
+            }
+
+          });
+
+          tabs += '</div>';
+          tabs += '</md-content>';
+          tabs += '</md-tab>';
+          //tabs += '</md-tabs>';
+          }
+          //fastTabs.html(tabs);
+
+
+          //$scope.fastTabs = tabs;
+
+        });
+
+
+        tabs += '</md-tabs>';
+        //console.log(tabs);
+        var fastTabs = angular.element(document.querySelector('#fastTabs'));
+        var newElement = $compile( tabs )( $scope );
+        fastTabs.append( newElement );
+
+      });
+
+
     });
   }
 
   $scope.get_player_link = function(channel_id) {
     //console.log(channel_id);
-
+    console.log('get_player_link');
     var request_channel_info = $http({
       method: "get",
       url: WPURLS.templateurl + "/php/get-channel-by-id.php?id=" + channel_id,

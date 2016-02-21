@@ -38,9 +38,9 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
 
  ?>
  <div id="page" class="single">
- <div class="content">
+ <div class="content"><!--get_channel_list('0');-->
 <div ng-app="MyApp" ng-controller="Player" ng-cloak="" style="margin-top:10px;"
-				ng-init="gen_token('<?php echo $userIP ?>'); get_channel_list('0'); promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');">
+				ng-init="get_fast_tabs(); gen_token('<?php echo $userIP ?>');  promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');">
 
 <div layout="row" layout-align="center center">
     <h2 ng-bind-html="channel_title_html"></h2>
@@ -144,20 +144,23 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
       <span flex></span>
     </div>
   </md-toolbar>
-	<md-tabs md-dynamic-height md-border-bottom>
-		<md-tab ng-repeat="x in channel_cat | orderBy: '+sort' | filter:{enable: 'true'}:true" label="{{x.cat_name}}" ng-click="get_channel_list(x.id)">
+  <div id="fastTabs"></div>
+  
+	<!--<md-tabs  md-dynamic-height md-border-bottom>
+
+		<md-tab ng-repeat="x in channel_cat | orderBy: '+sort' | filter:{enable: 'true'}:true" label="{{x.cat_name}}" ng-click="get_channel_list2(x.id)">
 			<md-content class="md-padding" layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;">
 				<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">
 					<div ng-repeat="channel in channel_list | filter:{enable: 'true'}:true">
 						&nbsp;
 						<a ng-click="get_player_link(channel.id)" style="cursor: pointer;">
-							<img ng-src={{channel.channel_logo_ssl}} class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" />
+							<img ng-src={{channel.channel_logo_ssl}} class="md-avatar" class="img-responsive center-block" style="padding-top:10px;"/>
 						</a>
 					</div>
 				</div>
 			</md-content>
 		</md-tab>
-	</md-tabs>
+	</md-tabs>-->
 </md-content>
 </div>
 <?php get_footer(); ?>

@@ -45,19 +45,19 @@
 
 					<div class="col-md-5 col-xs-5 text-right" style="padding:0px;padding-top:5px;margin-left:15px;">
 						<!--<div>ยอดสมาชิกแทงได้วันนี้</div>-->
-						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png"/>
+						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png" width="197" height="29"/>
 					</div>
 					<div class="col-md-4 col-xs-4 text-center" style="padding:0px;padding-top:3px;">
 						<div id="odometer" class="odometer">0</div>
 					</div>
 					<div class="col-md-1 col-xs-1 text-left" style="padding:0px;padding-top:5px;">
 						<!--<div>บาท</div>-->
-						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png"/>
+						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
 					</div>
 				</div>
 				<div class="row" style="padding:0px;">
 					<div class="col-md-12 col-xs-12">
-						<marquee style="color:#FFFF00;font-size:70%;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
+						<marquee style="color:#FFFF00;font-size:12px;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
 							Sbobet878.com ตัวแทนโดยตรงจาก sbobet มั่นคง ปลอดภัย ระบบอัตโนมัติทั้งเว็บ ไม่ต้องรอ Call center, รีบสร้างความมั่นคงให้กับชีวิตของคุณเดี๋ยวนี้ กดสมัครได้เลย
 						</marquee>
 					</div>
