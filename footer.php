@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * The template for displaying the footer.
  */
@@ -42,39 +42,203 @@
 		</div>
 	<?php } ?>
 </footer><!--footer-->
+
+<?php $postid = get_the_ID(); if($postid=='46') {?>
+	<div class="carousel" style="height:40px;margin-bottom:10px;">
+			<h3 class="frontTitle">ตารางคะแนน (อัพเดทอัตโนมัติ)</h3>
+	</div>
+	<div style="text-align:center;">
+		<script language='javascript'> var timeZone ='%2B0700'; var dstbox =''; var cpageBgColor = 'FFFFFF'; var wordAd='  Sbobet878.Com'; var wadurl='https://www.sboobet878.com'; var width='100%'; var tableFontSize='12'; var cborderColor='333333'; var ctdColor1='EEEEEE'; var ctdColor2='FFFFFF'; var clinkColor='0044DD'; var cdateFontColor='FFFFFF'; var cdateBgColor='333333'; var scoreFontSize='12'; var cteamFontColor='000000'; var cgoalFontColor='FF0000'; var cgoalBgColor='FFFF99'; var cremarkFontColor='000000'; var mark ='en'; var cremarkBgColor='F7F8F3'; var Skins='2'; var teamWeight='400'; var scoreWeight='700'; var goalWeight='700'; var fontWeight='700'; document.write("<iframe align='center' src='http://freelive.7m.cn/live.aspx?mark="+ mark +"&TimeZone=" + timeZone + "&wordAd=" + wordAd + "&cpageBgColor="+ cpageBgColor +"&wadurl=" + wadurl + "&width=" + width + "&tableFontSize=" + tableFontSize + "&cborderColor=" + cborderColor + "&ctdColor1=" + ctdColor1 + "&ctdColor2=" + ctdColor2 + "&clinkColor=" + clinkColor + "&cdateFontColor="+ cdateFontColor +"&cdateBgColor=" + cdateBgColor + "&scoreFontSize=" + scoreFontSize + "&cteamFontColor=" + cteamFontColor + "&cgoalFontColor=" + cgoalFontColor + "&cgoalBgColor=" + cgoalBgColor + "&cremarkFontColor=" + cremarkFontColor + "&cremarkBgColor=" + cremarkBgColor + "&Skins=" + Skins + "&teamWeight=" + teamWeight + "&scoreWeight=" + scoreWeight + "&goalWeight=" + goalWeight +"&fontWeight="+ fontWeight +"&DSTbox="+ dstbox +"'  height='470' width='95%' scrolling='yes' border='0' frameborder='0'></iframe>")</script>
+	</div>
+	<br>
+<?php } ?>
 <!--sbobet url check access from isp-->
 	<div class="carousel">
-			<h3 class="frontTitle"><div class="latest">sbobet_links</div></h3>
-<div class="excerpt">
-
-			 <div class="featured-thumbnail">
-										<img height="140" width="130" src="http://sbogroup.t-wifi.co.th/screenshot/screenshot.php?url=www.livescore.com&clipw=800&cliph=600" class="attachment-featured wp-post-image" alt="ทางเข้า sbobet3">
-									</div>
-						<a href="http://www.livescore.com" title="sbobet 3bb" rel="nofollow" id="footer-thumbnail">
-
-							<p class="footer-title">
-								<span class="featured-title">sbobet 3bb</span>
-							</p>
-						</a>
-					</div><!--.post excerpt-->
-<div class="excerpt">
-			 <div class="featured-thumbnail">
-										<img height="140" width="130" src="http://sbogroup.t-wifi.co.th/screenshot/screenshot.php?url=www.kapook.com&clipw=800&cliph=600" class="attachment-featured wp-post-image" alt="ทางเข้า sbobet3">
-									</div>
-						<a href="http://www.kapook.com" title="sbobet tot" rel="nofollow" id="footer-thumbnail">
-
-							<p class="footer-title">
-								<span class="featured-title">sbobet tot</span>
-							</p>
-						</a>
-					</div><!--.post excerpt-->
-
-
-
-
+			<h3 class="frontTitle">ทางเข้าเว็บพนัน (อัพเดทลิ้งค์ใหม่อัตโนมัติหากโดนบล๊อค)</h3>
 	</div>
+
+
+<table style="width:100%"  >
+<tr align="center">
+    <td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/3BB.jpg" alt="sbobet878">
+	 </td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</td>
+		<!--x -->
+	<td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/True.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+	</td>
+</tr>
+<tr align="center">
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_3bb">ทางเข้าทั้งหมดผ่าน3bb</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  <!--x -->
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_trueonline">ทางเข้าทั้งหมดผ่านทรู</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  </tr>
+</table>
+
+<table style="width:100%"  >
+<tr align="center">
+    <td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TOT.jpg" alt="sbobet878">
+	 </td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</td>
+		<!--x -->
+	<td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/CAT.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+	</td>
+</tr>
+<tr align="center">
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_tot">ทางเข้าทั้งหมดผ่านทีโอที</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  <!--x -->
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_cat">ทางเข้าทั้งหมดผ่านแคท</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  </tr>
+</table>
+
+<table style="width:100%"  >
+<tr align="center">
+    <td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/AIS.jpg" alt="sbobet878">
+	 </td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</td>
+		<!--x -->
+	<td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Dtac.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+	</td>
+</tr>
+<tr align="center">
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_ais">ทางเข้าทั้งหมดผ่านเอไอเอส</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  <!--x -->
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_dtac">ทางเข้าทั้งหมดผ่านดีแทค</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  </tr>
+</table>
+
+<table style="width:100%" >
+<tr align="center">
+    <td>
+		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TrueH.jpg" alt="sbobet878">
+	 </td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+	</td>
+    <td>
+		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</td>
+		<!--x -->
+	<td>
+
+	</td>
+    <td>
+		 <a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_all">
+      <img   src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/LinkEntry.png" alt="sbobet878"  hspace="10">
+     </a>
+	</td>
+    <td>
+
+	</td>
+
+</tr>
+<tr align="center">
+  <td>
+	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_truemove">ทางเข้าทั้งหมดผ่านทรูมูฟเฮช</a>
+  </td>
+  <td>
+	sbobet link1
+  </td>
+  <td>
+	Royal Gclub link1
+  </td>
+  <!--x -->
+   <td>
+   </td>
+  </tr>
+</table>
+
+
+
 <?php mts_copyrights_credit(); ?>
 <?php wp_footer(); ?>
+
 </div><!-- main-container -->
 
 </body>

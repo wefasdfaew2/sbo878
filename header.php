@@ -45,14 +45,14 @@
 
 					<div class="col-md-5 col-xs-5 text-right" style="padding:0px;padding-top:5px;margin-left:15px;">
 						<!--<div>ยอดสมาชิกแทงได้วันนี้</div>-->
-						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png" width="197" height="29"/>
+						<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png" width="197" height="29"/>
 					</div>
 					<div class="col-md-4 col-xs-4 text-center" style="padding:0px;padding-top:3px;">
 						<div id="odometer" class="odometer">0</div>
 					</div>
 					<div class="col-md-1 col-xs-1 text-left" style="padding:0px;padding-top:5px;">
 						<!--<div>บาท</div>-->
-						<img class="image-responsive" src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
+						<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
 					</div>
 				</div>
 				<div class="row" style="padding:0px;">
@@ -117,6 +117,9 @@
 		</div>
 	<?php } ?>
 
+
+<script language = 'javascript'>var wid = 980;var hei = 25;var file = 10;var mark = 3;var title = 'scores';var url = 'http://';var timezone = '%2B0700';var dstbox = '';document.write('<iframe src =http://freelive.7m.cn/U_fLeftRight.aspx?width='+wid+'&height='+hei+'&file='+file+'&mark='+mark+'&title='+title+'&urls='+ url+'&timezone="'+timezone+'"&dstbox='+dstbox+'  height ='+(parseInt(hei)+2) +' width = 100% frameborder = no border = 0 marginwidth = 0 marginheight = 0 scrolling = no allowtransparency = yes></iframe>');</script>
+
 	<header id="masthead" class="site-header" role="banner">
 		<div class="site-branding">
 			<?php $header_image = get_header_image();
@@ -169,12 +172,12 @@
 				<td rowspan="2">
 					<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/BarPayment_02.gif" width="559" height="57" alt=""></td>
 				<td>
-					<a href="http://www.google.com">
+					<a href="<?php echo  get_permalink(246); ?>">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/CreditDeposit.jpg" width="172" height="51" border="0" alt=""></a></td>
 				<td rowspan="2">
 					<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/BarPayment_04.gif" width="14" height="57" alt=""></td>
 				<td>
-					<a href="http://www.amazon.com">
+					<a href="<?php echo  get_permalink(272); ?>">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/CreditWithdraw.jpg" width="172" height="51" border="0" alt=""></a></td>
 				<td rowspan="2">
 					<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/BarPayment_06.gif" width="23" height="57" alt=""></td>
@@ -188,22 +191,46 @@
 		</table>
 
 		<table style="border:0px;margin:0px;">
-			<tr style="border:0px;white-space:nowrap;">
-				<td align="right" style="border:0px;margin:4px;padding-right: 4px;">
-					<img width="273" height="117"
-					class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
+			<tr style="border:0px;white-space:nowrap;" >
+				<td align="right" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects" >
+					<div class="img">
+						<img width="273" height="117"
+						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
+						<div class="overlay">
+								<a href="#" class="expand">+</a>
+								<a class="close-overlay hidden">x</a>
+						</div>
+				</div>
 				</td>
-				<td align="center" style="border:0px;margin:4px;padding-right: 4px;">
-					<img width="360" height="117"
-					class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment2.jpg">
+				<td align="center" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects">
+					<div class="img">
+						<img width="360" height="117"
+						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment2.jpg">
+						<div class="overlay">
+								<a href="#" class="expand">+</a>
+								<a class="close-overlay hidden">x</a>
+						</div>
+				</div>
 				</td>
-				<td align="left" style="border:0px;margin:4px;padding-right: 4px;">
-					<img width="186" height="117"
-					class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
+				<td align="left" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects">
+					<div class="img">
+						<img width="186" height="117"
+						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
+						<div class="overlay">
+								<a href="#" class="expand">+</a>
+								<a class="close-overlay hidden">x</a>
+						</div>
+					</div>
 				</td>
-				<td align="left" style="border:0px;margin:4px;">
+				<td align="left" style="border:0px;margin:4px;" class="effect-1 effects">
+				<div class="img">
 					<img width="109" height="117"
 					class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment4.jpg">
+					<div class="overlay">
+							<a href="#" class="expand">+</a>
+							<a class="close-overlay hidden">x</a>
+					</div>
+				</div>
 				</td>
 			</tr>
 		</table>

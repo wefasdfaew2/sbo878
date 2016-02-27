@@ -1,6 +1,6 @@
-var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ipCookie', 'ng.deviceDetector', 'ngSanitize']);
+var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ipCookie', 'ng.deviceDetector', 'ngSanitize', 'ui.bootstrap', 'ui.tab.scroll']);
 
-app.config(function($mdThemingProvider) {
+app.config(function($mdThemingProvider, scrollableTabsetConfigProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('blue', {
       // by default use shade 400 from the pink palette for primary intentions
@@ -9,6 +9,9 @@ app.config(function($mdThemingProvider) {
       'hue-3': 'A700' // use shade A100 for the <code>md-hue-3</code> class
     })
     .accentPalette('green');
+
+    scrollableTabsetConfigProvider.setShowTooltips (false);
+
 });
 
 app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compile, $mdDialog, $window, deviceDetector) {
@@ -250,7 +253,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
 
     }
     //WPURLS.templateurl from function.php
-  var request_channel_cat = $http({
+/**  var request_channel_cat = $http({
     method: "get",
     url: WPURLS.templateurl + "/php/get-channel-cat.php",
     data: {},
@@ -260,7 +263,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   });
   request_channel_cat.success(function(channel_cat) {
     $scope.channel_cat = channel_cat;
-  });
+  });**/
 
   var request_server_list = $http({
     method: "get",
@@ -293,11 +296,6 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
     });
   }
 
-  $scope.get_channel_list2 = function(cat_id) {
-    //console.log(cat_id);
-    //$scope.channel_list = $filter('filter')($scope.channel_list2, {category_id: cat_id});
-    //console.log($scope.channel_list);
-  }
 
   $scope.get_fast_tabs = function() {
     var request_channel_cat = $http({
@@ -319,54 +317,51 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       });
       request_channel_list.success(function(channel_list) {
         //console.log(channel_list);
-          var tabs = '<md-tabs  md-dynamic-height md-border-bottom>';
+          var tabs = '<md-tabs md-swipe-content md-no-ink md-border-bottom md-dynamic-height>';
 
         angular.forEach(channel_cat, function(value, key) {
-          //var tabs = '';
-          if(value.id != '0' && value.id != '10000'){
+          if(value.id == '0' && value.enable == 'true'){
+            console.log('asdf');
+            tabs += '<md-tab label="' + value.cat_name + '">';
+            tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
+            tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
+            angular.forEach(channel_list, function(value2, key2) {
 
+                tabs += '<div style="padding:5px;">';
+                tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
+                tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
+                tabs += '</a>';
+                tabs += '</div>';
 
-          tabs += '<md-tab label="' + value.cat_name + '">';
-          tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
-          tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
-
-
-          //console.log(channelByCat);
-          angular.forEach(channel_list, function(value2, key2) {
-
-            if(value2.category_id == value.id){
-
-              tabs += '<div style="padding:5px;">';
-              tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
-              tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
-              tabs += '</a>';
-              tabs += '</div>';
-            }
-
-          });
-
-          tabs += '</div>';
-          tabs += '</md-content>';
-          tabs += '</md-tab>';
-          //tabs += '</md-tabs>';
+            });
+            tabs += '</div>';
+            tabs += '</md-content>';
+            tabs += '</md-tab>';
           }
-          //fastTabs.html(tabs);
-
-
-          //$scope.fastTabs = tabs;
-
+          else if(value.id != '0' && value.id != '10000' && value.enable == 'true'){
+            tabs += '<md-tab label="' + value.cat_name + '">';
+            tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
+            tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
+            angular.forEach(channel_list, function(value2, key2) {
+              if(value2.category_id == value.id){
+                tabs += '<div style="padding:5px;">';
+                tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
+                tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
+                tabs += '</a>';
+                tabs += '</div>';
+              }
+            });
+            tabs += '</div>';
+            tabs += '</md-content>';
+            tabs += '</md-tab>';
+          }
         });
-
-
         tabs += '</md-tabs>';
         //console.log(tabs);
         var fastTabs = angular.element(document.querySelector('#fastTabs'));
         var newElement = $compile( tabs )( $scope );
         fastTabs.append( newElement );
-
       });
-
-
     });
   }
 

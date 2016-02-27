@@ -16,6 +16,36 @@ Point is distributed under the terms of the GNU General Public License v3
 # Normalize
 --------------------------------------------------------------*/
 /* Gray Scale */
+a.fancybox img {
+        border: none;
+        box-shadow: 0 1px 7px rgba(0,0,0,0.6);
+    } 
+#fancybox-title{
+  margin-left: 0px !important;
+}
+.page-title{
+  width: 100%;
+  border-color: #0c60ee;
+  background-color: #387ef5;
+  color: #fff;
+}
+
+.page-sub-title{
+  width: 100%;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #fff;
+}
+.select-page {
+  width: 50px;
+  text-align: center;
+	background-color: white;
+}
+.pagination li a input {
+  padding: 0;
+  margin: -5px 0;
+}
+
 .hover08 figure img {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
@@ -180,7 +210,7 @@ sub, sup {
 }
 sup { top: -0.5em }
 sub { bottom: -0.25em }
-img { border: 0 }
+/**img { border: 0 }**/
 svg:not(:root) { overflow: hidden }
 figure { margin: 1em 40px }
 hr {
@@ -236,9 +266,13 @@ optgroup { font-weight: bold }
 }*/
 
 td, th {
-	color: #08088A;
+	/**color: #08088A;**/
     padding: 5px 15px;
     border: 0px solid #e2e2e2;
+}
+
+[role="tabpanel"] {
+    transition: none;
 }
 /*--------------------------------------------------------------
 # Fonts
@@ -437,8 +471,8 @@ dd {
     margin: 0 0 10px;
 }
 img {
-    height: auto; /* Make sure images are scaled correctly. */
-    max-width: 100%; /* Adhere to container width. */ }
+  /**  height: auto;**/ /* Make sure images are scaled correctly. */
+/**max-width: 100%;**/ /* Adhere to container width. */ }
 /*table {
     margin: 0 0 1.5em;
     width: 100%;
@@ -1439,6 +1473,7 @@ footer .sbutton {
     border-top: 0;
 }
 /*-[ pagination ]------------------*/
+/**
 nav.posts-navigation { clear: both }
 .pagination {
     clear: both;
@@ -1535,7 +1570,7 @@ nav.posts-navigation { clear: both }
 .pagination .nav-previous a, .pagination .nav-next a { color: #fff!important }
 .pagination  .nav-previous a:hover, .pagination .nav-next a:hover { background-color: #222 }
 .single .currenttext { margin-bottom: 0 }
-.pagination .current .currenttext { margin-bottom: 10px }
+.pagination .current .currenttext { margin-bottom: 10px }**/
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -2095,10 +2130,10 @@ html {
 
   }
 
-    img {
+    /**img {
         max-width: 100%;
         height: auto!important;
-    }
+    }**/
     .ad-300 img { max-width: 100% }
     .ad-125 li { max-width: 40% }
     .ad-125 img {
@@ -2502,7 +2537,7 @@ html {
 @media screen and (min-width:360px) {
 	#sticky.stick {
       top: 35px;
-			
+
 
 			transform: translate(-50%, -50%);
   }

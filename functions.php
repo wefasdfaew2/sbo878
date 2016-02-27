@@ -12,6 +12,8 @@ if ( ! function_exists( 'point_setup' ) ) :
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
+
+
 function point_setup() {
 	/*
 	 * Make theme available for translation.
@@ -84,6 +86,9 @@ function point_setup() {
         }
     }
 
+
+
+
     add_action('admin_init', 'point_notice_ignore');
     function point_notice_ignore() {
         global $current_user;
@@ -114,6 +119,8 @@ function point_header_code() {
 	echo get_theme_mod( 'point_header_code', '' );
 }
 add_action( 'wp_head', 'point_header_code' );
+
+
 
 /**
  * Migrates Theme Options to Customizer at version 2.0
@@ -234,6 +241,7 @@ function point_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'point_scripts');
 
+
 function angular_scripts() {
 
   wp_register_script('md5', get_template_directory_uri() . '/js/md5.js', true);
@@ -252,8 +260,8 @@ function angular_scripts() {
   wp_register_script('angular-cookie', get_template_directory_uri() . '/js/angular-cookie.min.js', true);
   wp_enqueue_script('angular-cookie');
 
-	wp_register_script( 'jwplayer', 'https://content.jwplatform.com/libraries/tO4hwnMO.js', true );
-	wp_enqueue_script( 'jwplayer' );
+	//wp_register_script( 'jwplayer', 'https://content.jwplatform.com/libraries/tO4hwnMO.js', true );
+	//wp_enqueue_script( 'jwplayer' );
 
 //content.jwplatform.com/libraries/eX4mp13.js
 	wp_register_script('angular-animate', get_template_directory_uri() . '/js/angular-animate.min.js', true);
@@ -310,12 +318,35 @@ function angular_scripts() {
   wp_register_script('angular-sanitize', get_template_directory_uri() . '/js/angular-sanitize.min.js', true);
   wp_enqueue_script('angular-sanitize');
 
+  wp_register_script('ui-bootstrap', get_template_directory_uri() . '/js/ui-bootstrap-tpls-1.1.2.min.js', true);
+  wp_enqueue_script('ui-bootstrap');
 
+  wp_register_style( 'ui-tab-scroll', get_template_directory_uri() . '/css/angular-ui-tab-scroll.css' );
+	wp_enqueue_style( 'ui-tab-scroll' );
 
+  wp_register_script('angular-ui-tab-scroll', get_template_directory_uri() . '/js/angular-ui-tab-scroll.js', true);
+  wp_enqueue_script('angular-ui-tab-scroll');
+
+  wp_register_style( 'hover-style', get_template_directory_uri() . '/css/hover-style.css' );
+	wp_enqueue_style( 'hover-style' );
+
+  wp_register_script('smart-table', get_template_directory_uri() . '/js/smart-table.min.js', true);
+  wp_enqueue_script('smart-table');
+  //wp_register_script('modernizr', get_template_directory_uri() . '/js/modernizr.js', true);
+  //wp_enqueue_script('modernizr');
+
+  wp_register_script('suggest-friend', get_template_directory_uri() . '/js/suggest-friend.js', true);
+  wp_enqueue_script('suggest-friend',true);
+  $scriptData = array();
+  $scriptData['ajaxurl'] = admin_url( 'admin-ajax.php' );
+
+  wp_localize_script( 'suggest-friend', 'my_js_data', $scriptData );
   wp_localize_script('angular-app', 'WPURLS', array( 'templateurl' => get_template_directory_uri() ));
-}
 
+}
 add_action( 'wp_enqueue_scripts', 'angular_scripts');
+
+
 /**
  * Implement the Custom Header feature.
  */

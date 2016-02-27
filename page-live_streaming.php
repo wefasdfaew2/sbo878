@@ -6,6 +6,8 @@ Template Name: live_streaming
 <?php get_header();?>
 
 <?php
+wp_register_script( 'jwplayer', 'https://content.jwplatform.com/libraries/tO4hwnMO.js', true );
+wp_enqueue_script( 'jwplayer' );
 
 function get_ip_address(){
     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
@@ -145,7 +147,10 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
     </div>
   </md-toolbar>
   <div id="fastTabs"></div>
-  
+  <div id="fastTabssss"></div>
+
+
+
 	<!--<md-tabs  md-dynamic-height md-border-bottom>
 
 		<md-tab ng-repeat="x in channel_cat | orderBy: '+sort' | filter:{enable: 'true'}:true" label="{{x.cat_name}}" ng-click="get_channel_list2(x.id)">

@@ -20,7 +20,7 @@ if ($conn->connect_error)
 }
 
 //$sql = "SELECT * FROM channel_category GROUP BY channel_group ORDER BY c_sort";
-$sql = "SELECT * FROM category";
+$sql = "SELECT * FROM category ORDER BY sort";
 //$sql = "SELECT channel_group FROM channel_category";
 $result = $conn->query($sql);
 
