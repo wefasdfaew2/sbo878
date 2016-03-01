@@ -1,0 +1,48 @@
+<img ng-src="{{ template_directory_uri }}/images/withdraw-Step4.png" width="929" height="50" />
+<div class="md-padding"></div>
+<div layout="column" layout-align="center center" style="margin-bottom:20px;">
+  <center><h2>รายละเอียดการถอน</h2></center>
+  <div layout="column">
+    <div layout="row" layout-align="start center">
+      <label style="width:63px;">Account:</label>
+      <div style="padding-left:3em">{{ account }}</div>
+    </div>
+    <div layout="row" layout-align="start center">
+      <label style="width:63px;">เลขที่บัญชี:</label>
+      <div style="padding-left:3em">{{ bank_account }}</div>
+    </div>
+    <div layout="row" layout-align="start center">
+      <label style="width:63px;">ธนาคาร:</label>
+      <div style="padding-left:3em">{{ bank_name }}</div>
+    </div>
+    <div layout="row" layout-align="start center">
+      <label style="width:63px;">ชื่อบัญชี:</label>
+      <div style="padding-left:3em">{{ nickname }}</div>
+    </div>
+  </div>
+  <div layout="row" layout-align="center center" style="margin-top:10px;" flex>
+    <div ng-if="withdraw_wait" style="width:100%;height:auto;border: 2px solid red;padding: 15px">
+      <center>
+        <div>กำลังตรวจสอบยอดเงินคงเหลือที่ถอนได้ในบัญชีของท่าน</div>
+        <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="50"></md-progress-circular>
+      </center>
+    </div>
+    <div ng-if="withdraw_add" style="width:100%;height:auto;border: 2px solid #387ef5;padding: 15px">
+      <center>
+        <div >ยอดเงินคงเหลือที่ถอนได้  {{ current_amount }} บาท</div>
+        <br>
+        <md-input-container class="md-block" style="margin-top:20px;">
+            <label>ยอดเงินที่ต้องการถอน:</label>
+            <input type="number" min="1" ng-change="check_input_money()" ng-model="withdraw.withdraw_money"  placeholder="ระบุยอดเงินที่ต้องการถอน" style="width:300px;" >
+        </md-input-container>
+        <div ng-show="show_withdraw_error" style="color:red;">{{ error_text }}</div>
+      </center>
+    </div>
+    <div ng-if="withdraw_req_complete" style="width:100%;height:auto;border: 2px solid #4cae4c;padding: 15px">
+      <label>รับรายการถอนเข้าสู่ระบบแล้ว</label>
+    </div>
+  </div>
+
+  <md-button ng-show="show_button" ng-disabled="disable_ok" class="md-raised md-primary" ng-click="send_withdraw_req(withdraw.withdraw_money, $event)">ตกลง</md-button>
+
+</div>

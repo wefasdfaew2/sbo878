@@ -118,8 +118,8 @@
 	<?php } ?>
 
 
-<script language = 'javascript'>var wid = 980;var hei = 25;var file = 10;var mark = 3;var title = 'scores';var url = 'http://';var timezone = '%2B0700';var dstbox = '';document.write('<iframe src =http://freelive.7m.cn/U_fLeftRight.aspx?width='+wid+'&height='+hei+'&file='+file+'&mark='+mark+'&title='+title+'&urls='+ url+'&timezone="'+timezone+'"&dstbox='+dstbox+'  height ='+(parseInt(hei)+2) +' width = 100% frameborder = no border = 0 marginwidth = 0 marginheight = 0 scrolling = no allowtransparency = yes></iframe>');</script>
-
+<!--<script language = 'javascript'>var wid = 980;var hei = 25;var file = 10;var mark = 3;var title = 'scores';var url = 'http://';var timezone = '%2B0700';var dstbox = '';document.write('<iframe src =http://freelive.7m.cn/U_fLeftRight.aspx?width='+wid+'&height='+hei+'&file='+file+'&mark='+mark+'&title='+title+'&urls='+ url+'&timezone="'+timezone+'"&dstbox='+dstbox+'  height ='+(parseInt(hei)+2) +' width = 100% frameborder = no border = 0 marginwidth = 0 marginheight = 0 scrolling = no allowtransparency = yes></iframe>');</script>
+-->
 	<header id="masthead" class="site-header" role="banner">
 		<div class="site-branding">
 			<?php $header_image = get_header_image();

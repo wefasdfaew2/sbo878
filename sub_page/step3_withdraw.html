@@ -1,0 +1,41 @@
+<style>
+#spanLoding {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+.loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  /*background-color: white;*/
+  z-index: 100;
+  /*margin-top: -9em; set to a negative number 1/2 of your height*/
+  /*margin-left: -15em; set to a negative number 1/2 of your width*/
+  transform: translate(-50%, -50%);
+}
+</style>
+<img ng-src="{{ template_directory_uri }}/images/withdraw-Step3.png" width="929" height="50" />
+<div class="md-padding"></div>
+<div layout="column" layout-align="center center" style="margin-bottom:20px;">
+  <md-input-container class="md-block">
+    <label>OTP:</label>
+    <input ng-model="user_otp" type="text" placeholder="กรุณาใส่หมายเลข OTP ที่ได้รับในโทรศัพท์มือถือ" style="width:300px;">
+  </md-input-container>
+  <div layout="row">
+    <label>OTP reference:&nbsp;&nbsp;</label><div>{{ otp_ref }}</div>
+  </div>
+  <!--<div layout="row">
+    <label>อายุ OTP:&nbsp;&nbsp;</label><div>{{ (minutes) + ':' + seconds }}</div>
+  </div>-->
+  <md-button class="md-raised md-primary" ng-click="check_otp()">ตกลง</md-button>
+
+</div>
+<div  ng-show="showSpin" id="spanLoding">
+  <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+</div>
