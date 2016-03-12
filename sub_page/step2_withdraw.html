@@ -20,21 +20,22 @@
   transform: translate(-50%, -50%);
 }
 </style>
-
-<img ng-src="{{ template_directory_uri }}/images/withdraw-Step2.png" width="929" height="50" />
+<center>
+  <img ng-src="{{ template_directory_uri }}/images/withdraw-Step2.png" width="929" height="50" />
+</center>
 <div class="md-padding"></div>
-<div layout="column" layout-align="center center" style="margin-bottom:20px;">
+<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:20px;">
 
     <md-input-container class="md-block">
 
-        <label>Username:</label>
+        <label style="color:black;">Username:</label>
         <input ng-model="user.username" type="text" placeholder="กรุณาใส่ Username" style="width:300px;" >
 
     </md-input-container>
 
   <md-input-container class="md-block">
 
-      <label>เบอร์โทรศัพท์:</label>
+      <label style="color:black;">เบอร์โทรศัพท์:</label>
       <input ng-model="user.tel" type="text" placeholder="กรุณาใส่เบอร์โทรศัพท์มือถือที่ลงทะเบียนไว้" style="width:300px;">
 
   </md-input-container>

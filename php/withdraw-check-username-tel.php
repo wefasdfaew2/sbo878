@@ -112,8 +112,10 @@ if ($result->num_rows > 0)
   }
   else
   {
-    echo("Error description: " . mysqli_error($conn));
-    echo "0 results";
+    //echo("Error description: " . mysqli_error($conn));
+    //echo "0 results";
+    $result_data = array("check_status" => "not pass");
+    print json_encode($result_data);
   }
 
   mysqli_close($conn);
@@ -121,8 +123,10 @@ if ($result->num_rows > 0)
 }
 else
 {
-  echo("Error description: " . mysqli_error($conn));
-  echo "0 results";
+  //echo("Error description: " . mysqli_error($conn));
+  //echo "0 results";
+  $result_data = array("check_status" => "not pass");
+  print json_encode($result_data);
 }
 
 mysqli_close($conn);

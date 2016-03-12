@@ -1,0 +1,10 @@
+<div ng-repeat="image in images" style="margin-bottom:10px;background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+  <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+    <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+      {{ image.title }}
+    </div>
+  </h4>
+  <div ng-click="openLightboxModal($index)">
+    <img  title="{{ image.title }}" ng-src="{{ image.url }}" style="width:100%;height:auto;">
+ </div>
+</div>

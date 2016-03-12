@@ -300,7 +300,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   $scope.get_fast_tabs = function() {
     var request_channel_cat = $http({
       method: "get",
-      url: WPURLS.templateurl + "/php/get-channel-cat.php",
+      url: WPURLS.templateurl + "/php/get-channel-cat.php",      
       data: {},
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

@@ -1,12 +1,21 @@
-<img ng-src="{{ template_directory_uri }}/images/withdraw-Step1.png" width="929" height="50" />
+<center>
+  <h2 class="page-title" style="margin-top:0px;margin-bottom:0px;">
+    <div style="width: 80%;max-width: 24em;margin: 0 auto;padding: 0.25em 0.625em;">ฝาก-ถอน-ย้าย</div>
+  </h2>
+  <br>
+</center>
+<center>
+  <img ng-src="{{ template_directory_uri }}/images/withdraw-Step1.png" width="929" height="50" />
+</center>
 <div class="md-padding"></div>
-<div layout="row" layout-align="center center">
+<div layout="row" layout-align="center center" style="margin-bottom:5%;">
   <md-radio-group ng-model="step1_option">
-    <md-radio-button value="1" class="md-primary"> ฝากเงินสด </md-radio-button>
-    <md-radio-button value="2"class="md-primary" > ถอนเครดิตเป็นเงินสด </md-radio-button>
-    <md-radio-button value="3" class="md-primary"> ย้านเครดิต </md-radio-button>
+    <md-radio-button value="1" class="md-primary"> ฝากเงินสด (แบบอัตโนมัติ ไม่ต้องแจ้งหลังโอนเสร็จ) </md-radio-button>
+    <md-radio-button value="2" class="md-primary"> ฝากเงินสด (แบบแจ้ง Call Center หลังโอนเสร็จ) </md-radio-button>
+    <md-radio-button value="3"class="md-primary" > ถอนเครดิตเป็นเงินสด </md-radio-button>
+    <md-radio-button value="4" class="md-primary"> ย้ายเครดิต </md-radio-button>
   </md-radio-group>
   <div style="margin-left: 40px;">
     <md-button class="md-raised md-primary" ng-click="nextTo()">Next</md-button>
   </div>
-<div>
+</div>

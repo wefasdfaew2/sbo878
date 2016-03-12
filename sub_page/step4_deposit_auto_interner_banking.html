@@ -1,0 +1,55 @@
+<div class="md-padding">
+</div>
+<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
+  <div layout="row" layout-align="center start">
+    <div layout="column" layout-align="center center" style="width:60%;border-radius:20px;padding:16px;background-color:#cee8d6">
+      <div style="font-weight:bold;margin-bottom:5px;">เติมเครดิตผ่าน {{ bank_wellknown_name }}</div>
+      <img ng-src="{{ bank_logo }}"/>
+      <br>
+      <div style="font-size:150%;font-weight:bold;color:#EF473A;">กรุณาโอนยอดเงินจำนวน {{ money_amount }} บาท</div>
+      <br>
+      <div class="text-center" style="color:#EF473A;font-size:140%;font-weight:bold;width:90%;border-top:3px solid #EF473A;border-bottom:3px solid #EF473A;padding:5px;background-color:#fac7c3;">
+        <span>ไปยังเลขบัญชี</span> <span style="margin-right:7%;margin-left:7%;"> {{ bank_number }} </span> <span>ธนาคาร{{ bank_name }}</span>
+      </div>
+      <br>
+      <div class="text-center" style="font-size:120%;font-weight:bold;">
+        <div>และเพื่อการตรวจสอบยอดโอนเงินของท่านผ่าน {{ bank_wellknown_name }}</div>
+        <div>{{ notify_us1 }}</div>
+      </div>
+      <br>
+      <div class="text-center" style="font-size:155%;font-weight:bold;color:#0c60ee;text-decoration: underline;">
+        {{ notify_us2 }}
+      </div>
+      <br>
+      <div class="text-center" style="font-size:120%;font-weight:bold;">
+        {{ notify_us3 }}
+      </div>
+      <br>
+      <div class="text-center" style="font-size:155%;font-weight:bold;color:#0c60ee;text-decoration: underline;">
+        {{ notify_us4 }}
+      </div>
+      <br>
+      <div> ลงในช่องบริการแจ้งผู้รับปลายทาง </div>
+      <br>
+      <div style="" class="center-block">
+        <center>
+          <img style="width:80%;height:auto;" ng-src="{{ how_to_email }}"/>
+        </center>
+      </div>
+    </div>
+    <div layout="column" layout-align="center center" style="width:40%;margin-left:10px;" layout-wrap>
+      <div class="text-center" style="font-size:120%;font-weight:bold;padding:10px;width:100%;border-color: #e42112;background-color: #ef473a;color: #fff;" >
+        กรุณาอ่านคำแนะนำตรงนี้ด้วย
+      </div>
+
+      <div style="word-wrap: break-word;padding:10px 10px 10px 10px;">
+        <ol style="margin-left:0px;padding-left:20px;">
+          <li style="margin-bottom:15px;">เพื่อการตรวจสอบยอดที่รวดเร็วยิ่งขึ้น รบกวนท่านสมาชิกโอนเงินตามจำนวนยอดที่แจ้งทางซ้ายมือ <span style="color:red;">โดยระบุเศษสตางค์ตามที่ระบบแจ้ง (ไม่ต้องปัดเศษ)</span></li>
+          <li style="margin-bottom:15px;"><span style="color:red;">{{ warning_message1 }}</span>{{ warning_message2 }}</li>
+          <li style="margin-bottom:15px;">หมายเลขบัญชีของเรามีการเปลี่ยนแปลงอยู่ตลอดเวลา หากท่านสมาชิกต้องการเติมเครดิตครั้งถัดไป กรุณาดำเนินการกดตามขั้นตอนเดิมอีกครั้ง <span style="color:red;">(อย่าโอนโดยไม่ได้กดตามขั้นตอน เนื่องจากหมายเลขบัญชีอาจถูกยกเลิกการใช้งานไปแล้ว)</span></li>
+          <li style="margin-bottom:15px;">เมื่อท่านสมาชิกทำการโอนเสร็จแล้วให้ตรวจสอบสถานะรายการฝากของท่านได้ที่หน้าตรวจสอบรายการฝาก หรือรอรับเครดิตในบัญชีของท่านได้ทันทีภายในเวลา 2 นาทีครับ</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,11 @@
 <?php
 
+//require_once('../functions.php');
+ //session_start();
+// echo session_id();
+ //session_destroy();
+//if ( ! defined( 'ABSPATH' ) ) die( 'Error!' );
+
 header('Content-Type: text/html; charset=utf-8');
 
 $configs = include('../php_db_config/config.php');

@@ -1,0 +1,236 @@
+<div class="md-padding"></div>
+<div ng-if="!direct_access" style="margin-bottom:5%;">
+  <div  layout="row" layout-align="center center" style="margin-bottom:20px;">
+  <!--ng-if="!direct_access"-->
+  <div layout="column">
+    <md-input-container class="md-block">
+      <label style="color:black;">Username:</label>
+      <input ng-disabled="no_option" ng-change="check_account_type()" ng-model="user.username" type="text" placeholder="กรุณาใส่ Username" style="width:250px;">
+    </md-input-container>
+
+    <md-input-container class="md-block">
+        <label style="color:black;">เบอร์โทรศัพท์:</label>
+        <input ng-disabled="no_option" ng-model="user.tel" ng-change="check_account_type()" type="text" placeholder="กรุณาใส่เบอร์โทรศัพท์มือถือที่ลงทะเบียนไว้" style="width:250px;">
+    </md-input-container>
+  </div>
+
+    <div layout="column" layout-align="center center" style="margin-left:20px;">
+      <div>Account ของคุณเป็น Account ของเว็บ</div>
+      <img ng-show="is_logo_type" ng-src="{{ logo_type }}" />
+      <div ng-show="is_valid_account" style="color:red;"> {{ account_type }} </div>
+    </div>
+  </div>
+
+  <div layout="column" layout-align="center center">
+    <div style="font-size:150%;font-weight: bold;">กรุณาเลือกช่องทางการเติมเครดิตแบบอัตโนมัติด้านล่างนี้</div>
+    <div style="width:80%;" class="text-center">ทุกช่องทางด้านล่างนี้หลังจากชำระเงินเสร็จแล้ว ระบบจะทำการตรวจสอบยอดและเติมเครดิตสำหรับแทงบอลให้ท่านอัตโนมัติ </div>
+    <div style="width:80%;" class="text-center">ท่านสมาชิกไม่จำเป็นต้องแจ้ง CallCenter แต่อย่างใด</div>
+  </div>
+  <br><br>
+  <div layout="row" layout-align="center center">
+    <md-radio-group ng-model="user.auto_type_option" >
+
+      <div  style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+
+            <div slide-toggle="#internetBanking" style="padding-left:0px;margin: 0 auto;padding: 0.4em 0.625em;">
+              ผ่านอินเทอร์เน็ตแบงกิ๊ง (Internet Banking)
+            </div>
+
+        </h4>
+        <div id="internetBanking" class="slideable" style="margin:0px;">
+          <md-radio-button style="margin:16px;" ng-repeat="x in internet_bank" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center" style="margin-bottom:10px;">
+                <div layout="column">
+                  <div layout="row" style="margin-bottom:10px;">
+                    <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                  </div>
+                  <div layout="row">
+                    <table style="width:400px;"class="table table-striped">
+                     		<tbody>
+                       	<tr>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color,'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            ชื่อบริการ
+                          </td>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color, 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            {{ x.deposit_type_wellknown_name }}
+                          </td>
+                       	</tr>
+                     		<tbody>
+                     	<tbody>
+                       	<tr>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color, 'background-color': x.sec_color , 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            เว็บไซต์
+                          </td>
+                       		<td ng-style="{'color': x.pri_color, 'background-color': x.sec_color , 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            {{ x.access_way }}
+                          </td>
+                       	</tr>
+                     	</tbody>
+                   </table>
+                  </div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#mobileBanking" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านแอพพลิเคชั่นมือถิอ (Mobile Application Banking)
+          </div>
+        </h4>
+        <div id="mobileBanking" class="slideable" style="margin:0px;">
+          <md-radio-button style="margin:16px;" ng-repeat="x in mobile_bank" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center" style="margin-bottom:10px;">
+                <div layout="column">
+                  <div layout="row" style="margin-bottom:10px;">
+                    <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                  </div>
+                  <div layout="row">
+                    <table style="width:400px;"class="table table-striped">
+                     		<tbody>
+                       	<tr>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color,'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            ชื่อบริการ
+                          </td>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color, 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            {{ x.deposit_type_wellknown_name }}
+                          </td>
+                       	</tr>
+                     		<tbody>
+                     	<tbody>
+                       	<tr>
+                       		<td ng-style="{'font-weight': 'bold', 'color': x.pri_color, 'background-color': x.sec_color , 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            ชื่อ App
+                          </td>
+                       		<td ng-style="{'color': x.pri_color, 'background-color': x.sec_color , 'border-top': '2px solid ' + x.pri_color, 'border-bottom': '2px solid ' + x.pri_color}">
+                            {{ x.access_way }}
+                          </td>
+                       	</tr>
+                     	</tbody>
+                   </table>
+                  </div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#normalATM" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านตู้ ATM แบบโอนเงินปกติ
+          </div>
+        </h4>
+        <div id="normalATM" class="slideable" style="margin:0px;">
+          <md-radio-button style="margin:16px;" ng-repeat="x in atm_normal" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center">
+                <div layout="row" style="width:400px;">
+                  <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#refcodeATM" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านตู้ ATM ใช้ Ref Code (รับชำระสูงสุดครั้งละไม่เกิน 3,000 บาท)
+          </div>
+        </h4>
+        <div id="refcodeATM" class="slideable" style="margin:0px;">
+          <md-radio-button ng-repeat="x in atm_ref_code" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center">
+                <div layout="row" style="width:400px;">
+                  <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div  style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#couterservice" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านจุดชำระเงิน
+          </div>
+        </h4>
+        <div id="couterservice" class="slideable" style="margin:0px;">
+          <md-radio-button ng-repeat="x in couterservice" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center">
+                <div layout="column" style="width:400px;">
+                  <div>{{ x.name_for_show }}</div>
+                  <div>( {{ x.note }} )</div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#credit_paypal" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านบัตรเครดิต และ PayPal
+          </div>
+        </h4>
+        <div id="credit_paypal" class="slideable" style="margin:0px;">
+          <md-radio-button ng-repeat="x in credit_paypal" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center">
+                <div layout="column" style="width:400px;">
+                  <div>{{ x.name_for_show }}</div>
+                  <div>{{ x.note }}</div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+      <div style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+        <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+          <div slide-toggle="#e_wallet" style="margin: 0 auto;padding: 0.4em 0.625em;">
+            ผ่านกระเป่าสตางค์อิเล็คทรอนิคส์
+          </div>
+        </h4>
+        <div id="e_wallet" class="slideable" style="margin:0px;">
+          <md-radio-button ng-repeat="x in e_wallet" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
+              <div layout="row" layout-align="center center">
+                <div layout="column" style="width:400px;">
+                  <div>{{ x.deposit_type_subtype }}</div>
+                  <div>{{ x.name_for_show }}</div>
+                </div>
+                <div layout="column" style="margin-left:20px;">
+                  <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
+                </div>
+              </div>
+            </md-radio-button>
+        </div>
+      </div>
+
+    </md-radio-group>
+  </div>
+
+  <div layout-align="center center" layout="row" style="margin-top:3%;">
+    <md-button ng-disabled="isDisable" class="md-raised md-primary" ng-click="nextStep()">ตกลง</md-button>
+  </div>
+</div>

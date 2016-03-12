@@ -1,0 +1,231 @@
+
+<div ng-repeat="image in images" style="margin-bottom:10px;background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+  <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+    <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+      {{ image.title }}
+    </div>
+  </h4>
+  <div ng-click="openLightboxModal($index)">
+    <img  title="{{ image.title }}" ng-src="{{ image.url }}" style="width:100%;height:auto;">
+ </div>
+</div>
+
+<!--<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
+  <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+    <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+      1. หน้าแรก SBOBET เลือกแทงบอลผ่านมือถือ
+    </div>
+  </h4>
+  <div ng-click="openLightboxModal(0)">
+    <img  title="หน้าล็อกอินเข้าแทงบอล" src="{{ img_link }}/images/how-to-play-mobile(1).jpg" style="width:100%;height:auto;">
+ </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     2. หน้าล็อกอินเข้าแทงบอล
+   </div>
+ </h4>
+ <div>
+   <img class="fancybox" title="อธิบายหน้าหลักแทงบอล" src="{{ img_link }}/images/how-to-play-mobile(2).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+  <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+    3. หน้าแทงบอลหลังจากล็อกอินเข้ามา
+  </div>
+</h4>
+<div>
+  <img class="fancybox" title="หน้ารายการโปรด" src="{{ img_link }}/images/how-to-play-mobile(3).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+ <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+   4. หน้าหมวดหมู่กีฬา
+ </div>
+</h4>
+<div>
+ <img class="fancybox" title="อธิบายเมนูเลือกรูปแบบแทงบอล" src="{{ img_link }}/images/how-to-play-mobile(4).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+<div style="margin: 0 auto;padding: 0.4em 0.625em;">
+  5. หน้าแทงบอล หมวดหมู่แทงบอลวันนี้
+</div>
+</h4>
+<div>
+<img class="fancybox" title="อธิบายหน้าแทงบอล" src="{{ img_link }}/images/how-to-play-mobile(5).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+<div style="margin: 0 auto;padding: 0.4em 0.625em;">
+ 6. หน้าเลือกเล่นลีกต่างๆ
+</div>
+</h4>
+<div>
+<img class="fancybox" title="การแทงบอลเดี่ยวตัวอย่างที่ 1" src="{{ img_link }}/images/how-to-play-mobile(6).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+<div style="margin: 0 auto;padding: 0.4em 0.625em;">
+7. หน้าตัวอย่างการแทงบอลเดี่ยว
+</div>
+</h4>
+<div>
+<img class="fancybox" title="การแทงบอลเดี่ยวตัวอย่างที่ 2" src="{{ img_link }}/images/how-to-play-mobile(7).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+<div style="margin: 0 auto;padding: 0.4em 0.625em;">
+ 8. หน้าใส่จำนวนเงินที่ต้องการแทงบอลเดี่ยว
+</div>
+</h4>
+<div>
+ <img class="fancybox" title="รูปแบบการแสดงผลหน้าแทงบอล" src="{{ img_link }}/images/how-to-play-mobile(8).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+<div style="margin: 0 auto;padding: 0.4em 0.625em;">
+  9. หน้ายืนยันการพนันบอลเดี่ยว
+</div>
+</h4>
+<div>
+  <img class="fancybox" title="อธิบายการแทงบอลสด" src="{{ img_link }}/images/how-to-play-mobile(9).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+ <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+   10. หน้าพนันบอลเดี่ยวเสร็จสมบูรณ์แล้ว
+ </div>
+</h4>
+ <div>
+   <img class="fancybox" title="อธิบายการแทงบอลสด" src="{{ img_link }}/images/how-to-play-mobile(10).jpg" style="width:100%;height:auto;">
+</div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+  <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+    11. หน้าพนันของฉัน
+  </div>
+</h4>
+  <div>
+    <img class="fancybox" title="อธิบายการแทงบอลสด" src="{{ img_link }}/images/how-to-play-mobile(11).jpg" style="width:100%;height:auto;">
+ </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+<h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+  <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+    12. หน้าปุ่มการทำงานอื่นๆ
+  </div>
+</h4>
+  <div>
+    <img class="fancybox" title="อธิบายการแทงบอลสด" src="{{ img_link }}/images/how-to-play-mobile(12).jpg" style="width:100%;height:auto;">
+ </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     13. หน้าสำหรับเลือกแทงบอลเสต็ป
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(13).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     14. หน้าแทงบอลเสต็ป (มิกซ์ พาเลย์)
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(14).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     15. หน้าแสดงตัวเลขจำนวนทีมที่แทงไว้ ของบอลเสต็ป
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(15).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     16. หน้าแสดงรายการทีมที่ท่านเลือกแทงบอลเสต็ป
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(16).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     17. หน้าใส่จำนวนเงินที่ต้องการแทงบอลเสต็ป
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(17).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     18. หน้ายืนยันการพนันบอลเสต็ป
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(18).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     19. หน้าพนันบอลเสต็ปเสร็จสมบูรณ์แล้ว
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(19).jpg" style="width:100%;height:auto;">
+  </div>
+</div>
+
+<div style="background-color:#f0f0f0;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;margin-top:10px;">
+ <h4 class="page-sub-title" style="margin:0px;padding:10px 0 10px 0;border-top-right-radius:10px;border-top-left-radius:10px;">
+   <div style="margin: 0 auto;padding: 0.4em 0.625em;">
+     20. หน้าพนันของฉัน
+   </div>
+ </h4>
+   <div>
+     <img class="fancybox" title="ตัวอย่างการแทงบอล Step" src="{{ img_link }}/images/how-to-play-mobile(20).jpg" style="width:100%;height:auto;">
+  </div>
+</div>-->

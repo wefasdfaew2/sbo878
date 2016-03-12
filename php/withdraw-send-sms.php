@@ -2,7 +2,10 @@
 
 header('Content-Type: text/html; charset=utf-8');
 
-include("../php_sms_class/sms.class.php");
+//include("../php_sms_class/sms.class.php");
+include("../php_sms_class/sms_sbobet878.php");
+
+
 $configs = include('../php_db_config/config.php');
 
 $servername = $configs['servername'];
@@ -42,11 +45,13 @@ if ($result->num_rows > 0) {
   $username_sms = '0932531478';
 	$password_sms = '961888';
 	$msisdn_sms = $tel;
-	$message_sms = 'หมายเลข OTP = '. $data[0]['withdraw_otp'] .' Ref Code : '.$otp_ref;
+	$message_sms = 'รหัส OTP = '. $data[0]['withdraw_otp'] .' Ref Code : '.$otp_ref;
 	$sender_sms = 'SBOBET878';
 	$ScheduledDelivery_sms =  '';
 	$force_sms = 'Standard';
-	$result_sms = sms::send_sms($username_sms,$password_sms,$msisdn_sms,$message_sms,$sender_sms,$ScheduledDelivery_sms,$force_sms);
+
+  send_sms($msisdn_sms,$message_sms);
+  //$result_sms = sms::send_sms($username_sms,$password_sms,$msisdn_sms,$message_sms,$sender_sms,$ScheduledDelivery_sms,$force_sms);
   echo $result_sms;
 } else {
     echo "0 results";

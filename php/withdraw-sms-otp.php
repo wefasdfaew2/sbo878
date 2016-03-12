@@ -54,6 +54,7 @@ if($check_otp == false){
     {
       $data[] = $row;
     }
+    //print_r ($data);
     if($data[0]['withdraw_otp'] == $otp){
       $result_data = array("check_otp_status" => "pass");
     }else{

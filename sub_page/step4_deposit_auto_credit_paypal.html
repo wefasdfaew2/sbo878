@@ -1,0 +1,45 @@
+<div class="md-padding">
+</div>
+<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="CXGPZCSMZGHLG">
+    <table>
+      <tr>
+        <td>
+          <input type="hidden" name="on0" value="เลือกจำนวนเครดิตที่ต้องการเติม">เลือกจำนวนเครดิตที่ต้องการเติม</td>
+      </tr>
+      <tr>
+        <td>
+          <select name="os0" style="background-color: white;">
+            <option value="500 Credits">500 Credits ราคา ฿530.00 THB</option>
+            <option value="1000 Credits">1000 Credits ราคา ฿1,050.00 THB</option>
+            <option value="1500 Credits">1500 Credits ราคา ฿1,570.00 THB</option>
+            <option value="2000 Credits">2000 Credits ราคา ฿2,090.00 THB</option>
+            <option value="3000 Credits">3000 Credits ราคา ฿3,128.00 THB</option>
+            <option value="4000 Credits">4000 Credits ราคา ฿4,167.00 THB</option>
+            <option value="5000 Credits">5000 Credits ราคา ฿5,206.00 THB</option>
+            <option value="10000 Credits">10000 Credits ราคา ฿10,401.00 THB</option>
+            <option value="20000 Credits">20000 Credits ราคา ฿20,791.00 THB</option>
+            <option value="30000 Credits">30000 Credits ราคา ฿31,181.00 THB</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="hidden" name="on1" value="ระบุ Username ที่่ต้องการเติม">ระบุ Username ที่ต้องการเติม</td>
+      </tr>
+      <tr>
+        <td>
+          <input style="background-color: #E9E9E9;" type="text" name="os1" maxlength="200" ng-model="user.username" ng-disabled="true">
+
+        </td>
+      </tr>
+    </table>
+    <br>
+    <input type="hidden" name="currency_code" value="THB">
+    <input type="image" ng-src="{{ payType }}" border="0" name="submit" alt="PayPal คือ วิธีชำระเงินออนไลน์ที่ปลอดภัยและง่ายยิ่งขึ้น!">
+    <img style="vertical-align: top;height:278px; width:auto;" ng-src="{{ manualType }}" border="0" alt="คู่มือ">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</div>
