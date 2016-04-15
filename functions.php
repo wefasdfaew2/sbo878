@@ -318,14 +318,15 @@ function angular_scripts() {
   wp_register_script('angular-sanitize', get_template_directory_uri() . '/js/angular-sanitize.min.js', true);
   wp_enqueue_script('angular-sanitize');
 
-  wp_register_script('ui-bootstrap', get_template_directory_uri() . '/js/ui-bootstrap-tpls-1.1.2.min.js', true);
-  wp_enqueue_script('ui-bootstrap');
+  
+  //wp_register_script('ui-bootstrap', get_template_directory_uri() . '/js/ui-bootstrap-tpls-1.1.2.min.js', true);
+  //wp_enqueue_script('ui-bootstrap');
 
-  wp_register_style( 'ui-tab-scroll', get_template_directory_uri() . '/css/angular-ui-tab-scroll.css' );
-	wp_enqueue_style( 'ui-tab-scroll' );
+  //wp_register_style( 'ui-tab-scroll', get_template_directory_uri() . '/css/angular-ui-tab-scroll.css' );
+	//wp_enqueue_style( 'ui-tab-scroll' );
 
-  wp_register_script('angular-ui-tab-scroll', get_template_directory_uri() . '/js/angular-ui-tab-scroll.js', true);
-  wp_enqueue_script('angular-ui-tab-scroll');
+  //wp_register_script('angular-ui-tab-scroll', get_template_directory_uri() . '/js/angular-ui-tab-scroll.js', true);
+  //wp_enqueue_script('angular-ui-tab-scroll');
 
   wp_register_style( 'hover-style', get_template_directory_uri() . '/css/hover-style.css' );
 	wp_enqueue_style( 'hover-style' );
@@ -425,7 +426,9 @@ if ( ! function_exists( 'mts_copyrights_credit' ) ) {
 				<a href="<?php echo home_url(); ?>" rel="nofollow"><img src="<?php echo $footer_logo; ?>" alt="<?php bloginfo( 'name' ); ?>" ></a>
 			</div>
 		<?php } ?>
-		<div class="copyright-left-text">Copyright &copy; <?php echo date("Y") ?> <a href="<?php echo home_url(); ?>" title="<?php bloginfo('description'); ?>" rel="nofollow"><?php bloginfo('name'); ?></a>.</div>
+		 </br>
+		<div align="center"  ><a href="<?php echo home_url(); ?>" title="<?php bloginfo('description'); ?>" rel="nofollow"><?php bloginfo('name'); ?></a>.</div>
+	 
 		<div class="copyright-text">
 			<?php
 				$copyright_text = get_theme_mod('copyright_text', 'Theme by <a href="http://mythemeshop.com/" rel="nofollow">MyThemeShop</a>.');
@@ -442,7 +445,57 @@ if ( ! function_exists( 'mts_copyrights_credit' ) ) {
 			<?php } ?>
 		</div>
 		<div class="top"><a href="#top" class="toplink"><i class="point-icon icon-up-dir"></i></a></div>
+	 
+		
 	</div>
+	</br>
+	
+		<!-- 878 footer nav -->
+		<div  align="center">
+		<table style="width:100%">
+			  <tr>
+				<th style="padding-left:60px;"><p>Sbobet878</p></th>
+				<th style="padding-left:60px;"><p>เกี่ยวกับ</p></th> 
+				<th style="padding-left:60px;"><p>ช่วยเหลือ</p></th>
+			  </tr>
+			  <tr>
+				<td style="text-align:left;vertical-align:top;padding:0">
+					<ul type="square">
+						<li>โปรโมชั่น</li>
+						<li>สิทธิพิเศษ</li>
+						<li>ดูบอลสด</li>
+						<li>ตารางถ่ายทอดบอลสด</li>
+						<li>สมัครสมาชิก</li>
+						<li>ฝาก-ถอน-ย้าย</li>
+					</ul>
+				</td>
+				
+				<td style="text-align:left;vertical-align:top;padding:0">
+					<ul type="square">
+						<li>เกี่ยวกับเรา</li>
+						<li>ร่วมงานกับเรา</li>
+						<li>ติดต่อเรา</li>
+					</ul>
+				</td>
+				
+				<td style="text-align:left;vertical-align:top;padding:0">
+					<ul type="square">
+						<li>วิธีสมัครสมาชิก</li>
+						<li>วิธีเติมเงิน</li>
+						<li>วิธีใช้งานเวป</li>
+						<li>วิธีแทงบอล</li>
+					</ul>
+				</td>
+				
+			  </tr>
+		 
+			 
+			   
+			</table>
+		</div>
+		 <div align="center">Copyright &copy; <?php echo date("Y")." sbobet878.com" ?></div>
+		<!-- 878 footer nav -->
+	
 </div>
 <!--end copyrights-->
 <?php }

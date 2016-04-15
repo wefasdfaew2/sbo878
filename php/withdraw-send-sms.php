@@ -1,10 +1,13 @@
 <?php
 
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
+
 header('Content-Type: text/html; charset=utf-8');
 
 //include("../php_sms_class/sms.class.php");
 include("../php_sms_class/sms_sbobet878.php");
-
+//include("../php_sms_class/sendsms_daifaan.php");
 
 $configs = include('../php_db_config/config.php');
 
@@ -15,9 +18,13 @@ $dbname = "sbobet878";
 
 $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
-$account = $request->username;
-$otp_ref = $request->otp_ref;
-$tel = $request->tel;
+
+if(!empty($request->username))$account = $request->username;
+if(!empty($request->otp_ref))$otp_ref = $request->otp_ref;
+if(!empty($request->tel))$tel = $request->tel;
+
+
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 $conn->set_charset("utf8");
@@ -42,15 +49,17 @@ if ($result->num_rows > 0) {
     $result = array("check_otp_status" => "not pass");
   }
   print json_encode($result);**/
-  $username_sms = '0932531478';
-	$password_sms = '961888';
-	$msisdn_sms = $tel;
-	$message_sms = 'รหัส OTP = '. $data[0]['withdraw_otp'] .' Ref Code : '.$otp_ref;
+
+	/**$msisdn_sms = $tel;
+	$message_sms = 'รหัส%20OTP%20=%20'. $data[0]['withdraw_otp'] .'%20Ref%20Code%20:%20'.$otp_ref;
 	$sender_sms = 'SBOBET878';
 	$ScheduledDelivery_sms =  '';
 	$force_sms = 'Standard';
 
-  send_sms($msisdn_sms,$message_sms);
+  $result_sms = SendMessage_daifaan($msisdn_sms,$message_sms);**/
+  $msisdn_sms_1 = $tel;
+  $message_sms_1 = 'รหัส OTP = '. $data[0]['withdraw_otp'] .' Ref Code : '.$otp_ref;
+  $result_sms = send_sms($msisdn_sms_1,$message_sms_1);
   //$result_sms = sms::send_sms($username_sms,$password_sms,$msisdn_sms,$message_sms,$sender_sms,$ScheduledDelivery_sms,$force_sms);
   echo $result_sms;
 } else {

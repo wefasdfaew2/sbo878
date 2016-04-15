@@ -1,5 +1,8 @@
 <?php
 
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
+
 header('Content-Type: text/html; charset=utf-8');
 
 $configs = include('../php_db_config/config.php');
@@ -20,7 +23,7 @@ if ($conn->connect_error)
 }
 
 //$sql = "SELECT * FROM channel_category GROUP BY channel_group ORDER BY c_sort";
-$sql = "SELECT * FROM server";
+$sql = "SELECT id, server_name, server_url, enable FROM server WHERE enable = true";
 //$sql = "SELECT channel_group FROM channel_category";
 $result = $conn->query($sql);
 

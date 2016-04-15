@@ -5,17 +5,28 @@
   <br>
 </center>
 <center>
-  <img ng-src="{{ template_directory_uri }}/images/withdraw-Step1.png" width="929" height="50" />
+  <img ng-if="step1_option == 1" ng-src="{{ template_directory_uri }}/images/deposit_auto_Step1.png" width="929" height="50" />
+  <img ng-if="step1_option == 2" ng-src="{{ template_directory_uri }}/images/deposit_cc-Step1.png" width="929" height="50" />
+  <img ng-if="step1_option == 3" ng-src="{{ template_directory_uri }}/images/withdraw-Step1.png" width="929" height="50" />
 </center>
 <div class="md-padding"></div>
-<div layout="row" layout-align="center center" style="margin-bottom:5%;">
+<div layout="row" layout-align="center center"  >
   <md-radio-group ng-model="step1_option">
+  <div class="alert alert-info" >
     <md-radio-button value="1" class="md-primary"> ฝากเงินสด (แบบอัตโนมัติ ไม่ต้องแจ้งหลังโอนเสร็จ) </md-radio-button>
     <md-radio-button value="2" class="md-primary"> ฝากเงินสด (แบบแจ้ง Call Center หลังโอนเสร็จ) </md-radio-button>
     <md-radio-button value="3"class="md-primary" > ถอนเครดิตเป็นเงินสด </md-radio-button>
     <md-radio-button value="4" class="md-primary"> ย้ายเครดิต </md-radio-button>
+	</div>
+	  <div class="alert alert-success" >
+	<Strong>กรณีท่านสมาชิกเลือกฝากเงินสด แบบแจ้ง Call Center หลังโอนเงินเสร็จ และได้ทำการโอนเงินเรียบร้อยแล้ว</strong>
+	<md-radio-button value="5" class="md-primary"> แจ้งโอนเงิน </md-radio-button>
+	</div>
   </md-radio-group>
-  <div style="margin-left: 40px;">
+
+  <!-- <div style="margin-left: 40px;"> -->
+
+</div>
+ <div layout="row" layout-align="center center" style="margin-bottom:5%;">
     <md-button class="md-raised md-primary" ng-click="nextTo()">Next</md-button>
   </div>
-</div>

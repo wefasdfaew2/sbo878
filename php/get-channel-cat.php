@@ -1,10 +1,8 @@
 <?php
 
-//require_once('../functions.php');
- //session_start();
-// echo session_id();
- //session_destroy();
-//if ( ! defined( 'ABSPATH' ) ) die( 'Error!' );
+
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
 
 header('Content-Type: text/html; charset=utf-8');
 

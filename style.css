@@ -19,7 +19,7 @@ Point is distributed under the terms of the GNU General Public License v3
 a.fancybox img {
         border: none;
         box-shadow: 0 1px 7px rgba(0,0,0,0.6);
-    } 
+    }
 #fancybox-title{
   margin-left: 0px !important;
 }
@@ -77,7 +77,7 @@ a.fancybox img {
   display: none;
 }
 .box2{
-    margin: 10px auto;
+    margin: 5px auto;
     margin-top: 0px;
     width: 500px;
     min-height: 60px;
@@ -86,13 +86,14 @@ a.fancybox img {
     /*background: webkit-gradient(linear, 0% 20%, 0% 92%, from(#f3f3f3), to(#fff), color-stop(.1,#f3f3f3));*/
     /*background: linear-gradient(#EF9A9A, red);*/
     background: linear-gradient(#8A0808, #8A0808);
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    -webkit-border-bottom-right-radius: 40px 40px;
+    border-top: 1px solid #8A0808;
+    border-right: 1px solid #8A0808;
+    /*-webkit-border-bottom-right-radius: 40px 40px;*/
+    -webkit-border-radius: 3px;
     -webkit-box-shadow: -1px 5px 5px rgba(0, 0, 0, 0.4);
 
 }
-.box2:before{
+/**.box2:before{
     content:'';
     width: 25px;
     height: 20px;
@@ -105,7 +106,7 @@ a.fancybox img {
     rotate(-20deg)
     skew(-40deg,-3deg)
     translate(-13px,-13px);
-}
+}**/
 
 /*.box2:after{
     content: '';
@@ -539,7 +540,7 @@ a:link, a:visited, a:active { text-decoration: none !important}
 }
 .trending-articles ul {
   /*  list-style: none;
-    margin: 0;
+    margin: ;
     padding: 0;*/
 }
 .trending-articles li {

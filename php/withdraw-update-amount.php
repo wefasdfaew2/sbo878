@@ -1,5 +1,9 @@
 <?php
 
+
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
+
 header('Content-Type: text/html; charset=utf-8');
 
 $configs = include('../php_db_config/config.php');
@@ -11,8 +15,11 @@ $dbname = "sbobet878";
 
 $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
-$account = $request->username;
-$amount = $request->amount;
+
+if(!empty($request->username))$account = $request->username;
+if(!empty($request->amount))$amount = $request->amount;
+
+
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

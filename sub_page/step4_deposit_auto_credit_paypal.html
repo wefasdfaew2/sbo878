@@ -1,7 +1,13 @@
-<div class="md-padding">
+<div style="padding: 0 0 16px 0;">
+  <center>
+    <img ng-src="{{ template_directory_uri }}/images/deposit_auto_credit_Step4.png" width="929" height="50" />
+  </center>
 </div>
 <div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
   <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <!--  http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/test.php
+    http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/ipn_test.php
+  https://www.paypal.com/cgi-bin/webscr-->
     <input type="hidden" name="cmd" value="_s-xclick">
     <input type="hidden" name="hosted_button_id" value="CXGPZCSMZGHLG">
     <table>
@@ -27,12 +33,13 @@
       </tr>
       <tr>
         <td>
-          <input type="hidden" name="on1" value="ระบุ Username ที่่ต้องการเติม">ระบุ Username ที่ต้องการเติม</td>
+          <input type="hidden" name="on1" value="ระบุ Username ที่ต้องการเติม">ระบุ Username ที่ต้องการเติม</td>
       </tr>
       <tr>
         <td>
-          <input style="background-color: #E9E9E9;" type="text" name="os1" maxlength="200" ng-model="user.username" ng-disabled="true">
-
+<input style="background-color: #E9E9E9;" type="hidden" name="os1" maxlength="200" value="{{ user.id_username }}" >
+<input style="background-color: #E9E9E9;" type="text" name="osx" maxlength="200" value="{{ user.username }}"  disabled>
+<!--ng-model="user.username"  ng-disabled="true"-->
         </td>
       </tr>
     </table>

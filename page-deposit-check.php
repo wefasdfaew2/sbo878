@@ -11,7 +11,7 @@ Template Name: deposit-check
 
  <div id="page" class="single">
    <div class="content">
-     <div ng-app="MyDepositCheck" ng-controller="DepositCheck" ng-cloak="" style="margin-top:10px;">
+     <div ng-app="MyDepositCheck" ng-controller="DepositCheck as mc" ng-cloak="" style="margin-top:10px;">
 
        <center>
          <h2 class="" style="width: 100%;background-color: #792825;color: #fff;">
@@ -19,9 +19,18 @@ Template Name: deposit-check
          </h2>
          <br>
        </center>
-
-       <table  st-table="display_deposit_state" st-safe-src="deposit_state" class="table table-striped">
-      	<thead>
+<!--st-safe-src="deposit_state"-->
+       <table  class="table table-striped" st-pipe="mc.callServer" st-table="mc.displayed"  >
+         <tr>
+      		<th colspan="1">
+      		</th>
+      		<th>
+      			<input st-search="deposit_account" placeholder="ค้นจาก username" class="input-sm form-control" type="search"/>
+      		</th>
+          <th colspan="3">
+      		</th>
+      	</tr>
+        <thead>
       	<tr>
       		<th style="white-space:nowrap;width:150px;text-align: center;">วันที่ทำรายการ</th>
       		<th style="white-space:nowrap;width:150px;text-align: center;">Username</th>
@@ -30,12 +39,12 @@ Template Name: deposit-check
           <th style="text-align: center;">หมายเหตุ</th>
       	</tr>
       	</thead>
-      	<tbody>
-      	<tr ng-repeat="row in display_deposit_state">
+      	<tbody ng-show="!mc.isLoading">
+      	<tr ng-repeat="row in mc.displayed">
       		<td style="vertical-align: middle;white-space:nowrap;text-align: center;">{{ row.deposit_regis }}</td>
-      		<td style="vertical-align: middle;text-align: center;">{{ row.deposit_account }}</td>
+      		<td style="vertical-align: middle;text-align: center;">{{ row.hide_deposit_account }}</td>
       		<td style="vertical-align: middle;text-align: center;">
-            <img ng-src="<?php echo get_template_directory_uri(); ?>{{ row.deposit_type_name }}" width="80" height="33"/>            
+            <img ng-src="<?php echo get_template_directory_uri(); ?>{{ row.deposit_type_name }}" width="80" height="33"/>
           </td>
       		<td style="vertical-align: middle;white-space:nowrap;text-align: center;">
             <img ng-if="row.deposit_status_id == 1"
@@ -51,6 +60,11 @@ Template Name: deposit-check
       		<td style="vertical-align: middle;text-align: center;">{{ row.deposit_note }}</td>
       	</tr>
       	</tbody>
+        <tbody ng-show="mc.isLoading">
+        	<tr>
+        		<td colspan="5" class="text-center">Loading ... </td>
+        	</tr>
+        </tbody>
         <tfoot>
     <tr>
         <td colspan="6" class="text-center">

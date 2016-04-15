@@ -1,0 +1,22 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST}  ^www\. [NC]
+RewriteRule ^(.*)$   http://thapakornstudio.com/$1 [R=301,L]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+
+#RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+</IfModule>
+
+# END WordPress
+
+<Files "aes.js">
+Order Deny,Allow
+Deny from all
+</Files>

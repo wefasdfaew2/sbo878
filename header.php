@@ -9,6 +9,7 @@
 <html  <?php language_attributes(); ?> >
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="referrer" content="origin">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
@@ -40,28 +41,41 @@
 			<div style="height:80px;"></div>
 			<div id="sticky-anchor"></div>
 			<!--<div class="sticky-text" >ยอดสมาชิกแทงได้วันนี้</div>-->
-			<div id="sticky" class="box2 stick" >
-				<div class="row text-center" style="">
+			<div id="sticky" class="stick" style="width:980px;background-color:transparent;padding-top:5px;">
 
-					<div class="col-md-5 col-xs-5 text-right" style="padding:0px;padding-top:5px;margin-left:15px;">
-						<!--<div>ยอดสมาชิกแทงได้วันนี้</div>-->
-						<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png" width="197" height="29"/>
+				<div  class="box2" style="display:inline-block;margin-left:10px;width:550px;">
+					<div class="row text-center">
+						<div class="col-md-5 col-xs-5 text-right" style="padding:0px;padding-top:5px;margin-left:15px;">
+							<!--<div>ยอดสมาชิกแทงได้วันนี้</div>-->
+							<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader1.png" width="197" height="29"/>
+						</div>
+						<div class="col-md-4 col-xs-4 text-center" style="padding:0px;padding-top:3px;">
+							<div id="odometer" class="odometer">0</div>
+						</div>
+						<div class="col-md-1 col-xs-1 text-left" style="padding:0px;padding-top:5px;">
+							<!--<div>บาท</div>-->
+							<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
+						</div>
 					</div>
-					<div class="col-md-4 col-xs-4 text-center" style="padding:0px;padding-top:3px;">
-						<div id="odometer" class="odometer">0</div>
-					</div>
-					<div class="col-md-1 col-xs-1 text-left" style="padding:0px;padding-top:5px;">
-						<!--<div>บาท</div>-->
-						<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
+					<div class="row" style="padding:0px;">
+						<div class="col-md-12 col-xs-12">
+							<marquee style="color:#FFFF00;font-size:12px;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
+								Sbobet878.com ตัวแทนโดยตรงจาก sbobet มั่นคง ปลอดภัย ระบบอัตโนมัติทั้งเว็บ ไม่ต้องรอ Call center, รีบสร้างความมั่นคงให้กับชีวิตของคุณเดี๋ยวนี้ กดสมัครได้เลย
+							</marquee>
+						</div>
 					</div>
 				</div>
-				<div class="row" style="padding:0px;">
-					<div class="col-md-12 col-xs-12">
-						<marquee style="color:#FFFF00;font-size:12px;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
-							Sbobet878.com ตัวแทนโดยตรงจาก sbobet มั่นคง ปลอดภัย ระบบอัตโนมัติทั้งเว็บ ไม่ต้องรอ Call center, รีบสร้างความมั่นคงให้กับชีวิตของคุณเดี๋ยวนี้ กดสมัครได้เลย
-						</marquee>
-					</div>
+				<div style="-webkit-box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.4);display:inline-block;float:right;margin-right:10px;background-color:rgba(0, 0, 0, 0.5);border-radius:3px;">
+					<img src="<?php echo get_template_directory_uri(); ?>/images/ANDRIOD-store.png" />
+					<img src="<?php echo get_template_directory_uri(); ?>/images/IOS-store.png" />
+					<center>
+						<div style="font-size:50%;">
+							ค้นหาชื่อ <span style="color:#f58300;">878Member</span> ใน Store ของท่าน
+						</div>
+					</center>
 				</div>
+
+
 			</div>
 
 			<div class="row">
@@ -125,13 +139,71 @@
 			<?php $header_image = get_header_image();
 			if ( !empty($header_image) ) { ?>
 				<?php if( is_front_page() || is_home() || is_404() ) { ?>
-					<h1 id="logo" class="image-logo" itemprop="headline">
-						<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>
-					</h1><!-- END #logo -->
+					<!--<h1 id="logo" class="image-logo" itemprop="headline">-->
+						<!--<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>-->
+						<table width="980" height="60" border="0" cellpadding="0" cellspacing="0" style="margin-top:15px;margin-bottom:15px;">
+							<tr>
+								<td rowspan="2">
+									<a href="/">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.jpg" width="237" height="60" border="0" alt=""></a></td>
+								<td colspan="5">
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="657" height="26" alt=""></td>
+								<td rowspan="2">
+									<a href=" http://line.me/ti/p/FU7mQUUa_E">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.png" width="60" height="60" border="0" alt=""></a></td>
+								<td rowspan="2">
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="26" height="60" alt=""></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="313" height="34" alt=""></td>
+								<td>
+									<a href="tel://0979988238">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="162" height="34" border="0" alt=""></a></td>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="8" height="34" alt=""></td>
+								<td>
+									<a href="tel://0979988239">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05-08.gif" width="163" height="34" border="0" alt=""></a></td>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="11" height="34" alt=""></td>
+							</tr>
+						</table>
+
+
+					<!--</h1>--><!-- END #logo -->
 				<?php } else { ?>
-					<h2 id="logo" class="image-logo" itemprop="headline">
-						<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>
-					</h2><!-- END #logo -->
+
+						<!--<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>-->
+						<table width="980" height="60" border="0" cellpadding="0" cellspacing="0" style="margin-top:15px;margin-bottom:15px;">
+							<tr>
+								<td rowspan="2">
+									<a href="/">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.jpg" width="237" height="60" border="0" alt=""></a></td>
+								<td colspan="5">
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="657" height="26" alt=""></td>
+								<td rowspan="2">
+									<a href=" http://line.me/ti/p/FU7mQUUa_E">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.png" width="60" height="60" border="0" alt=""></a></td>
+								<td rowspan="2">
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="26" height="60" alt=""></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="313" height="34" alt=""></td>
+								<td>
+									<a href="tel://0979988238">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="162" height="34" border="0" alt=""></a></td>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="8" height="34" alt=""></td>
+								<td>
+									<a href="tel://0979988239">
+										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05-08.gif" width="163" height="34" border="0" alt=""></a></td>
+								<td>
+									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="11" height="34" alt=""></td>
+							</tr>
+						</table>
+					<!-- END #logo -->
 				<?php } ?>
 			<?php } else { ?>
 				<?php if( is_front_page() || is_home() || is_404() ) { ?>
@@ -192,45 +264,41 @@
 
 		<table style="border:0px;margin:0px;">
 			<tr style="border:0px;white-space:nowrap;" >
-				<td align="right" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects" >
-					<div class="img">
-						<img width="273" height="117"
-						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
-						<div class="overlay">
-								<a href="#" class="expand">+</a>
-								<a class="close-overlay hidden">x</a>
+				<td align="right" style="border:0px;margin:4px;padding-right: 4px;"  ><!--class="effect-1 effects"-->
+					<a href="#">
+						<div class="img">
+							<img width="273" height="117"
+							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
 						</div>
-				</div>
+					</a>
 				</td>
-				<td align="center" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects">
-					<div class="img">
-						<img width="360" height="117"
-						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment2.jpg">
-						<div class="overlay">
-								<a href="#" class="expand">+</a>
-								<a class="close-overlay hidden">x</a>
-						</div>
-				</div>
-				</td>
-				<td align="left" style="border:0px;margin:4px;padding-right: 4px;" class="effect-1 effects">
-					<div class="img">
-						<img width="186" height="117"
-						class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
-						<div class="overlay">
-								<a href="#" class="expand">+</a>
-								<a class="close-overlay hidden">x</a>
-						</div>
+				<td align="center" style="border:0px;margin:4px;padding-right: 4px;" >
+					<a href="#">
+						<div class="img">
+
+							<img width="360" height="117"
+							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment2.jpg">
+
 					</div>
+					</a>
 				</td>
-				<td align="left" style="border:0px;margin:4px;" class="effect-1 effects">
-				<div class="img">
-					<img width="109" height="117"
-					class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment4.jpg">
-					<div class="overlay">
-							<a href="#" class="expand">+</a>
-							<a class="close-overlay hidden">x</a>
-					</div>
-				</div>
+				<td align="left" style="border:0px;margin:4px;padding-right: 4px;" >
+					<a href="#">
+						<div class="img">
+							<img width="186" height="117"
+							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
+
+						</div>
+					</a>
+				</td>
+				<td align="left" style="border:0px;margin:4px;" >
+					<a href="#">
+						<div class="img">
+							<img width="109" height="117"
+							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment4.jpg">
+
+						</div>
+					</a>
 				</td>
 			</tr>
 		</table>

@@ -1,31 +1,36 @@
-<div class="md-padding">
+<div style="padding: 0 0 16px 0;">
+  <center>
+    <img ng-src="{{ template_directory_uri }}/images/deposit_auto_Step4.png" width="929" height="50" />
+  </center>
 </div>
 <div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
   <div layout="row" layout-align="center start">
-    <div layout="column" layout-align="center center" style="width:60%;border-radius:20px;padding:16px;background-color:#cee8d6">
+    <div layout="column" layout-align="center center" style="width:60%;border-radius:10px;padding:16px;background-color:#b1f4c5">
       <div style="font-weight:bold;margin-bottom:5px;">เติมเครดิตผ่าน {{ bank_wellknown_name }}</div>
       <img ng-src="{{ bank_logo }}"/>
       <br>
-      <div style="font-size:150%;font-weight:bold;color:#EF473A;">กรุณาโอนยอดเงินจำนวน {{ money_amount }} บาท</div>
+      <div class="text-center" style="width:100%;font-size:1.3vw;font-weight:bold;">
+        กรุณาโอนยอดเงินจำนวน <span style="font-size:1.5vw;color:#EF473A;">{{ money_amount }}</span> บาท
+      </div>
       <br>
-      <div class="text-center" style="color:#EF473A;font-size:140%;font-weight:bold;width:90%;border-top:3px solid #EF473A;border-bottom:3px solid #EF473A;padding:5px;background-color:#fac7c3;">
+      <div class="text-center" style="color:#EF473A;font-size:1.3vw;font-weight:bold;width:90%;border-top:3px solid #EF473A;border-bottom:3px solid #EF473A;padding:5px;background-color:#fac7c3;">
         <span>ไปยังเลขบัญชี</span> <span style="margin-right:7%;margin-left:7%;"> {{ bank_number }} </span> <span>ธนาคาร{{ bank_name }}</span>
       </div>
       <br>
-      <div class="text-center" style="font-size:120%;font-weight:bold;">
+      <div class="text-center" style="font-size:1.1vw;font-weight:bold;">
         <div>และเพื่อการตรวจสอบยอดโอนเงินของท่านผ่าน {{ bank_wellknown_name }}</div>
         <div>{{ notify_us1 }}</div>
       </div>
       <br>
-      <div class="text-center" style="font-size:155%;font-weight:bold;color:#0c60ee;text-decoration: underline;">
+      <div class="text-center" style="font-size:1.3vw;font-weight:bold;color:#0c60ee;text-decoration: underline;">
         {{ notify_us2 }}
       </div>
       <br>
-      <div class="text-center" style="font-size:120%;font-weight:bold;">
+      <div class="text-center" style="font-size:1.1vw;font-weight:bold;">
         {{ notify_us3 }}
       </div>
       <br>
-      <div class="text-center" style="font-size:155%;font-weight:bold;color:#0c60ee;text-decoration: underline;">
+      <div class="text-center" style="font-size:1.3vw;font-weight:bold;color:#0c60ee;text-decoration: underline;">
         {{ notify_us4 }}
       </div>
       <br>
@@ -38,7 +43,7 @@
       </div>
     </div>
     <div layout="column" layout-align="center center" style="width:40%;margin-left:10px;" layout-wrap>
-      <div class="text-center" style="font-size:120%;font-weight:bold;padding:10px;width:100%;border-color: #e42112;background-color: #ef473a;color: #fff;" >
+      <div class="text-center" style="font-size:1.1vw;font-weight:bold;padding:10px;width:100%;border-color: #e42112;background-color: #ef473a;color: #fff;" >
         กรุณาอ่านคำแนะนำตรงนี้ด้วย
       </div>
 

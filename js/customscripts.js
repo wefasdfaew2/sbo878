@@ -618,7 +618,7 @@ jQuery(document).ready(function($) {
 
   if (Modernizr.touch) {
       // show the close overlay button
-    
+
       $(".close-overlay").removeClass("hidden");
       // handle the adding of hover class when clicked
       $(".img").click(function(e){
@@ -660,24 +660,24 @@ jQuery(document).ready(function($) {
     },
     function(data, status){
         //console.log(data[0].user_money);
-        odometer.innerHTML = data[0].user_money;
+        odometer.innerHTML = data[0].member_current_bet;
   });
   var money = 0;
   setInterval(function(){
 
-    $.get(WPURLS.templateurl + "/php/test-add-money.php",{
-        option: "set"
-      },
-      function(data, status){
+  //  $.get(WPURLS.templateurl + "/php/test-add-money.php",{
+  //      option: "set"
+  //    },
+  //    function(data, status){
           //console.log("Data: " + data + "\nStatus: " + status);
-    });
+//    });
 
     $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
         option: "get"
       },
       function(data, status){
           //console.log(data[0].user_money);
-          odometer.innerHTML = data[0].user_money;
+          odometer.innerHTML = data[0].member_current_bet;
     });
 
     //money += Math.floor(Math.random() * 3000);

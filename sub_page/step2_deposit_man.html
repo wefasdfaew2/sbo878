@@ -1,0 +1,112 @@
+<div style="padding: 0 0 16px 0;">
+  <center>
+    <img ng-src="{{ template_directory_uri }}/images/deposit_cc-Step2.png" width="929" height="50" />
+  </center>
+</div>
+<div ng-if="!direct_access" style="margin-bottom:5%;margin: 0 auto;">
+  <div layout="row" layout-align="center center" style="margin-bottom:20px;">
+    <!--ng-if="!direct_access"-->
+    <div layout="column">
+      <md-input-container class="md-block">
+        <label style="color:black;">Username:</label>
+        <input ng-disabled="no_option" ng-change="check_account_type()" ng-model="user.username" type="text" placeholder="กรุณาใส่ Username" style="width:250px;">
+      </md-input-container>
+
+      <!--<md-input-container class="md-block">
+          <label style="color:black;">เบอร์โทรศัพท์:</label>
+          <input ng-disabled="no_option" ng-change="check_account_type()" ng-model="user.tel"  type="text" placeholder="กรุณาใส่เบอร์โทรศัพท์มือถือที่ลงทะเบียนไว้" style="width:250px;">
+      </md-input-container>-->
+    </div>
+    <div layout="column" layout-align="center center" style="margin-left:20px;">
+      <div>Account ของคุณเป็น Account ของเว็บ</div>
+      <img ng-show="is_logo_type" ng-src="{{ logo_type }}"/>
+      <div ng-show="is_valid_account" style="color:red;">
+        {{ account_type }}
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="account_corect" style="border-radius:3px;border: 2px solid #0092f5;">
+    <div layout="column">
+      <div class="page-sub-title" style="font-weight:bold;font-size:1.3vw;margin:0px;padding:10px 0 10px 0;background-color:#0092f5;">
+        <div class="text-center" slide-toggle="#e_wallet" style="margin: 0 auto;padding: 0.4em 0.625em;">
+          <div>เพื่อป้องกันมิจฉาชีพ การโอนเงินแบบแจ้ง Call Center ท่านสมาชิกจะต้องทำการโอนโดย</div>
+          <div>ใช้บัญชีของท่านที่ได้ลงทะเบียนไว้ในการโอนเงินเท่านั้น</div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div layout="row" layout-align="center center">
+      <div ng-repeat="x in bank_info" style="margin: 0 auto;width: 32%;border: 2px solid #33cd5f;border-radius:3px;padding-bottom:20px;">
+        <div ng-if="$index == 0" style="color:white;margin: 0 auto;font-size:1.2vw;width: 100%;padding: 5px;padding-left:20px;background-color:#33cd5f;">
+          บัญชีหลัก
+        </div>
+        <div ng-if="$index != 0" style="color:white;margin: 0 auto;font-size:1.2vw;width: 100%;padding: 5px;padding-left:20px;background-color:#33cd5f;">
+          บัญชีสำรอง{{ $index }}
+        </div>
+        <table style="margin: 20px auto 0 20px;width:80%;" class="table table-striped">
+          <tbody>
+            <tr>
+              <td ng-style="{'width':'100px', 'background-color':'#c1f0ce', 'font-weight': 'bold', 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+                บัญชีเลขที่
+              </td>
+              <td ng-style="{'background-color':'#c1f0ce','font-weight': 'bold', 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+
+                {{ x.bank_number }}
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td ng-style="{'width':'100px','font-weight': 'bold', 'background-color': '#92e4a9' , 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+                ชื่อบัญชี
+              </td>
+              <td ng-style="{'background-color': '#92e4a9' , 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+
+                {{ x.account_name }}
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td ng-style="{'width':'100px', 'background-color':'#c1f0ce', 'font-weight': 'bold', 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+                ธนาคาร
+              </td>
+              <td ng-style="{'background-color':'#c1f0ce', 'border-top': '2px solid #72dc90', 'border-bottom': '2px solid #72dc90'}">
+
+                {{ x.bank_name }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div layout="row" layout-align="end center" style="margin: 10px 10px 10px;">
+      ต้องการเพิ่มหรือแก้ไขบัญชีบัญชีของตัวเองมากกว่า 1 บัญชี ?
+      <a ui-sref="add_bank({deposit_username: user.username, direct_access: false})">คลิ๊กที่นี่</a>
+    </div>
+    <br>
+    <div layout="row" layout-align="start center" style="padding-left:20px;font-weight:bold;font-size:1.1vw;margin: 10px 10px 10px;">
+      *หากท่านสมาชิกใช้บัญชีอื่นที่ไม่ได้ลงทะเบียนกับทางเว็บไซต์ แล้วทำการโอนเงินเข้ามา ทางทีมงานจะไม่ทำการปรับยอดให้ท่านสมาชิก
+    </div>
+    <div layout="row" layout-align="start center" style="padding-left:20px;font-weight:bold;font-size:1.1vw;margin: 10px 10px 10px;">
+      *ท่านสมาชิกสามารถใช้ช่องทางการโอนเงินได้ทุกช่องทางในการโอนเงิน
+    </div>
+    <div layout="row" layout-align="start center" style="padding-left:20px;font-weight:bold;font-size:1.1vw;text-decoration: underline;color:red;margin: 10px 10px 10px;">
+      ยกเว้นการโอนผ่านหน้าเค้าเตอร์ธนาคาร และเครื่องฝากเงินสด (แบบไม่ใช้บัตร)
+    </div>
+  </div>
+
+  <div layout="row" layout-align="center center" style="width:100%;margin:20px;">
+    <div  layout="row" style="">
+      <md-checkbox ng-model="user.accepp" ng-change="check_input()" aria-label="Checkbox 1">
+        ติ๊กที่ช่องเพื่อยอมรับเงื่อนไขการโอนเงินแบบแจ้ง Call Center
+      </md-checkbox>
+    </div>
+    <span flex="10"></span>
+    <div  layout="row" style="">
+      <md-button ng-disabled="!show_button" class="md-raised md-primary" ng-click="nextStep()">Next</md-button>
+    </div>
+  </div>
+</div>

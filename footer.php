@@ -8,6 +8,136 @@
 <?php
 	$carousel_section = get_theme_mod('point_carousel_section', '1');
 	$carousel_cats = get_theme_mod('point_carousel_cat');
+ // thai month
+ $thai_m=array("มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม",
+"กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+// db
+ date_default_timezone_set("Asia/Bangkok");
+  $configs = include('php_db_config/config.php');
+  $servername = $configs['servername'];
+  $username = $configs['username'];
+  $password = $configs['password'];
+  $dbname = "sbobet878";
+ // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  $conn->set_charset('utf8');
+  // Check connection
+  if ($conn->connect_error)
+  {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  //init link str
+  $link_3bb_s='';
+  $link_3bb_g='';
+  $link_trueonline_s='';
+  $link_trueonline_g='';
+  $link_tot_s='';
+  $link_tot_g='';
+  $link_cat_s='';
+  $link_cat_g='';
+  $link_ais_s='';
+  $link_ais_g='';
+  $link_dtac_s='';
+  $link_dtac_g='';
+  $link_truemove_s='';
+  $link_truemove_g='';
+  //lotto
+  $lotto_date='';
+  $lotto_number=''; 
+  //top user cashback
+  $u_cashback1='';
+  $u_cashback2='';
+  $u_cashback3='';
+  $u_cashback4='';
+  $u_cashback5='';
+  
+  $sql_get_url =  "SELECT `sort`,`bet_name`,`isp_name`,`url`
+						FROM  `all_bet_link_url`";
+					 
+   $result_get_url = $conn->query($sql_get_url);
+   
+   if ($result_get_url->num_rows > 0){
+    while($row = $result_get_url->fetch_assoc())
+    {
+ 
+		$db_sort= $row["sort"];
+	  $db_bet_name= $row["bet_name"];
+	  $db_isp_name= $row["isp_name"];
+	  $db_url= $row["url"];
+	 
+	  //assign url
+	 
+	  if($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='3bb'){
+		$link_3bb_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='3bb'){
+		$link_3bb_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='trueonline'){
+		$link_trueonline_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='trueonline'){
+		$link_trueonline_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='tot'){
+		$link_tot_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='tot'){
+		$link_tot_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='cat'){
+	   $link_cat_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='cat'){
+	   $link_cat_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='ais'){
+	   $link_ais_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='ais'){
+	   $link_ais_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='dtac'){
+	   $link_dtac_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='dtac'){
+	   $link_dtac_g=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='truemove'){
+	   $link_truemove_s=$db_url;
+	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='truemove'){
+	   $link_truemove_g=$db_url;
+	  }
+    
+	}
+ 
+   }else{
+  //  echo "ref_otp not found on db";
+   }
+   // sql lotto
+	 
+	$sql_get_lotto =  "SELECT `current_pro_lotto_date`,`current_pro_lotto_number`  
+						FROM `global_setting` WHERE 1";
+   $result_get_lotto = $conn->query($sql_get_lotto);
+   if ($result_get_lotto->num_rows > 0){
+    while($row = $result_get_lotto->fetch_assoc())
+    {
+	 $lotto_date=$row["current_pro_lotto_date"];
+	 $lotto_number=$row["current_pro_lotto_number"];
+	}
+	} 
+   //sql top 5 cashback user
+   	$sql_get_cashback =  "SELECT reward,username FROM `promotion_cashback` 
+							WHERE  MONTH(`date`) = MONTH(NOW()) order by reward";
+   $result_get_cashback = $conn->query($sql_get_cashback);
+   if ($result_get_cashback->num_rows > 0){
+    while($row = $result_get_cashback->fetch_assoc())
+    {
+	 $db_reward=$row["reward"];
+	 $db_username=$row["username"];
+	 if($db_reward=='1'){
+		$u_cashback1=$db_username;
+	 }elseif($db_reward=='2'){
+		$u_cashback2=$db_username;
+	 }elseif($db_reward=='3'){
+		$u_cashback3=$db_username;
+	 }elseif($db_reward=='4'){
+		$u_cashback4=$db_username;
+	 }elseif($db_reward=='5'){
+		$u_cashback5=$db_username;
+	 }
+	 
+	}
+	} 
+   
 ?>
 <footer>
 	<?php if( $carousel_section == 1 && isset($carousel_cats) ) { ?>
@@ -44,11 +174,121 @@
 </footer><!--footer-->
 
 <?php $postid = get_the_ID(); if($postid=='46') {?>
+<!--lotto-->
+<div class="carousel" style="height:40px;margin-bottom:10px;">
+			<table style="width:100%">
+				<tr>
+					<th><h3 class="frontTitle">ตรวจโปรเลขท้ายสามตัว</h3></th>
+					<th><h3 class="frontTitle">ตรวจโปรคืนยอดเสีย</h3></th> 
+				</tr>
+				</table> 
+	</div>
+ 
+  <div class="row " >
+    <div class="col-md-6  col-xs-6  col-sm-6 text-center " >
+			<table style="width:100%;" >
+				<tr> 
+					<td>งวดประจำวันที่ <?php echo $lotto_date;?></td> 
+				</tr>
+				<tr> 
+					<td>
+					</br>
+					<font color="blue"><strong>รางวัลที่ 1</strong></font>
+					</td> 
+				</tr>
+				<tr> 
+					<td style="word-spacing: 30px;">
+					<?php echo  $lotto_number[0];?>
+					<?php echo  $lotto_number[1];?>
+					<?php echo  $lotto_number[2];?>
+					<font style="color: red; text-decoration: underline;">
+					<strong>
+					<?php echo  $lotto_number[3];?>
+					<?php echo  $lotto_number[4];?>
+					<?php echo  $lotto_number[5];?>
+					</strong>
+					</font>
+					 </td> 
+				</tr>
+				<tr> 
+					<td>
+					</br>
+						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom#pro_lotto" class = "btn btn-danger" role = "button">
+						อ่านรายละเอียดโปรโมชั่นนี้
+						</a>
+			 		
+						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotion-lotto" class = "btn btn-danger" role = "button">
+					ตรวจสอบรายชือผู้โชคดี
+						</a>
+				   </td>
+				</tr>
+				</table>
+	</div>
+	
+    <div class="col-md-6  col-xs-6  col-sm-6   " >
+			<table style="width:100%;" class="text-center" >
+				<tr>
+					<td>ประจำเดือน <?php echo $thai_m[date("n")-1];?>
+					(<?php echo date('j',strtotime("first day of this month")),"-",date('j',strtotime("last day of this month"))," ",$thai_m[date("n")-1]," ",date("Y")+543;?>)	
+					
+					</td> 
+				</tr>
+				<tr>
+				 <td></br></td>
+				</tr>
+				</table>
+				
+				<table   style="width:95%;border:1px solid #A2B964;"   >
+				 
+				<tr bgcolor="#A2B964" >
+					<td style="color:white;padding:5px 0px 0px 50px;">อันดับที่ 1 (คืนยอดเสีย 10%) </td>
+					<td style="color:white;padding:5px 0px 0px 50px;"><?php echo $u_cashback1;?></td> 					
+				</tr>
+				<tr  style="border:1px solid #A2B964;"   >
+					<td style="padding-left:50px;">อันดับที่ 2 (คืนยอดเสีย 7%) </td>
+					<td style="padding-left:50px;"><?php echo  $u_cashback2;?></td>					
+				</tr>
+				<tr style="border:1px solid #A2B964;"  >
+					<td style="padding-left:50px;">อันดับที่ 3 (คืนยอดเสีย 5%) </td> 
+					<td style="padding-left:50px;"><?php echo  $u_cashback3;?></td>
+				</tr>
+				<tr style="border:1px solid #A2B964;"  >
+					<td style="padding-left:50px;">อันดับที่ 4 (คืนยอดเสีย 3%) </td> 
+					<td style="padding-left:50px;"><?php echo  $u_cashback4;?></td>		
+				</tr>
+				<tr style="border:1px solid #A2B964;"  >
+					<td style="padding-left:50px;">อันดับที่ 5 (คืนยอดเสีย 3%) </td>
+					<td style="padding-left:50px;"><?php echo  $u_cashback5;?></td>
+				</tr>
+				 
+				</table>
+				<table style="width:100%;" class="text-center"  >
+				<tr>
+					<td>
+					</br>
+						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom#pro_cashback" class = "btn btn-success" role = "button">
+						อ่านรายละเอียดโปรโมชั่นนี้
+						</a>
+			 		
+						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom" class = "btn btn-success" role = "button">
+					ตรวจสอบรายชือผู้โชคดี
+						</a>
+					</td> 
+				</tr>
+				</table>
+				
+	</div>
+   
+   </div>
+  
+ </br>
+	 
+<!--score table-->
 	<div class="carousel" style="height:40px;margin-bottom:10px;">
 			<h3 class="frontTitle">ตารางคะแนน (อัพเดทอัตโนมัติ)</h3>
 	</div>
 	<div style="text-align:center;">
-		<script language='javascript'> var timeZone ='%2B0700'; var dstbox =''; var cpageBgColor = 'FFFFFF'; var wordAd='  Sbobet878.Com'; var wadurl='https://www.sboobet878.com'; var width='100%'; var tableFontSize='12'; var cborderColor='333333'; var ctdColor1='EEEEEE'; var ctdColor2='FFFFFF'; var clinkColor='0044DD'; var cdateFontColor='FFFFFF'; var cdateBgColor='333333'; var scoreFontSize='12'; var cteamFontColor='000000'; var cgoalFontColor='FF0000'; var cgoalBgColor='FFFF99'; var cremarkFontColor='000000'; var mark ='en'; var cremarkBgColor='F7F8F3'; var Skins='2'; var teamWeight='400'; var scoreWeight='700'; var goalWeight='700'; var fontWeight='700'; document.write("<iframe align='center' src='http://freelive.7m.cn/live.aspx?mark="+ mark +"&TimeZone=" + timeZone + "&wordAd=" + wordAd + "&cpageBgColor="+ cpageBgColor +"&wadurl=" + wadurl + "&width=" + width + "&tableFontSize=" + tableFontSize + "&cborderColor=" + cborderColor + "&ctdColor1=" + ctdColor1 + "&ctdColor2=" + ctdColor2 + "&clinkColor=" + clinkColor + "&cdateFontColor="+ cdateFontColor +"&cdateBgColor=" + cdateBgColor + "&scoreFontSize=" + scoreFontSize + "&cteamFontColor=" + cteamFontColor + "&cgoalFontColor=" + cgoalFontColor + "&cgoalBgColor=" + cgoalBgColor + "&cremarkFontColor=" + cremarkFontColor + "&cremarkBgColor=" + cremarkBgColor + "&Skins=" + Skins + "&teamWeight=" + teamWeight + "&scoreWeight=" + scoreWeight + "&goalWeight=" + goalWeight +"&fontWeight="+ fontWeight +"&DSTbox="+ dstbox +"'  height='470' width='95%' scrolling='yes' border='0' frameborder='0'></iframe>")</script>
+		<script language='javascript'> var timeZone ='%2B0700'; var dstbox =''; var cpageBgColor = 'FFFFFF'; var wordAd='  Sbobet878.Com'; var wadurl='https://www.sboobet878.com'; var width='100%'; var tableFontSize='12'; var cborderColor='333333'; var ctdColor1='EEEEEE'; var ctdColor2='FFFFFF'; var clinkColor='0044DD'; var cdateFontColor='FFFFFF'; var cdateBgColor='333333'; var scoreFontSize='12'; var cteamFontColor='000000'; var cgoalFontColor='FF0000'; var cgoalBgColor='FFFF99'; var cremarkFontColor='000000'; var mark ='en'; var cremarkBgColor='F7F8F3'; var Skins='2'; var teamWeight='400'; var scoreWeight='700'; var goalWeight='700'; var fontWeight='700'; document.write("<iframe align='center' src='http://www.nowgoal.cc/Asianbookie.aspx?tv=false&amp;link=facebook" +"'  height='470' width='95%' scrolling='yes' border='0' frameborder='0'></iframe>")</script>
 	</div>
 	<br>
 <?php } ?>
@@ -64,20 +304,28 @@
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/3BB.jpg" alt="sbobet878">
 	 </td>
     <td>
+	 <a target="_blank" href="<?php echo $link_3bb_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_3bb_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 		</td>
 		<!--x -->
 	<td>
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/True.jpg" alt="sbobet878">
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_trueonline_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_trueonline_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 	</td>
 </tr>
 <tr align="center">
@@ -109,20 +357,28 @@
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TOT.jpg" alt="sbobet878">
 	 </td>
     <td>
+	<a target="_blank" href="<?php echo $link_tot_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_tot_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 		</td>
 		<!--x -->
 	<td>
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/CAT.jpg" alt="sbobet878">
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_cat_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_cat_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 	</td>
 </tr>
 <tr align="center">
@@ -154,20 +410,28 @@
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/AIS.jpg" alt="sbobet878">
 	 </td>
     <td>
+	<a target="_blank" href="<?php echo $link_ais_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_ais_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 		</td>
 		<!--x -->
 	<td>
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Dtac.jpg" alt="sbobet878">
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_dtac_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
     <td>
+	<a target="_blank" href="<?php echo $link_dtac_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 	</td>
 </tr>
 <tr align="center">
@@ -192,17 +456,20 @@
   </td>
   </tr>
 </table>
-
 <table style="width:100%" >
 <tr align="center">
-    <td>
+    <td  >
 		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TrueH.jpg" alt="sbobet878">
 	 </td>
-    <td>
+    <td style="padding-left: 4px;">
+	<a target="_blank" href="<?php echo $link_truemove_s;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		</a>
 	</td>
-    <td>
+    <td style="padding-left: 1px;">
+	<a target="_blank" href="<?php echo $link_truemove_g;?>">
 		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		</a>
 		</td>
 		<!--x -->
 	<td>
@@ -210,7 +477,7 @@
 	</td>
     <td>
 		 <a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_all">
-      <img   src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/LinkEntry.png" alt="sbobet878"  hspace="10">
+      <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/LinkEntry.png" alt="sbobet878" align="middle" >
      </a>
 	</td>
     <td>
@@ -231,8 +498,13 @@
   <!--x -->
    <td>
    </td>
+   <td>
+   </td>
+   <td>
+   </td>
   </tr>
 </table>
+
 
 
 
@@ -240,6 +512,15 @@
 <?php wp_footer(); ?>
 
 </div><!-- main-container -->
-
+<!-- Histats.com  START  (standard)-->
+<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15_giftop.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+<a href="http://www.histats.com" target="_blank" title="" ><script  type="text/javascript" >
+try {Histats.startgif(1,3358859,4,10040,"div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}");
+Histats.track_hits();} catch(err){};
+</script></a>
+<noscript><style type="text/css">div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}</style>
+<a href="http://www.histats.com" alt="" target="_blank" ><div id="histatsC"><img border="0" src="http://s4is.histats.com/stats/i/3358859.gif?3358859&103"></div></a>
+</noscript>
+        <!-- Histats.com  END  -->
 </body>
 </html>

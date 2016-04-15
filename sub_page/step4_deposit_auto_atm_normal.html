@@ -1,0 +1,47 @@
+<div style="padding: 0 0 16px 0;">
+  <center>
+    <img ng-src="{{ template_directory_uri }}/images/deposit_auto_Step4.png" width="929" height="50" />
+  </center>
+</div>
+<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
+  <div layout="column" layout-align="center center" style="width:75%;border-radius:3px;border: 2px solid #006cb7;">
+    <div layout="column" layout-align="center center">
+      <div class="page-sub-title" style="font-weight:bold;font-size:1.4vw;margin:0px;padding:10px 0 10px 0;background-color:#006cb7;">
+        <div class="text-center" slide-toggle="#e_wallet" style="margin: 0 auto;padding: 0.4em 0.625em;">
+          ใช้บัตร ATM ธนาคาร{{ from_bank_name }}ของท่าน ทำรายการโอนเงินที่ตู้ ATM ธนาคาร{{ from_bank_name }}
+        </div>
+      </div>
+      <div layout="column" layout-align="center center"style="padding:16px;">
+        <div class="text-center" style="width:100%;margin-top:10px;font-size:1.4vw;font-weight:bold;">
+          โอนยอดจำนวน <span style="font-size:1.7vw;color:#f54600">{{ amount_atm }}</span> บาท
+        </div>
+        <div class="text-center" style="width:100%;margin-top:20px;color:#EF473A;font-size:1.4vw;font-weight:bold;width:90%;border-top:3px solid #EF473A;border-bottom:3px solid #EF473A;padding:5px;background-color:#fac7c3;">
+          <span>ไปยังเลขบัญชี</span> <span style="margin-right:7%;margin-left:7%;"> {{ to_bank_number }} </span> <span>ธนาคาร{{ to_bank_name }}</span>
+        </div>
+        <div class="text-center" style="width:85%;margin-top:10px;margin-bottom:20px;font-size:1.1vw;font-weight:bold;">
+          <div>และเพื่อการตรวจสอบยอดโอนเงินของท่านผ่าน ATM ธนาคาร{{ from_bank_name }}ให้เป็นไปอย่างอัตโนมัติกรุณาเลือกใช้บริการส่ง SMS แจ้งผู้รับปลายทางโดยใส่รายละเอียดดังนี้
+          </div>
+        </div>
+        <div layout="row" style="width:90%;">
+          <div class="text-center" style="width:90%;color:#006cb7;font-size:1.5vw;font-weight:bold;border-top:3px solid #006cb7;border-bottom:3px solid #006cb7;padding:5px;background-color:#b2d2e9;">
+            เบอร์มือถือของผู้รับ
+          </div>
+          <div class="text-center" style="width:90%;color:#006cb7;font-size:1.5vw;font-weight:bold;border-top:3px solid #006cb7;border-bottom:3px solid #006cb7;padding:5px;background-color:#b2d2e9;">
+            0957327076
+          </div>
+        </div>
+        <div layout="row" style="width:90%;">
+          <div class="text-center" style="width:90%;color:#006cb7;font-size:1.5vw;font-weight:bold;border-top:none;border-bottom:3px solid #006cb7;padding:5px;background-color:#7fb5db;">
+            เบอร์มือถือของผู้ส่ง
+          </div>
+          <div class="text-center" style="width:90%;color:#006cb7;font-size:1.5vw;font-weight:bold;border-top:none;border-bottom:3px solid #006cb7;padding:5px;background-color:#7fb5db;">
+            {{ tel }}
+          </div>
+        </div>
+        <center style="margin-top:40px;">
+          <img ng-src="{{ how_to }}"/>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>

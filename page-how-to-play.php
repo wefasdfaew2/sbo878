@@ -7,6 +7,9 @@ Template Name: how-to-play
 
 <?php
 
+ wp_register_script('ui-bootstrap', get_template_directory_uri() . '/js/ui-bootstrap-tpls-1.1.2.min.js', true);
+ wp_enqueue_script('ui-bootstrap');
+
   wp_register_script('angular-ui-router', get_template_directory_uri() . '/js/angular-ui-router.min.js', true);
   wp_enqueue_script('angular-ui-router');
 
@@ -21,14 +24,9 @@ Template Name: how-to-play
 
 
 <script type="text/javascript">
-var app = angular.module('MyHowToPlay', ['ngMaterial', 'ngMessages', 'ui.router', 'ngSanitize', 'bootstrapLightbox']);
-
-app.controller('HowToPlay', function($scope, $http, $filter, $state, Lightbox) {
-
-  console.log("How to play !!!");
+var app = angular.module('MyHowToPlay', ['ngMaterial', 'ngMessages', 'ui.bootstrap', 'bootstrapLightbox', 'ui.router']);
 
 
-});
 
 
 app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
@@ -269,6 +267,109 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
       }
     })
+    .state('mobile-en', {
+      url: '/mobile-en',
+      abstract: false,
+      templateUrl: WPURLS.templateurl + '/sub_page/how-to-play-mobile-en.html',
+      controller: function($scope, $state, Lightbox) {
+
+        //$scope.img_link = WPURLS.templateurl;
+        $scope.openLightboxModal = function (index) {
+          Lightbox.openModal($scope.images, index);
+        };
+
+        $scope.images = [
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(1).jpg',
+            'title': '1. หน้าแรก SBOBET เลือกแทงบอลผ่านมือถือ'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(2).jpg',
+            'title': '2. หน้าล็อกอินเข้าแทงบอล'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(3).jpg',
+            'title': '3. หน้าแทงบอลหลังจากล็อกอินเข้ามา'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(4).jpg',
+            'title': '4. หน้าหมวดหมู่กีฬา'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(5).jpg',
+            'title': '5. หน้าแทงบอล หมวดหมู่แทงบอลวันนี้'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(6).jpg',
+            'title': '6. หน้าเลือกเล่นลีกต่างๆ'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(7).jpg',
+            'title': '7. หน้าตัวอย่างการแทงบอลเดี่ยว'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(8).jpg',
+            'title': '8. หน้าใส่จำนวนเงินที่ต้องการแทงบอลเดี่ยว'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(9).jpg',
+            'title': '9. หน้ายืนยันการพนันบอลเดี่ยว'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(10).jpg',
+            'title': '10. หน้าพนันบอลเดี่ยวเสร็จสมบูรณ์แล้ว'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(11).jpg',
+            'title': '11. หน้าพนันของฉัน'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(12).jpg',
+            'title': '12. หน้าปุ่มการทำงานอื่นๆ'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(13).jpg',
+            'title': '13. หน้าสำหรับเลือกแทงบอลเสต็ป'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(14).jpg',
+            'title': '14. หน้าแทงบอลเสต็ป (มิกซ์ พาเลย์)'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(15).jpg',
+            'title': '15. หน้าแสดงตัวเลขจำนวนทีมที่แทงไว้ ของบอลเสต็ป'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(16).jpg',
+            'title': '16. หน้าแสดงรายการทีมที่ท่านเลือกแทงบอลเสต็ป'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(17).jpg',
+            'title': '17. หน้าใส่จำนวนเงินที่ต้องการแทงบอลเสต็ป'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(18).jpg',
+            'title': '18. หน้ายืนยันการพนันบอลเสต็ป'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(19).jpg',
+            'title': '19. หน้าพนันบอลเสต็ปเสร็จสมบูรณ์แล้ว'
+          },
+          {
+            'url': WPURLS.templateurl + '/images/how-to-play-mobile-EN(20).jpg',
+            'title': '20. หน้าพนันของฉัน'
+          }
+        ];
+
+      }
+    })
+  });
+
+  app.controller('HowToPlay', function($scope, $http, $filter, $state, Lightbox) {
+
+    console.log("How to play !!!");
+
+
   });
 </script>
  <div id="page" class="single">

@@ -1,5 +1,9 @@
 <?php
 
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
+
+
 header('Content-Type: text/html; charset=utf-8');
 
 $configs = include('../php_db_config/config.php');

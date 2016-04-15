@@ -1,6 +1,120 @@
 var app = angular.module('MyDepositCheck', ['ngMaterial', 'ngMessages', 'smart-table']);
 
-app.controller('DepositCheck', function($scope, $http, $filter, $interval) {
+app.controller('DepositCheck', ['Resource', '$interval', function (service, $interval) {
+
+  var ctrl = this;
+  var externaelTableState;
+  this.displayed = [];
+
+  this.callServer = function callServer(tableState) {
+    externaelTableState = tableState;
+
+    ctrl.isLoading = true;
+
+    var pagination = tableState.pagination;
+    //console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
+    var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+    var number = pagination.number || 10;  // Number of entries showed per page.
+
+    service.getPage(start, number, tableState).then(function (result) {
+
+      ctrl.displayed = result.data;
+      tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+      ctrl.isLoading = false;
+    });
+  };
+
+  $interval(function() {
+    console.log('callServer');
+    //ctrl.isLoading = true;
+    var tableState = externaelTableState;
+    var pagination = tableState.pagination;
+    //console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
+    var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+    var number = pagination.number || 10;  // Number of entries showed per page.
+
+    service.getPage(start, number, tableState).then(function (result) {
+
+      ctrl.displayed = result.data;
+      tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+      ctrl.isLoading = false;
+    });
+  }, 10000);
+
+}]);
+
+app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, $q, $filter, $timeout) {
+
+	//this would be the service to call your server, a standard bridge between your model an $http
+
+	// the database (normally on your server)
+  function hide_username(username){
+
+    var first = username.substring(0, 1);
+    var forhide = username.substring(1, 7);
+    var last = username.substring(7);
+    var hide_username = first + '------' + last;
+    return hide_username;
+
+  }
+
+  var randomsItems = [];
+
+
+
+	//fake call to the server, normally this service would serialize table state to send it to the server (with query parameters for example) and parse the response
+	//in our case, it actually performs the logic which would happened in the server
+	function getPage(start, number, params) {
+
+		var deferred = $q.defer();
+
+    var request_deposit_state = $http({
+      method: "get",
+      url: WPURLS.templateurl + "/php/get-deposit-state.php",
+      data: {},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    request_deposit_state.success(function(deposit_state) {
+      //console.log(deposit_state);
+      randomsItems = deposit_state;
+
+      for(x in randomsItems){
+        if(randomsItems[x].deposit_type_name == null){
+          randomsItems[x].deposit_type_name = '/images/WaitTransfer.gif';
+        }
+        //randomsItems[x].deposit_account = hide_username(randomsItems[x].deposit_account);
+        randomsItems[x].hide_deposit_account = hide_username(randomsItems[x].deposit_account);
+      }
+
+      var filtered = params.search.predicateObject ? $filter('filter')(randomsItems, params.search.predicateObject) : randomsItems;
+
+  		if (params.sort.predicate) {
+  			filtered = $filter('orderBy')(filtered, params.sort.predicate, params.sort.reverse);
+  		}
+
+  		var result = filtered.slice(start, start + number);
+
+  		$timeout(function () {
+  			//note, the server passes the information about the data set size
+  			deferred.resolve({
+  				data: result,
+  				numberOfPages: Math.ceil(filtered.length / number)
+  			});
+  		}, 1500);
+
+    });
+
+		return deferred.promise;
+	}
+
+	return {
+		getPage: getPage
+	};
+
+}]);
+/**app.controller('DepositCheck', function($scope, $http, $filter, $interval) {
 
   function hide_username(username){
 
@@ -86,3 +200,4 @@ angular.module('MyDepositCheck')
       }
     }
   });
+**/

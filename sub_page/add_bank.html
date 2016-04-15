@@ -1,0 +1,166 @@
+<div ng-if="!direct_access" style="margin-bottom:5%;">
+
+  <h2 class="page-title">
+    <div class="text-center" style="font-size:1.4vw;width: 80%;margin: 0 auto;padding: 15px;">
+      ลงทะเบียนเพิ่มบัญชี/แก้ไข เพื่อใช้สำหรับการโอนเงิน เติมเครดิต (เพิ่มได้สูงสุด 3 บัญชี)
+    </div>
+  </h2>
+  <br>
+  <form name="add_form">
+    <div style="margin: 0 auto;width: 60%;border: 2px solid #f5c000;border-radius:3px;padding-bottom:20px;">
+      <div style="margin: 0 auto;font-size:1.2vw;width: 100%;padding: 5px;padding-left:20px;background-color:#f5c000;">
+        บัญชีหลัก
+      </div>
+      <table style="margin: 20px auto 0 20px;width:70%;" class="table table-striped">
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              บัญชีเลขที่
+            </td>
+            <td ng-style="{'background-color':'#fff0ba','font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <input class="form-control" ng-disabled="true" style="width:150px;" type="text" ng-model="user.bank_number"/>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px','font-weight': 'bold', 'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ชื่อบัญชี
+            </td>
+            <td ng-style="{'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <input class="form-control" ng-disabled="true" style="width:150px;" type="text" ng-model="user.account_name"/>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ธนาคาร
+            </td>
+            <td ng-style="{'background-color':'#fff0ba', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <select ng-disabled="true" style="width:150px;" class="form-control" ng-model="user.bank_name">
+                <option value="{{ x }}" ng-repeat="x in list_bank_name">{{ x }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin: 20px auto;width: 60%;border: 2px solid #f5c000;border-radius:3px;padding-bottom:20px;">
+      <div style="margin: 0 auto;font-size:1.2vw;width: 100%;padding: 5px;padding-left:20px;background-color:#f5c000;">
+        บัญชีสำรอง 1
+      </div>
+      <table style="margin: 20px auto 0 20px;width:70%;" class="table table-striped">
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              บัญชีเลขที่
+            </td>
+            <td ng-style="{'background-color':'#fff0ba','font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <div style="margin:0px;" class="form-group" ng-class="{ 'has-error': !add_form.myInput1.$valid }">
+                <div layout="row" layout-align="start center">
+                  <input name="myInput1" ng-pattern="/^[0-9]*$/" class="form-control" style="width:150px;" type="text" ng-model="user.bank_number_2" placeholder="ยังไม่มีข้อมูล"/>
+                  <div ng-hide="add_form.myInput1.$valid" style="margin-left:5px;color:red;">เลขบัญชีไม่ถูกต้อง</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'font-weight': 'bold', 'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ชื่อบัญชี
+            </td>
+            <td ng-style="{'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <input class="form-control" ng-disabled="true" style="width:150px;" type="text" ng-model="user.account_name_2"/>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ธนาคาร
+            </td>
+            <td ng-style="{'background-color':'#fff0ba', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <select style="width:150px;" class="form-control" ng-model="user.bank_name_2">
+                <option value="{{ x }}" ng-repeat="x in list_bank_name">{{ x }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin: 20px auto;width: 60%;border: 2px solid #f5c000;border-radius:3px;padding-bottom:20px;">
+      <div style="margin: 0 auto;font-size:1.2vw;width: 100%;padding: 5px;padding-left:20px;background-color:#f5c000;">
+        บัญชีสำรอง 2
+      </div>
+      <table style="margin: 20px auto 0 20px;width:70%;" class="table table-striped">
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              บัญชีเลขที่
+            </td>
+            <td ng-style="{'background-color':'#fff0ba','font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <div style="margin:0px;" class="form-group" ng-class="{ 'has-error': !add_form.myInput.$valid }">
+                <div layout="row" layout-align="start center">
+                  <input name="myInput" ng-pattern="/^[0-9]*$/" class="form-control" style="width:150px;" type="text" ng-model="user.bank_number_3" placeholder="ยังไม่มีข้อมูล"/>
+                  <div ng-hide="add_form.myInput.$valid" style="margin-left:5px;color:red;">เลขบัญชีไม่ถูกต้อง</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'font-weight': 'bold', 'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ชื่อบัญชี
+            </td>
+            <td ng-style="{'background-color': '#ffd744' , 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <input class="form-control" ng-disabled="true" style="width:150px;" type="text" ng-model="user.account_name_3"/>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td ng-style="{'width':'100px', 'background-color':'#fff0ba', 'font-weight': 'bold', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              ธนาคาร
+            </td>
+            <td ng-style="{'background-color':'#fff0ba', 'border-top': '2px solid #f59700', 'border-bottom': '2px solid #f59700'}">
+              <!--<input style="width:150px;background-color:white" type="text" ng-model="user.bank_name_3" placeholder="ยังไม่มีข้อมูล"/>-->
+              <select style="width:150px;" class="form-control" ng-model="user.bank_name_3">
+                <option value="{{ x }}" ng-repeat="x in list_bank_name">{{ x }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div layout-align="center center" layout="column" style="margin-top:3%;">
+      <md-button ng-disabled="show_otp" class="md-raised md-primary" ng-click="bank_save()">บันทึกแก้ไข</md-button>
+      <div ng-show="form_error" style="color:red;font-weight:bold;">กรุณกรอกข้อมูลให้ครบและถูกต้อง</div>
+      <div ng-show="form_error2" style="color:red;font-weight:bold;">กรุณกรอกข้อมูลให้ครบและถูกต้อง</div>
+
+    </div>
+  </form>
+  <center>
+    <div ng-show="show_success" class="alert alert-success" role="alert">บันทึกเสร็จสมบูรณ์</div>
+    <div id="otp_div" ng-show="show_otp" layout="column" layout-align="center center" style="margin-top:10px;border: 2px solid black;padding: 16px;width:300px;">
+      <div>
+        เพื่อยืนยันการเปลี่ยนแปลงข้อมูล ระบบจะทำการส่ง OTP ไปยังโทรศัพท์หมายเลข
+      </div>
+      <div style="margin:20px;font-weight:bold;">
+        {{ tel }}</div>
+      <div>
+        <div layout="row" layout-align="center center">
+          <input class="form-control" style="width:200px;" type="text" ng-model="user.otp" placeholder="กรุณากรอกหมายเลข OTP"/>
+        </div>
+        <div style="margin-top:5px;">Ref:
+          {{ otp_ref }}</div>
+      </div>
+      <md-button class="md-raised md-primary" ng-click="verify_otp(user.otp)">ตกลง</md-button>
+    </div>
+  </center>
+</div>

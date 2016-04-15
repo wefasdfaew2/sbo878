@@ -1,13 +1,17 @@
-
-<div class="md-padding"></div>
-<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;" >
+<div style="padding: 0 0 16px 0;">
+  <center>
+    <img ng-if="show_money_input" ng-src="{{ template_directory_uri }}/images/deposit_auto_Step3.png" width="929" height="50" />
+    <img ng-if="!show_money_input" ng-src="{{ template_directory_uri }}/images/deposit_auto_credit_Step3.png" width="929" height="50" />
+  </center>
+</div>
+<div ng-if="!direct_access" id="element_3" layout="column" layout-align="center center" style="margin-bottom:5%;" >
   <md-input-container ng-if="show_money_input" class="md-block">
     <label style="color:black;width:400px;">กรุณากรอกยอดที่ท่านต้องการเติมเครดิต:</label>
-    <input ng-change="cal_credit_money(user.credit_money)" min="1" ng-model="user.credit_money" type="number" placeholder="กรุณากรอกยอดที่ท่านต้องการเติมเครดิต" style="width:250px;">
+    <input ng-change="cal_credit_money(user.credit_money)" min="1" max="{{ max_money }}" ng-model="user.credit_money" type="number" placeholder="{{ money_placeholder }}" style="width:250px;">
     <span>บาท</span>
   </md-input-container>
   <div style="border-color: #e42112;background-color: #ef473a;color: #fff;margin-bottom:10px;">
-    <div style="font-size:150%;padding:16px;">{{ big_bonun_text }}</div>
+    <div style="font-size:1.4vw;padding:16px;">{{ big_bonun_text }}</div>
   </div>
   <div style="margin-bottom:20px;"> {{ small_bonun_text }} </div>
   <md-radio-group ng-change="cal_credit_money(user.credit_money)" ng-model="user.bonus_type" >
@@ -21,7 +25,8 @@
 
   <code ng-if="show_money_input" style="font-size:130%;">สรุปยอดเครดิตที่คุณจะได้รับหลังดำเนินการโอนเงินแล้วเสร็จคือ {{ user.credit_result }} บาท</code>
 
-  <div layout-align="center center" style="margin-top:3%;">
+  <div  layout-align="center center" style="margin-top:3%;">
     <md-button ng-disabled="invalid_number" class="md-raised md-primary" ng-click="set_account_to_deposit()">ตกลง</md-button>
   </div>
+  <center><div ng-show="showLoading">กรุณารอสักครู่ ระบบกำลังดำเนินการ...</div></center>
 </div>

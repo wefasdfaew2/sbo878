@@ -37,15 +37,58 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
 	$mode = 'no-promote';
 }
 
+  $isp_ip = unserialize(file_get_contents('http://pro.ip-api.com/php/'.$userIP.'?key=utwEtyx2f6XGIFr'.'&fields=isp,org,reverse,status'));
+  if($isp_ip && $isp_ip['status'] == 'success') {
+  $user_org = strtolower($isp_ip['org']);
+  $user_isp = strtolower($isp_ip['isp']);
+  $user_reverse = strtolower($isp_ip['reverse']);
+  //echo $user_ip_provider;
+  } else {
+  $user_isp = "Unable to get isp";
+  $user_org = "Unable to get org";
+  $user_reverse = "Unable to get reverse";
+   echo 'Unable to get isp';
+  }
 
+  // 1. org 2. ISP 3. reverse dns
+  $key_word_3bb="/jastel|tripletnet|triple|jastel|3bb|tt&t|jastel|jasmine/";
+  $key_word_trueonline="/true|trueinternet/";
+  $key_word_tot="/tot/";
+  $key_word_cat="/cat|hinet/";
+  $key_word_ais="/superbroadbandnetwork|awn|sbn|advance/";
+  $key_word_dtac="/total|dtac|trinet/";
+  $key_word_truemove="/true move|realmove|truemove/";
+  if (preg_match($key_word_3bb, $user_isp)== true || preg_match($key_word_3bb, $user_org) || preg_match($key_word_3bb, $user_reverse) ){
+    $isp_call="3bb";
+  }elseif(preg_match($key_word_trueonline, $user_isp)== true || preg_match($key_word_trueonline, $user_org) || preg_match($key_word_trueonline, $user_reverse) ){
+    $isp_call="trueonline";
+  }elseif(preg_match($key_word_dtac, $user_isp)== true || preg_match($key_word_dtac, $user_org) || preg_match($key_word_dtac, $user_reverse) ){
+    $isp_call="dtac";
+  }elseif(preg_match($key_word_tot, $user_isp)== true || preg_match($key_word_tot, $user_org) || preg_match($key_word_tot, $user_reverse) ){
+    $isp_call="tot";
+  }elseif(preg_match($key_word_ais, $user_isp)== true || preg_match($key_word_ais, $user_org) || preg_match($key_word_ais, $user_reverse) ){
+    $isp_call="ais";
+  }elseif(preg_match($key_word_truemove, $user_isp)== true || preg_match($key_word_truemove, $user_org) || preg_match($key_word_truemove, $user_reverse) ){
+    $isp_call="truemove";
+  }else{
+    $isp_call="อื่นๆ";
+  }
+  //echo $isp_call;
  ?>
  <div id="page" class="single">
  <div class="content"><!--get_channel_list('0');-->
 <div ng-app="MyApp" ng-controller="Player" ng-cloak="" style="margin-top:10px;"
-				ng-init="get_fast_tabs(); gen_token('<?php echo $userIP ?>');  promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');">
+				ng-init="get_fast_tabs(); gen_token('<?php echo $userIP ?>');
+        promote_play(<?php echo $id ?>,'<?php echo $server ?>','<?php echo $bitrate ?>','<?php echo $mode ?>');
+        get_internet_isp('<?php echo $isp_call ?>')">
 
 <div layout="row" layout-align="center center">
     <h2 ng-bind-html="channel_title_html"></h2>
+</div>
+<div layout="row" layout-align="end center">
+    <md-button class="md-raised md-primary" md-no-focus-style="true" style="padding-left:15px;padding-right:15px;margin-right:20px;">
+      ตารางถ่ายถอดสด
+    </md-button>
 </div>
 <div ng-show="youtube_id == false" layout="column" style="padding-left:16px;padding-right:16px;">
 

@@ -1,6 +1,6 @@
-var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ipCookie', 'ng.deviceDetector', 'ngSanitize', 'ui.bootstrap', 'ui.tab.scroll']);
+var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ipCookie', 'ng.deviceDetector', 'ngSanitize']);
 
-app.config(function($mdThemingProvider, scrollableTabsetConfigProvider) {
+app.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('blue', {
       // by default use shade 400 from the pink palette for primary intentions
@@ -10,7 +10,7 @@ app.config(function($mdThemingProvider, scrollableTabsetConfigProvider) {
     })
     .accentPalette('green');
 
-    scrollableTabsetConfigProvider.setShowTooltips (false);
+    //scrollableTabsetConfigProvider.setShowTooltips (false);
 
 });
 
@@ -22,6 +22,11 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   $scope.youtube_display = 'none';
   $scope.from_promote_link = false;
   $scope.fastTabs = '';
+
+  var internet_isp;
+  $scope.get_internet_isp = function(isp){
+    internet_isp = isp;
+  }
 
   $scope.gen_token = function(userIP) {
 
@@ -91,6 +96,9 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
 
       if (server == 'no-promote') {
         return;
+      }
+      if(internet_isp == 'dtac' || internet_isp == 'ais'){
+        server = '99';
       }
       $scope.from_promote_link = true;
       $scope.youtube_display = 'none';
@@ -275,6 +283,13 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   });
   request_server_list.success(function(server_list) {
     $scope.server_list = server_list;
+    console.log(typeof($scope.server_list));
+    if(internet_isp == 'dtac' || internet_isp == 'ais'){
+      $scope.server_list = $filter('filter')($scope.server_list, {
+        id: 99
+      });
+      $scope.serverurl = $scope.server_list[0].server_url;
+    }
   });
 
   $scope.get_channel_list = function(cat_id) {
@@ -300,7 +315,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   $scope.get_fast_tabs = function() {
     var request_channel_cat = $http({
       method: "get",
-      url: WPURLS.templateurl + "/php/get-channel-cat.php",      
+      url: WPURLS.templateurl + "/php/get-channel-cat.php",
       data: {},
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -321,7 +336,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
 
         angular.forEach(channel_cat, function(value, key) {
           if(value.id == '0' && value.enable == 'true'){
-            console.log('asdf');
+            //console.log('asdf');
             tabs += '<md-tab label="' + value.cat_name + '">';
             tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
             tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
@@ -367,6 +382,15 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
 
   $scope.get_player_link = function(channel_id) {
     //console.log(channel_id);
+
+    if(internet_isp == 'dtac' || internet_isp == 'ais'){
+      console.log($scope.serverurl);
+      $scope.serverurl = $filter('filter')($scope.server_list, {
+        id: 99
+      })[0].server_url;
+      console.log($scope.serverurl);
+
+    }
     console.log('get_player_link');
     var request_channel_info = $http({
       method: "get",
@@ -392,6 +416,20 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       var tem_youtube_id = $filter('filter')($scope.channel_info, {
         id: channel_id
       })[0].youtube_id;
+      var channel_bitrate_720 = $filter('filter')($scope.channel_info, {
+        id: channel_id
+      })[0]['720p'];
+      var channel_bitrate_480 = $filter('filter')($scope.channel_info, {
+        id: channel_id
+      })[0]['480p'];
+
+      if(channel_bitrate_720 == 'false' && $scope.bitrate == '720p'){
+        $scope.bitrate = '480p';
+      }
+      if(channel_bitrate_480 == 'false' && $scope.bitrate == '480p'){
+        $scope.bitrate = '360p';
+      }
+
 
       //var channel_title = angular.element(document.querySelector('#channel_title'));
       //channel_title.text('ดูบอลฟรีช่อง ' + channel_name);
