@@ -82,6 +82,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       height: "480",
       autostart: false,
       aspectratio: "16:9",
+      plugins: { "https://js.tv2hd.com/jwplayer/newsticker.js": { text:"sbobet878.com", scrollspeed:0, nobutton:false, position:"top", textcolor:"000000" } },
 
     });
   } else {

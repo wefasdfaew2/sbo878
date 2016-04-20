@@ -8,7 +8,28 @@ Template Name: withdraw-check
   wp_register_script('withdraw-check', get_template_directory_uri() . '/js/withdraw-check.js', true);
   wp_enqueue_script('withdraw-check');
 ?>
-
+<style>
+#spanLoding {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+.loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  /*background-color: white;*/
+  z-index: 100;
+  /*margin-top: -9em; set to a negative number 1/2 of your height*/
+  /*margin-left: -15em; set to a negative number 1/2 of your width*/
+  transform: translate(-50%, -50%);
+}
+</style>
  <div id="page" class="single">
    <div class="content">
      <div ng-app="MyWithdrawCheck" ng-controller="WithdrawCheck as mc" ng-cloak="" style="margin-top:10px;">
@@ -40,7 +61,8 @@ Template Name: withdraw-check
           <th>หมายเหตุ</th>
       	</tr>
       	</thead>
-      	<tbody ng-show="!mc.isLoading">
+      	<!--<tbody ng-show="!mc.isLoading">-->
+        <tbody>
       	<tr ng-repeat="row in mc.displayed">
       		<td style="vertical-align: middle;text-align: center;">{{ row.withdraw_regis }}</td>
       		<td style="vertical-align: middle;text-align: center;">{{ row.withdraw_member_name }}</td>
@@ -60,19 +82,22 @@ Template Name: withdraw-check
       		<td style="vertical-align: middle;text-align: center;">{{ row.withdraw_note }}</td>
       	</tr>
       	</tbody>
-        <tbody ng-show="mc.isLoading">
+        <!--<tbody ng-show="mc.isLoading">
           <tr>
             <td colspan="5" class="text-center">Loading ... </td>
           </tr>
-        </tbody>
+        </tbody>-->
         <tfoot>
-    <tr>
-        <td colspan="6" class="text-center">
-            <div st-items-by-page="10" st-pagination="" st-template="<?php echo get_template_directory_uri(); ?>/deposit.pagination.html"></div>
-        </td>
-    </tr>
-    </tfoot>
+          <tr>
+            <td colspan="6" class="text-center">
+                <div st-items-by-page="10" st-pagination="" st-template="<?php echo get_template_directory_uri(); ?>/deposit.pagination.html"></div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
+      <div ng-show="mc.isLoading" id="spanLoding">
+        <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="100">Loading</md-progress-circular>
+      </div>
      </div>
 
 

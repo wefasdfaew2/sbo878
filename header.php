@@ -95,7 +95,7 @@
 								</td>
 				            <td align="right" style="float:right;border:0px;padding-right:5px;white-space:nowrap;">
 											<a href="<?php echo  get_permalink(29); ?>?cmd=update">
-												<button type="button" class="btn btn-success">แก้ไข้ข้อมูลส่วนตัว</button>
+												<button type="button" class="btn btn-success">คุณอยู่ในระบบ</button>
 											</a>
 									</td>
 				            <td align="right" style="float:right;border:0px;padding-right:5px;white-space:nowrap;">

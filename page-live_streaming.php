@@ -86,9 +86,11 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
     <h2 ng-bind-html="channel_title_html"></h2>
 </div>
 <div layout="row" layout-align="end center">
+  <a href="<?php echo get_permalink(314); ?>">
     <md-button class="md-raised md-primary" md-no-focus-style="true" style="padding-left:15px;padding-right:15px;margin-right:20px;">
       ตารางถ่ายถอดสด
     </md-button>
+  </a>
 </div>
 <div ng-show="youtube_id == false" layout="column" style="padding-left:16px;padding-right:16px;">
 
