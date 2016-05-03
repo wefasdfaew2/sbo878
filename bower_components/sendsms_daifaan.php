@@ -1,14 +1,12 @@
 ﻿<?php
 //echo SendMessage('0871348970', 'line1%0Aบันทัด2%0Aบันทัด3%0Aบันทัด4');
 //if ( ! defined( 'ABSPATH' ) ) die( 'Error!' );
-$pos = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+/**$pos = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
 if($pos===false){
-  $pos = strpos($_SERVER['HTTP_REFERER'],'sbolive.asia');
-  if($pos===false){
-    die('Restricted access');
-  }  
-}
 
+    die('Restricted access');
+
+}**/
 function SendMessage_daifaan($number, $message)
 {
 $host= '119.160.210.164';

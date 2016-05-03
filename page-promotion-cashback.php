@@ -10,7 +10,7 @@ var app = angular.module('MyPromotionCashback', ['ngMaterial', 'ngMessages', 'sm
 
 app.controller('PromotionCashback', function($scope, $http) {
 
-  console.log("PromotionCashback !!!");
+  //console.log("PromotionCashback !!!");
 
   $scope.templateUrl = WPURLS.templateurl + '/images';
   //$scope.lotto_winner = function(){

@@ -25,6 +25,7 @@ if(!empty($request->bank_number_2))$bank_number_2 = $request->bank_number_2;
 if(!empty($request->bank_name_2))$bank_name_2 = $request->bank_name_2;
 if(!empty($request->bank_number_3))$bank_number_3 = $request->bank_number_3;
 if(!empty($request->bank_name_3))$bank_name_3 = $request->bank_name_3;
+if(!empty($request->notify_transfer_url))$notify_transfer_url = $request->notify_transfer_url;
 
 
 $deposit_bot_tunover_check_mark = '';
@@ -153,20 +154,25 @@ if ($result->num_rows > 0)
             '$deposit_nextpayment_promotion_mark')";
 
     if ($conn->query($sql) === TRUE) {
-      $daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท%0A%0Aไปยังบัญชีเลขที่%0A'.
-                    $bank_number_show.'%0A(ธนาคาร'.$bank_name_show.')%0A%0Aหลังจากโอนเงินเสร็จเรียบร้อย%0A'.
-                    'แล้วกรุณาแจ้งการโอนเงินผ่าน%0Aแบบฟอร์มได้ที่%0A%0Ahttp://sbogroup.t-wifi.co.th/wordpress/index.php/user_inform_transfer';
-      SendMessage_daifaan($member_telephone_1, $daifaan_sms );
 
       $result_data = array(
         "amount" => $deposit_amount,
         "bank_number" => $bank_number_show,
         "bank_name" => $bank_name_show,
         "set_status" => "success");
+        print json_encode($result_data);
+
+      $daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท%0A%0Aไปยังบัญชีเลขที่%0A'.
+                    $bank_number_show.'%0A(ธนาคาร'.$bank_name_show.')%0A%0Aหลังจากโอนเงินเสร็จเรียบร้อย%0A'.
+                    'แล้วกรุณาแจ้งการโอนเงินผ่าน%0Aแบบฟอร์มได้ที่%0A%0A'.$notify_transfer_url;
+      SendMessage_daifaan($member_telephone_1, $daifaan_sms );
+
+
     } else {
       $result_data = array("set_status" => "fail3");
+      print json_encode($result_data);
     }
-    print json_encode($result_data);
+
   }
   else
   {

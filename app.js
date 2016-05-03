@@ -40,27 +40,27 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       var user_md5 = 'guest' + md5('guest' + ip + ts);
       $scope.token = md5($scope.random_string);
 
-      /*console.log(full_ts);
-      console.log(ts);
-      console.log('guest' + ip + ts);
-      console.log(user_md5);
-      console.log($scope.random_string);
-      console.log($scope.token);*/
+      /*//console.log(full_ts);
+      //console.log(ts);
+      //console.log('guest' + ip + ts);
+      //console.log(user_md5);
+      //console.log($scope.random_string);
+      //console.log($scope.token);*/
 
       var data = {};
       data.user = user_md5;
       data.timestamp = full_ts;
       data.ip = userIP;
       data.token = $scope.token;
-      //console.log(data);
+      ////console.log(data);
       $http.post(WPURLS.templateurl + "/php/insert-user-token.php", data)
         .success(function(result) {
-          //console.log('result = ' + result);
+          ////console.log('result = ' + result);
         });
     }
     //player();
     //function player(player_link, channel_title) {
-    //console.log(channel_title);
+    ////console.log(channel_title);
   $scope.channel_id = null;
   //WPURLS.templateurl + "/images/
   //if(deviceDetector.os == 'android'){
@@ -90,9 +90,9 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   }
   //  }
   $scope.promote_play = function(id, server, bitrate, mode) {
-      console.log("id = " + id + server);
-      console.log(bitrate);
-      console.log(mode);
+      //console.log("id = " + id + server);
+      //console.log(bitrate);
+      //console.log(mode);
 
 
       if (server == 'no-promote') {
@@ -194,7 +194,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
             }
 
             if (deviceDetector.os == 'android') {
-              console.log("promote goto app");
+              //console.log("promote goto app");
               $scope.link_promote_player = '<a href="' +  $scope.link_player + '">' +
               '<img src="' + WPURLS.templateurl + '/images/android-player.jpg"/>' +
               '</a>';
@@ -207,7 +207,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
                 file: $scope.link_player
               }]).play();
             }
-            console.log($scope.link_player);
+            //console.log($scope.link_player);
           });
         } else {
           var server_from_id = $http({
@@ -240,7 +240,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
             }
 
             if (deviceDetector.os == 'android') {
-              console.log("promote goto app");
+              //console.log("promote goto app");
               $scope.link_promote_player = '<a href="' +  $scope.link_player + '">' +
               '<img src="' + WPURLS.templateurl + '/images/android-player.jpg"/>' +
               '</a>';
@@ -254,7 +254,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
               }]).play();
             }
 
-            console.log($scope.link_player);
+            //console.log($scope.link_player);
           });
         }
       });
@@ -284,7 +284,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   });
   request_server_list.success(function(server_list) {
     $scope.server_list = server_list;
-    console.log(typeof($scope.server_list));
+    //console.log(typeof($scope.server_list));
     if(internet_isp == 'dtac' || internet_isp == 'ais'){
       $scope.server_list = $filter('filter')($scope.server_list, {
         id: 99
@@ -307,7 +307,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
     request_channel_list.success(function(channel_list) {
       $scope.channel_list = channel_list;
       $scope.channel_list2 = channel_list;
-      console.log( $filter('filter')(channel_list, {category_id: '14'}) );
+      //console.log( $filter('filter')(channel_list, {category_id: '14'}) );
       //alert(channel_list.ip);
     });
   }
@@ -332,12 +332,12 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
         }
       });
       request_channel_list.success(function(channel_list) {
-        //console.log(channel_list);
+        ////console.log(channel_list);
           var tabs = '<md-tabs md-swipe-content md-no-ink md-border-bottom md-dynamic-height>';
 
         angular.forEach(channel_cat, function(value, key) {
           if(value.id == '0' && value.enable == 'true'){
-            //console.log('asdf');
+            ////console.log('asdf');
             tabs += '<md-tab label="' + value.cat_name + '">';
             tabs += '<md-content layout="row" layout-wrap layout-align="center center" style="background-color: #ECEFF1;padding-bottom:16px;">';
             tabs += '<div layout="row" layout-wrap layout-align="center center" style="padding-top:5px;padding-bottom:5px;">';
@@ -345,7 +345,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
 
                 tabs += '<div style="padding:5px;">';
                 tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
-                tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
+                tabs += '<img ng-src="' + WPURLS.templateurl + '/images' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
                 tabs += '</a>';
                 tabs += '</div>';
 
@@ -362,7 +362,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
               if(value2.category_id == value.id){
                 tabs += '<div style="padding:5px;">';
                 tabs += '<a ng-click="get_player_link(' + value2.id +')" style="cursor: pointer;">';
-                tabs += '<img ng-src="' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
+                tabs += '<img ng-src="' + WPURLS.templateurl + '/images' + value2.channel_logo_ssl + '" class="md-avatar" class="img-responsive center-block" style="padding-top:10px;" width="117" height="60"/>';
                 tabs += '</a>';
                 tabs += '</div>';
               }
@@ -373,7 +373,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
           }
         });
         tabs += '</md-tabs>';
-        //console.log(tabs);
+        ////console.log(tabs);
         var fastTabs = angular.element(document.querySelector('#fastTabs'));
         var newElement = $compile( tabs )( $scope );
         fastTabs.append( newElement );
@@ -382,17 +382,17 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   }
 
   $scope.get_player_link = function(channel_id) {
-    //console.log(channel_id);
+    ////console.log(channel_id);
 
     if(internet_isp == 'dtac' || internet_isp == 'ais'){
-      console.log($scope.serverurl);
+      //console.log($scope.serverurl);
       $scope.serverurl = $filter('filter')($scope.server_list, {
         id: 99
       })[0].server_url;
-      console.log($scope.serverurl);
+      //console.log($scope.serverurl);
 
     }
-    console.log('get_player_link');
+    //console.log('get_player_link');
     var request_channel_info = $http({
       method: "get",
       url: WPURLS.templateurl + "/php/get-channel-by-id.php?id=" + channel_id,
@@ -436,7 +436,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       //channel_title.text('ดูบอลฟรีช่อง ' + channel_name);
       $scope.channel_title_html = 'ดูบอลฟรีช่อง ' + channel_name;
 
-      //console.log(tem_youtube_id);
+      ////console.log(tem_youtube_id);
       if (tem_youtube_id != null && tem_youtube_id != '') {
 
         tem_youtube_id = 'http://www.youtube.com/embed/' + tem_youtube_id;
@@ -493,7 +493,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
           }
 
           if (deviceDetector.os == 'ios' || deviceDetector.os == 'android') {
-            console.log("goto app");
+            //console.log("goto app");
             $window.location.href = $scope.link_player;
           } else {
             play_stream.load([{
@@ -501,7 +501,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
             }]).play();
           }
 
-          console.log($scope.link_player);
+          //console.log($scope.link_player);
         });
       } else {
 
@@ -521,10 +521,10 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
             simname + '_' + $scope.bitrate.trim();
           $scope.link_player += "/playlist.m3u8?token=" + $scope.random_string;
         }
-        console.log($scope.link_player);
+        //console.log($scope.link_player);
 
         if (deviceDetector.os == 'ios' || deviceDetector.os == 'android') {
-          console.log("goto app");
+          //console.log("goto app");
           $window.location.href = $scope.link_player;
         } else {
           play_stream.load([{
@@ -542,7 +542,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
   $scope.set_cookies = function(cookies_id, cookies_value) {
     ipCookie(cookies_id, cookies_value);
 
-    //console.log($scope.channel_id);
+    ////console.log($scope.channel_id);
     if ($scope.channel_id != null) {
       if (deviceDetector.os == 'ios' || deviceDetector.os == 'android') {
 

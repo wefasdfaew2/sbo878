@@ -13,7 +13,7 @@ var app = angular.module('MyLiveSchedule', ['ngMaterial', 'ngMessages', 'smart-t
 
 app.controller('LiveSchedule', function($scope, $http, $filter) {
 
-  console.log("LiveSchedule !!!");
+  //console.log("LiveSchedule !!!");
 
   var today = $filter('date')(Date.now(), 'yyyy-MM-dd', '+0700');
   var be = parseInt($filter('date')(Date.now(), 'yyyy', '+0700')) + 543;
@@ -45,7 +45,7 @@ app.controller('LiveSchedule', function($scope, $http, $filter) {
   get_schedule.success(function(schedule) {
     $scope.schedule_list = schedule;
     //$scope.channel_logo =
-    console.log($scope.schedule_list);
+    //console.log($scope.schedule_list);
      //var res = str.split(" ");
   });
 
@@ -64,7 +64,7 @@ app.controller('LiveSchedule', function($scope, $http, $filter) {
     </center>
       <div ng-repeat="league in league_list">
         <div style="background-color:#387ef5;font-weight: bold;text-indent: 10px;width:90%;margin:10px auto 0px auto;color:white;padding: 10px 5px 5px 5px;" ng-if="(schedule_list|filter:{schedule_league:league.league_name}).length != 0">
-          <img ng-if="league.league_logo != ''" ng-src="{{ league.league_logo }}" alt="ดูบอลออนไล์ ดูบอลสด" style="margin-right: 3px;" width="35" height="35"/>
+          <img ng-if="league.league_logo != ''" ng-src="<?php echo get_template_directory_uri(); ?>/images/{{ league.league_logo }}" alt="ดูบอลออนไล์ ดูบอลสด" style="margin-right: 3px;" width="35" height="35"/>
           <img ng-if="league.league_logo == ''" ng-src="<?php echo get_template_directory_uri(); ?>/images/noimage.jpg" alt="ดูบอลออนไล์ ดูบอลสด" style="margin-right: 3px;" width="35" height="35"/>{{ league.league_name }}
         </div>
         <table  style="width:90%;margin:0 auto;" ng-if="(schedule_list|filter:{schedule_league:league.league_name}).length != 0" class="table table-striped">

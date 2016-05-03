@@ -10,7 +10,7 @@ var app = angular.module('MyPromotionLotto', ['ngMaterial', 'ngMessages', 'smart
 
 app.controller('PromotionLotto', function($scope, $http) {
 
-  console.log("PromotionLotto !!!");
+  //console.log("PromotionLotto !!!");
 
   //$scope.lotto_winner = function(){
     var get_winner = $http({

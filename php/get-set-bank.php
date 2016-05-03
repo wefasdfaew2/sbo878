@@ -5,7 +5,8 @@ $check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
 if($check_direct_access === false)die('Restricted access');
 
 header('Content-Type: text/html; charset=utf-8');
-include("../php_sms_class/sendsms_daifaan.php");
+//include("../php_sms_class/sendsms_daifaan.php");
+include("../php_sms_class/sms_sbobet878.php");
 $configs = include('../php_db_config/config.php');
 
 $servername = $configs['servername'];
@@ -163,8 +164,12 @@ if($option == 'get'){
 
   if ($conn->query($sql) === TRUE) {
 
-    $daifaan_sms = 'รหัส%20OTP%20=%20'.$otp.'%20Ref%20Code%20:%20'.$otp_ref;
-    SendMessage_daifaan($tel, $daifaan_sms );
+
+    $message_sms_1 = 'รหัส OTP = '. $otp .' Ref Code : '.$otp_ref;
+    $result_sms = send_sms($tel,$message_sms_1);
+
+    //$daifaan_sms = 'รหัส%20OTP%20=%20'.$otp.'%20Ref%20Code%20:%20'.$otp_ref;
+    //SendMessage_daifaan($tel, $daifaan_sms );
 
       $result_data = array("otp_ref" => "$otp_ref");
   } else {

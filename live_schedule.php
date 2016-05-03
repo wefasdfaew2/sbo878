@@ -30,7 +30,7 @@ get_header();
   if(empty($_POST["password"]))
     {
 
-        $check_p = 'true';
+        $check_p = 'false';//true
     }else {
       if($_POST["password"] == 's4722team'){
         $check_p = 'false';
@@ -70,7 +70,7 @@ get_header();
    // echo '<div ng-app="app_user_inform_transfer" ng-controller="cont_user_inform_transfer" ng-cloak="" ng-init="user_waiting_list('.$user_name.')">';
  ?>
 
-	<div ng-app="app_backend_live_schedule" ng-controller="cont_backend_live_schedule" ng-cloak="" ng-init="data_list('0')">
+	<div ng-app="app_backend_live_schedule" ng-controller="cont_backend_live_schedule as ctrl" ng-cloak="" ng-init="data_list('0')">
 
  </br>
 
@@ -134,22 +134,80 @@ get_header();
 
 	</div>
 
-	<div class="row">
-  <div class="col-md-8  col-xs-8 col-sm-8 " >
-  <h3>ชื่อทีมที่ต้องการบันทึก (หรือสามารถแก้ไขได้ที่นี่ก่อนบันทึก)</h3>
-	<md-input-container>
+	<!--<div class="row">
+  <div class="col-md-8  col-xs-8 col-sm-8 " >-->
+
+  <div>
+      <h3>ชื่อทีมที่ต้องการบันทึก (หรือสามารถแก้ไขได้ที่นี่ก่อนบันทึก)</h3>
+	<!--<md-input-container>
         <label>ทีมเจ้าบ้าน</label>
         <input ng-model="insert_team_home">
       </md-input-container>
 	   <md-input-container>
         <label>ทีมเยือน</label>
         <input ng-model="insert_team_away">
-      </md-input-container>
-	  </div>
+      </md-input-container>-->
 
-	  </div>
+      <div layout="row">
+        <span flex></span>
+        <div layout="column">
+          <label>ทีมเจ้าบ้าน</label>
+          <md-autocomplete
+          style="width: 300px;"
+             md-no-cache="true"
+             md-selected-item="selectedhome"
+             md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+             md-search-text="ctrl.searchText"
+             md-selected-item-change="ctrl.selectedItemChange(selectedhome.team_name)"
+             md-items="item in ctrl.querySearch(ctrl.searchText)"
+             md-item-text="item.team_name"
+             md-min-length="0"
+             placeholder="Team name ?"
+             >
+
+             <md-item-template>
+              <span md-highlight-text="ctrl.searchText" >{{item.team_name}}</span>
+            </md-item-template>
+            <md-not-found>
+              ไม่มีทีม "{{ctrl.searchText}}" ในดาต้าเบส.
+              <a ng-click="ctrl.newState(ctrl.searchText)">คลิกเพื่อใช้ทีมนี้</a>
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+        <span flex="5"></span>
+        <div layout="column">
+          <label>ทีมเยือน</label>
+          <md-autocomplete
+          style="width: 300px;"
+             md-no-cache="true"
+             md-selected-item="selectedaway"
+             md-search-text-change="ctrl.searchTextChange2(ctrl.searchText2)"
+             md-search-text="ctrl.searchText2"
+             md-selected-item-change="ctrl.selectedItemChange2(selectedaway.team_name)"
+             md-items="item in ctrl.querySearch(ctrl.searchText2)"
+             md-item-text="item.team_name"
+             md-min-length="0"
+             placeholder="Team name ?"
+             >
+
+             <md-item-template>
+              <span md-highlight-text="ctrl.searchText2" >{{item.team_name}}</span>
+            </md-item-template>
+            <md-not-found>
+              ไม่มีทีม "{{ctrl.searchText2}}" ในดาต้าเบส.
+              <a ng-click="ctrl.newState2(ctrl.searchText2)">คลิกเพื่อใช้ทีมนี้</a>
+            </md-not-found>
+          </md-autocomplete>
+        </div>
+        <span flex></span>
+      </div>
 
 
+    </div>
+
+
+
+    <br>
     <ul style="-webkit-column-count: 3;-moz-column-count: 3;column-count: 3;list-style: none;">
       <li ng-repeat="list_ch in json_data_list_ch">
         <input type="checkbox" ng-checked="ch_exists(list_ch.id, ch_selected)" ng-click="ch_toggle(list_ch.id, ch_selected)">
@@ -165,11 +223,12 @@ get_header();
 
 
 
-
+<center>
 	 <div>
    <md-button ng-click="insertdata()" class="md-raised md-warn md-hue-2">ยืนยัน</md-button>
    </div>
-
+      {{result}}
+    </center>
    <div  ng-show="<?php echo $check_p; ?>" id="spanLoding">
      <form class="loading" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 

@@ -18,23 +18,83 @@
 
 
 header('Content-Type: text/html; charset=utf-8');
+
+function get_ip_address(){
+    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+        if (array_key_exists($key, $_SERVER) === true){
+            foreach (explode(',', $_SERVER[$key]) as $ip){
+                $ip = trim($ip); // just to be safe
+
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                    return $ip;
+                }
+            }
+        }
+    }
+}
+
+$userIP = get_ip_address();
+
+$isp_ip = unserialize(file_get_contents('http://pro.ip-api.com/php/'.$userIP.'?key=utwEtyx2f6XGIFr'.'&fields=region,isp,org,as,reverse,mobile,proxy,query,status,message'));
+if($isp_ip && $isp_ip['status'] == 'success') {
+$user_org = strtolower($isp_ip['org']);
+$user_isp = strtolower($isp_ip['isp']);
+$user_reverse = strtolower($isp_ip['reverse']);
+//echo $user_ip_provider;
+//echo $isp_ip;
+echo "<pre>";
+print_r($isp_ip);
+echo "</pre>";
+//$isp_ip['org'] = 'SamnaknganTamruatHaeng';
+$check_key_word="/Ministry|Gover|SamnaknganTamruatHaeng|Chat|Leased|Krom|Police|Giver|Department|Court|1222|Royal/i";
+foreach ($isp_ip as $key => $value) {
+  if (preg_match($check_key_word, $value) == true){
+    die('Exit');
+  }
+}
+
+} else {
+$user_isp = "Unable to get isp";
+$user_org = "Unable to get org";
+$user_reverse = "Unable to get reverse";
+ echo 'Unable to get isp';
+}
+
+
+
+//foreach($_SERVER as $key => $value){
+//echo '$_SERVER["'.$key.'"] = '.$value."<br />";//
+//}
+
 //echo $_SERVER['HTTP_REFERER'].'<br>';
 //echo $_SERVER['SERVER_ADDR'].'<br>';
 //echo $_SERVER['REMOTE_ADDR'].'<br>';
 //echo getenv('HTTP_HOST');
-include("http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php_sms_class/sendsms_daifaan.php");
+//include("http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php_sms_class/sendsms_daifaan.php");
 
-echo "<a href='http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/test.php'>aaaa</a>";
+/**$add_result = json_decode('{"status" : "200", "error" : "zzzzzz"}',true);
+//$result = preg_match("/200/",$add_result);
+$result = $obj->{'status'};
 
-$pos = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+//print_r($add_result);
+
+echo $add_result["status"];
+echo $add_result["error"];
+echo $add_result[0]->status;
+if($add_result == null){
+  echo 'abc';
+}**/
+//echo "<a href='http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/test.php'>aaaa</a>";
+
+/**$pos = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
 if($pos===false){
   $pos = strpos($_SERVER['HTTP_REFERER'],'sbolive.asia');
   if($pos===false){
     die('Restricted access1');
   }
-}
+}**/
 
-echo "string";
+//echo "string";
 /**$configs = include('../php_db_config/config.php');
 
 $servername = $configs['servername'];

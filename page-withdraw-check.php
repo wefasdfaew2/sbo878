@@ -53,7 +53,7 @@ Template Name: withdraw-check
       	</tr>
         <thead>
       	<tr>
-      		<th style="white-space:nowrap;text-align: center;">วันที่ทำรายการ</th>
+      		<th st-sort="withdraw_regis" st-sort-default="reverse" style="white-space:nowrap;text-align: center;">วันที่ทำรายการ</th>
           <th style="white-space:nowrap;text-align: center;">ประเภทบัญชี</th>
       		<th style="white-space:nowrap;text-align: center;">Username</th>
       		<th style="white-space:nowrap;text-align: center;">ถอนเข้าบัญชีเลขที่</th>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * The template for displaying the footer.
  */
@@ -43,30 +43,30 @@
   $link_truemove_g='';
   //lotto
   $lotto_date='';
-  $lotto_number=''; 
+  $lotto_number='';
   //top user cashback
   $u_cashback1='';
   $u_cashback2='';
   $u_cashback3='';
   $u_cashback4='';
   $u_cashback5='';
-  
+
   $sql_get_url =  "SELECT `sort`,`bet_name`,`isp_name`,`url`
 						FROM  `all_bet_link_url`";
-					 
+
    $result_get_url = $conn->query($sql_get_url);
-   
+
    if ($result_get_url->num_rows > 0){
     while($row = $result_get_url->fetch_assoc())
     {
- 
+
 		$db_sort= $row["sort"];
 	  $db_bet_name= $row["bet_name"];
 	  $db_isp_name= $row["isp_name"];
 	  $db_url= $row["url"];
-	 
+
 	  //assign url
-	 
+
 	  if($db_sort=='1' && $db_bet_name == 'sbobet' && $db_isp_name=='3bb'){
 		$link_3bb_s=$db_url;
 	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='3bb'){
@@ -96,15 +96,15 @@
 	  }elseif($db_sort=='1' && $db_bet_name == 'gclub' && $db_isp_name=='truemove'){
 	   $link_truemove_g=$db_url;
 	  }
-    
+
 	}
- 
+
    }else{
   //  echo "ref_otp not found on db";
    }
    // sql lotto
-	 
-	$sql_get_lotto =  "SELECT `current_pro_lotto_date`,`current_pro_lotto_number`  
+
+	$sql_get_lotto =  "SELECT `current_pro_lotto_date`,`current_pro_lotto_number`
 						FROM `global_setting` WHERE 1";
    $result_get_lotto = $conn->query($sql_get_lotto);
    if ($result_get_lotto->num_rows > 0){
@@ -113,9 +113,9 @@
 	 $lotto_date=$row["current_pro_lotto_date"];
 	 $lotto_number=$row["current_pro_lotto_number"];
 	}
-	} 
+	}
    //sql top 5 cashback user
-   	$sql_get_cashback =  "SELECT reward,username FROM `promotion_cashback` 
+   $sql_get_cashback =  "SELECT reward,username FROM `promotion_cashback`
 							WHERE  MONTH(`date`) = MONTH(NOW()) order by reward";
    $result_get_cashback = $conn->query($sql_get_cashback);
    if ($result_get_cashback->num_rows > 0){
@@ -134,10 +134,33 @@
 	 }elseif($db_reward=='5'){
 		$u_cashback5=$db_username;
 	 }
-	 
 	}
-	} 
-   
+	}else{
+	//if return 0 show last month
+	$sql_get_cashback =  "SELECT reward,username FROM `promotion_cashback`
+							WHERE  MONTH(`date`) = MONTH(NOW())-1 order by reward";
+	$result_get_cashback = $conn->query($sql_get_cashback);
+   if ($result_get_cashback->num_rows > 0){
+    while($row = $result_get_cashback->fetch_assoc())
+    {
+	 $db_reward=$row["reward"];
+	 $db_username=$row["username"];
+	 if($db_reward=='1'){
+		$u_cashback1=$db_username;
+	 }elseif($db_reward=='2'){
+		$u_cashback2=$db_username;
+	 }elseif($db_reward=='3'){
+		$u_cashback3=$db_username;
+	 }elseif($db_reward=='4'){
+		$u_cashback4=$db_username;
+	 }elseif($db_reward=='5'){
+		$u_cashback5=$db_username;
+	 }
+	}
+	}
+
+	}
+
 ?>
 <footer>
 	<?php if( $carousel_section == 1 && isset($carousel_cats) ) { ?>
@@ -176,27 +199,30 @@
 <?php $postid = get_the_ID(); if($postid=='46') {?>
 <!--lotto-->
 <div class="carousel" style="height:40px;margin-bottom:10px;">
-			<table style="width:100%">
-				<tr>
-					<th><h3 class="frontTitle">ตรวจโปรเลขท้ายสามตัว</h3></th>
-					<th><h3 class="frontTitle">ตรวจโปรคืนยอดเสีย</h3></th> 
-				</tr>
-				</table> 
+ <div class="row " >
+		<div class="col-md-6  col-xs-6  col-sm-6 text-center " >
+		<h3 class="frontTitle">ตรวจโปรเลขท้ายสามตัว</h3>
+		</div>
+		<div class="col-md-6  col-xs-6  col-sm-6 text-center " >
+		<h3 class="frontTitle">ตรวจโปรคืนยอดเสีย</h3>
+		</div>
+ </div>
+
 	</div>
- 
+
   <div class="row " >
     <div class="col-md-6  col-xs-6  col-sm-6 text-center " >
 			<table style="width:100%;" >
-				<tr> 
-					<td>งวดประจำวันที่ <?php echo $lotto_date;?></td> 
+				<tr>
+					<td>งวดประจำวันที่ <?php echo $lotto_date;?></td>
 				</tr>
-				<tr> 
+				<tr>
 					<td>
 					</br>
 					<font color="blue"><strong>รางวัลที่ 1</strong></font>
-					</td> 
+					</td>
 				</tr>
-				<tr> 
+				<tr>
 					<td style="word-spacing: 30px;">
 					<?php echo  $lotto_number[0];?>
 					<?php echo  $lotto_number[1];?>
@@ -208,81 +234,81 @@
 					<?php echo  $lotto_number[5];?>
 					</strong>
 					</font>
-					 </td> 
+					 </td>
 				</tr>
-				<tr> 
+				<tr>
 					<td>
 					</br>
-						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom#pro_lotto" class = "btn btn-danger" role = "button">
+						<a href = "<?php echo get_permalink(133); ?>#pro_lotto" class = "btn btn-danger" role = "button">
 						อ่านรายละเอียดโปรโมชั่นนี้
 						</a>
-			 		
-						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotion-lotto" class = "btn btn-danger" role = "button">
+
+						<a href = "<?php echo get_permalink(310); ?>" class = "btn btn-danger" role = "button">
 					ตรวจสอบรายชือผู้โชคดี
 						</a>
 				   </td>
 				</tr>
 				</table>
 	</div>
-	
+
     <div class="col-md-6  col-xs-6  col-sm-6   " >
 			<table style="width:100%;" class="text-center" >
 				<tr>
 					<td>ประจำเดือน <?php echo $thai_m[date("n")-1];?>
-					(<?php echo date('j',strtotime("first day of this month")),"-",date('j',strtotime("last day of this month"))," ",$thai_m[date("n")-1]," ",date("Y")+543;?>)	
-					
-					</td> 
+					(<?php echo date('j',strtotime("first day of this month")),"-",date('j',strtotime("last day of this month"))," ",$thai_m[date("n")-1]," ",date("Y")+543;?>)
+
+					</td>
 				</tr>
 				<tr>
 				 <td></br></td>
 				</tr>
 				</table>
-				
+
 				<table   style="width:95%;border:1px solid #A2B964;"   >
-				 
+
 				<tr bgcolor="#A2B964" >
 					<td style="color:white;padding:5px 0px 0px 50px;">อันดับที่ 1 (คืนยอดเสีย 10%) </td>
-					<td style="color:white;padding:5px 0px 0px 50px;"><?php echo $u_cashback1;?></td> 					
+					<td style="color:white;padding:5px 0px 0px 50px;"><?php echo $u_cashback1;?></td>
 				</tr>
 				<tr  style="border:1px solid #A2B964;"   >
 					<td style="padding-left:50px;">อันดับที่ 2 (คืนยอดเสีย 7%) </td>
-					<td style="padding-left:50px;"><?php echo  $u_cashback2;?></td>					
+					<td style="padding-left:50px;"><?php echo  $u_cashback2;?></td>
 				</tr>
 				<tr style="border:1px solid #A2B964;"  >
-					<td style="padding-left:50px;">อันดับที่ 3 (คืนยอดเสีย 5%) </td> 
+					<td style="padding-left:50px;">อันดับที่ 3 (คืนยอดเสีย 5%) </td>
 					<td style="padding-left:50px;"><?php echo  $u_cashback3;?></td>
 				</tr>
 				<tr style="border:1px solid #A2B964;"  >
-					<td style="padding-left:50px;">อันดับที่ 4 (คืนยอดเสีย 3%) </td> 
-					<td style="padding-left:50px;"><?php echo  $u_cashback4;?></td>		
+					<td style="padding-left:50px;">อันดับที่ 4 (คืนยอดเสีย 3%) </td>
+					<td style="padding-left:50px;"><?php echo  $u_cashback4;?></td>
 				</tr>
 				<tr style="border:1px solid #A2B964;"  >
 					<td style="padding-left:50px;">อันดับที่ 5 (คืนยอดเสีย 3%) </td>
 					<td style="padding-left:50px;"><?php echo  $u_cashback5;?></td>
 				</tr>
-				 
+
 				</table>
 				<table style="width:100%;" class="text-center"  >
 				<tr>
 					<td>
 					</br>
-						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom#pro_cashback" class = "btn btn-success" role = "button">
+						<a href = "<?php echo get_permalink(133); ?>#pro_cashback" class = "btn btn-success" role = "button">
 						อ่านรายละเอียดโปรโมชั่นนี้
 						</a>
-			 		
-						<a href = "http://sbogroup.t-wifi.co.th/wordpress/index.php/promotiom" class = "btn btn-success" role = "button">
+
+						<a href = "<?php echo get_permalink(312); ?>" class = "btn btn-success" role = "button">
 					ตรวจสอบรายชือผู้โชคดี
 						</a>
-					</td> 
+					</td>
 				</tr>
 				</table>
-				
+
 	</div>
-   
+
    </div>
-  
+
  </br>
-	 
+
 <!--score table-->
 	<div class="carousel" style="height:40px;margin-bottom:10px;">
 			<h3 class="frontTitle">ตารางคะแนน (อัพเดทอัตโนมัติ)</h3>
@@ -333,20 +359,28 @@
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_3bb">ทางเข้าทั้งหมดผ่าน3bb</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_3bb_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_3bb_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   <!--x -->
   <td>
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_trueonline">ทางเข้าทั้งหมดผ่านทรู</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_trueonline_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_trueonline_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   </tr>
 </table>
@@ -386,20 +420,28 @@
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_tot">ทางเข้าทั้งหมดผ่านทีโอที</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_tot_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_tot_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   <!--x -->
   <td>
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_cat">ทางเข้าทั้งหมดผ่านแคท</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_cat_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_cat_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   </tr>
 </table>
@@ -439,20 +481,28 @@
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_ais">ทางเข้าทั้งหมดผ่านเอไอเอส</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_ais_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_ais_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   <!--x -->
   <td>
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_dtac">ทางเข้าทั้งหมดผ่านดีแทค</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_dtac_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_dtac_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   </tr>
 </table>
@@ -490,10 +540,14 @@
 	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_truemove">ทางเข้าทั้งหมดผ่านทรูมูฟเฮช</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_truemove_s;?>">
 	sbobet link1
+	</a>
   </td>
   <td>
+  <a target="_blank" href="<?php echo $link_truemove_g;?>">
 	Royal Gclub link1
+	</a>
   </td>
   <!--x -->
    <td>

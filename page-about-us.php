@@ -7,7 +7,7 @@ Template Name: About-Us
 
 
  <div id="page" class="single">
-   <div class="content">
+   <div class="content" id="aboutus">
      <div  style="margin-top:0px;">
        <center>
          <h2 class="page-title">
@@ -44,7 +44,7 @@ Template Name: About-Us
          <h3 style="background-color: #5cb85c;border-color: #4cae4c;color: #fff;">
            <div style="width: 80%;max-width: 24em;margin: 0 auto;padding: 0.25em 0.625em;">ทำไมต้องใช้บริการกับ SBOBET878</div>
          </h3>
-         <br>
+
        </center>
        <div style="background-color:#f0f0f0;border-radius:10px;">
          <div style="padding:16px;">
@@ -55,7 +55,7 @@ Template Name: About-Us
             <li>เหนือกว่าด้วยระบบฝาก-ถอน อัตโนมัติ และระบบเติมเงินหลากหลายช่องทาง ไม่ว่าจะเป็น เติมเงินผ่านจุดรับชำระเงินสาขาใกล้บ้านคุณ, บัตรเครดิต และ PayPal เป็นต้น</li>
             <li>บริการเสริมฟรีๆอีกมากมาย ไม่ว่าจะเป็น ดูบอลออนไลน์ ดูหนังออนไลน์ โหลดหนัง AV,HD</li>
           </ul>
-          <p style="text-indent: 3em;font-size:120%;">
+          <p style="text-indent: 3em;font-size:120%;" id="contactus">
            อย่าลังเลที่จะติดต่อหาเราในทุกๆช่องทาง หากท่านต้องการสมัครสมาชิกกับเรา หรือสมัครเอเย่นต์ร่วมเป็นส่วนหนึ่งกับเรา หรือติดต่อสอบถามรายละเอียดต่างๆ แจ้งปัญหาต่าง ๆ เราพร้อมและยินดีให้บริการอย่างเป็นกันเองด้วยพนักงานคุณภาพตลอด 24 ชั่วโมง
           </p>
          </div>
@@ -65,10 +65,10 @@ Template Name: About-Us
          <h3 style="background-color: #5cb85c;border-color: #4cae4c;color: #fff;">
            <div style="width: 80%;max-width: 24em;margin: 0 auto;padding: 0.25em 0.625em;">ช่องทางการติดต่อหาเรา</div>
          </h3>
-         <br>
+
        </center>
 
-       <div style="background-color:#f0f0f0;border-radius:10px;padding:16px;">
+       <div style="background-color:#f0f0f0;border-radius:10px;padding:16px;margin-bottom:16px;">
          <table style="border:0px;margin:0px;width:100%;">
            <tr style="border:0px;white-space:nowrap;" >
              <td align="center" style="border:0px;">
@@ -77,7 +77,7 @@ Template Name: About-Us
              </td>
              <td align="center" style="border:0px;">
                  <img width="80" height="80"
-                 class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/QRCode-Line.jpg">
+                 class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/QR-LINE.png">
              </td>
              <td align="center" style="border:0px;">
                  <img width="80" height="80"
@@ -108,7 +108,7 @@ Template Name: About-Us
                <div>Tel. 097-9988-239</div>
              </td>
              <td align="center">
-               <div>Line ID : 878BET</div>
+               <div>Line ID : @878BET</div>
              </td>
              <td align="center">
                <div>ติดต่อเราผ่าน Live Chat</div>

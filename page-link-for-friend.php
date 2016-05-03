@@ -8,6 +8,7 @@ Template Name: link-for-friend
 <?php
   wp_register_script('link-for-friend', get_template_directory_uri() . '/js/link-for-friend.js', true);
   wp_enqueue_script('link-for-friend');
+  $url_link = $_GET['url_link'];
 ?>
 
  <div id="page" class="single">
@@ -26,7 +27,8 @@ Template Name: link-for-friend
       </h2>
       <br>
       <div layout="row">
-        <div>Link แนะนำเพื่อนของคุณคือ: {{ xxxx }}</div>
+        <div flex="20">Link แนะนำเพื่อนของคุณคือ:</div>
+        <div style="color:red;"><?php echo $url_link; ?></div>        
       </div>
       <br>
       <div layout="row">

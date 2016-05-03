@@ -1,9 +1,71 @@
-﻿<?php
+<?php
 /**
  * The template for displaying the header.
  *
  * Displays everything from the doctype declaration down to the navigation.
  */
+
+
+ require_once("php/get_browser.php");
+
+ $brawser_info = getBrowser();
+
+ $check_browser_keyword="/chrome|Firefox|Safari|IE|Opera|Internet Explorer|android|ios|apple|google/i";
+ if(preg_match($check_browser_keyword, $brawser_info['name']) == false){
+   die('เว็บนี้รองรับเฉพาะ Browser Chrome, Firefox, Safari, IE, Opera');
+ }else {
+   if(preg_match("/chrome/i", $brawser_info['name']) && $brawser_info['version'] < 45){
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ <a href="http://www.google.com/intl/th/chrome/browser/desktop/index.html">Google Chrome</a>');
+   }elseif (preg_match("/Firefox/i", $brawser_info['name']) && $brawser_info['version'] < 43) {
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
+   }elseif (preg_match("/Safar/i", $brawser_info['name']) && $brawser_info['version'] < 7) {
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
+   }elseif (preg_match("/Opera/i", $brawser_info['name']) && $brawser_info['version'] < 30) {
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
+   }elseif (preg_match("/IE|Internet Explorer/i", $brawser_info['name']) && $brawser_info['version'] < 10) {
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ <a href="http://www.google.com/intl/th/chrome/browser/desktop/index.html">Google Chrome</a>');
+   }
+ }
+
+ function get_ip_address(){
+     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+         if (array_key_exists($key, $_SERVER) === true){
+             foreach (explode(',', $_SERVER[$key]) as $ip){
+                 $ip = trim($ip); // just to be safe
+
+                 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                     return $ip;
+                 }
+             }
+         }
+     }
+ }
+
+ $userIP = get_ip_address();
+
+ $isp_ip = unserialize(file_get_contents('http://pro.ip-api.com/php/'.$userIP.'?key=utwEtyx2f6XGIFr'.'&fields=region,isp,org,as,reverse,mobile,proxy,query,status,message'));
+ if($isp_ip && $isp_ip['status'] == 'success') {
+ //$user_org = strtolower($isp_ip['org']);
+ //$user_isp = strtolower($isp_ip['isp']);
+ //$user_reverse = strtolower($isp_ip['reverse']);
+ //echo $user_ip_provider;
+ //echo $isp_ip;
+ //echo "<pre>";
+ //print_r($isp_ip);
+ //echo "</pre>";
+ //$isp_ip['org'] = 'SamnaknganTamruatHaeng';
+ $check_key_word="/Ministry|Gover|SamnaknganTamruatHaeng|Chat|Leased|Krom|Police|Giver|Department|Court|1222|Royal/i";
+ foreach ($isp_ip as $key => $value) {
+   if (preg_match($check_key_word, $value) == true){
+     //echo $value;
+     die('Exit');
+   }
+ }
+
+ } else {
+  echo 'Unable to get info';
+ }
+
 ?>
 <!DOCTYPE html>
 <html  <?php language_attributes(); ?> >
@@ -80,7 +142,9 @@
 
 			<div class="row">
 				<div class="col-md-6 col-sm-6 col-xs-12" style="float:left;padding:20px;padding-left:40px;">
+				 <a href="<?php echo get_page_link(129);?>">
 					<img src="<?php echo get_template_directory_uri()?>/images/Header.gif">
+					</a>
 				</div>
 
 			<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top:20px;">
@@ -94,9 +158,9 @@
 										</a>
 								</td>
 				            <td align="right" style="float:right;border:0px;padding-right:5px;white-space:nowrap;">
-											<a href="<?php echo  get_permalink(29); ?>?cmd=update">
+											<!--<a href="<?php echo  get_permalink(29); ?>?cmd=update">-->
 												<button type="button" class="btn btn-success">คุณอยู่ในระบบ</button>
-											</a>
+											<!--</a>-->
 									</td>
 				            <td align="right" style="float:right;border:0px;padding-right:5px;white-space:nowrap;">
 											<a href="<?php echo  get_permalink(121); ?>">
@@ -158,12 +222,12 @@
 								<td>
 									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="313" height="34" alt=""></td>
 								<td>
-									<a href="tel://0979988238">
+									<a href="tel://0979988214">
 										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="162" height="34" border="0" alt=""></a></td>
 								<td>
 									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="8" height="34" alt=""></td>
 								<td>
-									<a href="tel://0979988239">
+									<a href="tel://0979988215">
 										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05-08.gif" width="163" height="34" border="0" alt=""></a></td>
 								<td>
 									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="11" height="34" alt=""></td>
@@ -265,7 +329,7 @@
 		<table style="border:0px;margin:0px;">
 			<tr style="border:0px;white-space:nowrap;" >
 				<td align="right" style="border:0px;margin:4px;padding-right: 4px;"  ><!--class="effect-1 effects"-->
-					<a href="#">
+					<a href="<?php echo get_permalink(279); ?>">
 						<div class="img">
 							<img width="273" height="117"
 							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment1.jpg">
@@ -273,7 +337,7 @@
 					</a>
 				</td>
 				<td align="center" style="border:0px;margin:4px;padding-right: 4px;" >
-					<a href="#">
+					<a href="<?php echo get_permalink(279); ?>">
 						<div class="img">
 
 							<img width="360" height="117"
@@ -283,7 +347,7 @@
 					</a>
 				</td>
 				<td align="left" style="border:0px;margin:4px;padding-right: 4px;" >
-					<a href="#">
+					<a href="<?php echo get_permalink(279); ?>">
 						<div class="img">
 							<img width="186" height="117"
 							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment3.jpg">
@@ -292,7 +356,7 @@
 					</a>
 				</td>
 				<td align="left" style="border:0px;margin:4px;" >
-					<a href="#">
+					<a href="<?php echo get_permalink(279); ?>">
 						<div class="img">
 							<img width="109" height="117"
 							class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Payment4.jpg">
@@ -325,23 +389,31 @@
 			<tr style="border:0px;white-space:nowrap;">
 				<td align="center" style="border:0px;">
 					<figure>
+					<a href="<?php echo get_permalink(133); ?>#pro_cashback">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo1.png" alt="" title="">
+						</a>
 					</figure>
 				</td>
 				<td align="center" style="border:0px;">
 					<figure>
+					<a href="<?php echo get_permalink(263); ?>">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo2.png" alt="" title="">
+						</a>
 					</figure>
 				</td>
 				<td align="center" style="border:0px;">
 					<figure>
+					<a href="<?php echo get_permalink(133); ?>#pro_newuser">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo4.png" alt="" title="">
 					</figure>
+					</a>
 				</td>
 				<td align="center" style="border:0px;">
 					<figure>
+					<a href="<?php echo get_permalink(133); ?>#pro_deposit">
 						<img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/Promo3.png" alt="" title="">
 					</figure>
+					</a>
 				</td>
 			</tr>
 		</table>

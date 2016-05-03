@@ -318,7 +318,7 @@ function angular_scripts() {
   wp_register_script('angular-sanitize', get_template_directory_uri() . '/js/angular-sanitize.min.js', true);
   wp_enqueue_script('angular-sanitize');
 
-  
+
   //wp_register_script('ui-bootstrap', get_template_directory_uri() . '/js/ui-bootstrap-tpls-1.1.2.min.js', true);
   //wp_enqueue_script('ui-bootstrap');
 
@@ -336,13 +336,13 @@ function angular_scripts() {
   //wp_register_script('modernizr', get_template_directory_uri() . '/js/modernizr.js', true);
   //wp_enqueue_script('modernizr');
 
-  wp_register_script('suggest-friend', get_template_directory_uri() . '/js/suggest-friend.js', true);
-  wp_enqueue_script('suggest-friend',true);
+
   $scriptData = array();
   $scriptData['ajaxurl'] = admin_url( 'admin-ajax.php' );
 
   wp_localize_script( 'suggest-friend', 'my_js_data', $scriptData );
-  wp_localize_script('angular-app', 'WPURLS', array( 'templateurl' => get_template_directory_uri() ));
+  wp_localize_script('angular-app', 'WPURLS', array( 'templateurl' => get_template_directory_uri(), 'home_url' => home_url('/index.php') ));
+  //wp_localize_script('my-script', 'my_script_vars', array('postID' => $post->ID));
 
 }
 add_action( 'wp_enqueue_scripts', 'angular_scripts');
@@ -428,7 +428,7 @@ if ( ! function_exists( 'mts_copyrights_credit' ) ) {
 		<?php } ?>
 		 </br>
 		<div align="center"  ><a href="<?php echo home_url(); ?>" title="<?php bloginfo('description'); ?>" rel="nofollow"><?php bloginfo('name'); ?></a>.</div>
-	 
+
 		<div class="copyright-text">
 			<?php
 				$copyright_text = get_theme_mod('copyright_text', 'Theme by <a href="http://mythemeshop.com/" rel="nofollow">MyThemeShop</a>.');
@@ -445,57 +445,98 @@ if ( ! function_exists( 'mts_copyrights_credit' ) ) {
 			<?php } ?>
 		</div>
 		<div class="top"><a href="#top" class="toplink"><i class="point-icon icon-up-dir"></i></a></div>
-	 
-		
+
+
 	</div>
 	</br>
-	
+
 		<!-- 878 footer nav -->
 		<div  align="center">
 		<table style="width:100%">
 			  <tr>
 				<th style="padding-left:60px;"><p>Sbobet878</p></th>
-				<th style="padding-left:60px;"><p>เกี่ยวกับ</p></th> 
+				<th style="padding-left:60px;"><p>เกี่ยวกับ</p></th>
 				<th style="padding-left:60px;"><p>ช่วยเหลือ</p></th>
 			  </tr>
 			  <tr>
 				<td style="text-align:left;vertical-align:top;padding:0">
 					<ul type="square">
-						<li>โปรโมชั่น</li>
-						<li>สิทธิพิเศษ</li>
-						<li>ดูบอลสด</li>
-						<li>ตารางถ่ายทอดบอลสด</li>
-						<li>สมัครสมาชิก</li>
-						<li>ฝาก-ถอน-ย้าย</li>
+						<li>
+						<a href="<?php echo get_page_link(133);?>">
+						โปรโมชั่น
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(282);?>">
+						สิทธิพิเศษ
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(74);?>">
+						ดูบอลสด
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(314);?>">
+						ตารางถ่ายทอดบอลสด
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(129);?>">
+						สมัครสมาชิก
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(279);?>">
+						ฝาก-ถอน-ย้าย
+						</a>
+						</li>
 					</ul>
 				</td>
-				
+
 				<td style="text-align:left;vertical-align:top;padding:0">
 					<ul type="square">
-						<li>เกี่ยวกับเรา</li>
-						<li>ร่วมงานกับเรา</li>
-						<li>ติดต่อเรา</li>
+						<li>
+						<a href="<?php echo get_page_link(244)."#aboutus";?>">
+						เกี่ยวกับเรา
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(335);?>">
+						ร่วมงานกับเรา
+						</a>
+						</li>
+						<li>
+						<a href="<?php echo get_page_link(244)."#contactus";?>">
+						ติดต่อเรา
+						</a>
+						</li>
 					</ul>
 				</td>
-				
+
 				<td style="text-align:left;vertical-align:top;padding:0">
 					<ul type="square">
 						<li>วิธีสมัครสมาชิก</li>
 						<li>วิธีเติมเงิน</li>
 						<li>วิธีใช้งานเวป</li>
-						<li>วิธีแทงบอล</li>
+						<li>
+						<a href="<?php echo get_page_link(259);?>">
+						วิธีแทงบอล
+						</a>
+						</li>
 					</ul>
 				</td>
-				
+
 			  </tr>
-		 
-			 
-			   
+
+
+
 			</table>
 		</div>
 		 <div align="center">Copyright &copy; <?php echo date("Y")." sbobet878.com" ?></div>
+		<div align="center"><img src="https://upic.me/i/2q/wdeli.png"> By S4</div>
 		<!-- 878 footer nav -->
-	
+
 </div>
 <!--end copyrights-->
 <?php }

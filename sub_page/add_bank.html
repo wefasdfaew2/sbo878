@@ -139,14 +139,15 @@
     </div>
 
     <div layout-align="center center" layout="column" style="margin-top:3%;">
-      <md-button ng-disabled="show_otp" class="md-raised md-primary" ng-click="bank_save()">บันทึกแก้ไข</md-button>
+      <md-button ng-disabled="show_otp" ng-show="show_ok" class="md-raised md-primary" ng-click="bank_save()">บันทึกแก้ไข</md-button>
       <div ng-show="form_error" style="color:red;font-weight:bold;">กรุณกรอกข้อมูลให้ครบและถูกต้อง</div>
       <div ng-show="form_error2" style="color:red;font-weight:bold;">กรุณกรอกข้อมูลให้ครบและถูกต้อง</div>
+      <div ng-show="form_error3" style="color:red;font-weight:bold;">กรุณรอสักครู่....</div>
 
     </div>
   </form>
   <center>
-    <div ng-show="show_success" class="alert alert-success" role="alert">บันทึกเสร็จสมบูรณ์</div>
+    <div ng-show="show_success" class="alert alert-success" role="alert">บันทึกเสร็จสมบูรณ์ <br> กำลังพาคุณกลับไปยังหน้าหลัก....</div>
     <div id="otp_div" ng-show="show_otp" layout="column" layout-align="center center" style="margin-top:10px;border: 2px solid black;padding: 16px;width:300px;">
       <div>
         เพื่อยืนยันการเปลี่ยนแปลงข้อมูล ระบบจะทำการส่ง OTP ไปยังโทรศัพท์หมายเลข

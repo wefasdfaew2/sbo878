@@ -39,13 +39,13 @@ Template Name: test_play
            </div>
          </div>
        </div>
-
+<!--
        <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
-         <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar2.png">
+         <img ng-src="<?php //echo get_template_directory_uri()?>/images/Bar2.png">
           <div class="md-padding" style="padding-top:0px;" layout-wrap>
             <div layout="row" layout-align="center center">
                <div flex="none">
-                 <img ng-src="<?php echo get_template_directory_uri()?>/images/VEGUS168.png"/>
+                 <img ng-src="<?php //echo get_template_directory_uri()?>/images/VEGUS168.png"/>
                  <a href="http://www.vegus168.com" target="_blank">
                    <div style="margin-top:5px;">คลิกที่นี่เพื่อเข้าทดลองเล่น</div>
                  </a>
@@ -63,11 +63,11 @@ Template Name: test_play
           </div>
         </div>
         <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
-          <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar3.png">
+          <img ng-src="<?php //echo get_template_directory_uri()?>/images/Bar3.png">
            <div class="md-padding" style="padding-top:0px;" layout-wrap>
              <div layout="row" layout-align="center center">
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri()?>/images/IBCBET.png"/>
+                  <img ng-src="<?php //echo get_template_directory_uri()?>/images/IBCBET.png"/>
                   <a href="http://www1.ibcth.com" target="_blank">
                     <div style="margin-top:5px;">คลิกที่นี่เพื่อเข้าทดลองเล่น</div>
                   </a>
@@ -88,11 +88,11 @@ Template Name: test_play
          </div>
 
          <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
-           <img ng-src="<?php echo get_template_directory_uri()?>/images/Bar4.png">
+           <img ng-src="<?php //echo get_template_directory_uri()?>/images/Bar4.png">
             <div class="md-padding" style="padding-top:0px;" layout-wrap>
               <div layout="row" layout-align="center center">
                  <div flex="none">
-                   <img ng-src="<?php echo get_template_directory_uri()?>/images/Royal-GClub.png"/>
+                   <img ng-src="<?php //echo get_template_directory_uri()?>/images/Royal-GClub.png"/>
                    <a href="http://95v.gclub168.com" target="_blank">
                      <div style="margin-top:5px;">คลิกที่นี่เพื่อเข้าทดลองเล่น</div>
                    </a>
@@ -111,7 +111,8 @@ Template Name: test_play
             </div>
           </div>
        </md-content>
-     </div>
+-->     
+	 </div>
 
 <?php get_footer(); ?>
 

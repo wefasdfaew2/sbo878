@@ -1,7 +1,19 @@
 var app = angular.module('MyDepositCheck', ['ngMaterial', 'ngMessages', 'smart-table']);
 
-app.controller('DepositCheck', ['Resource', '$interval', function (service, $interval) {
+app.filter('dayFilter', function() {
+    return function(input, last_number_day) {
+        var filterFunction = function (item) {
+          var d = new Date();
+          d.setDate(d.getDate()-last_number_day);
+          var timestamp = new Date(item.deposit_regis);
+          return timestamp >= d;
+        };
+    	return input.filter(filterFunction);
+    };
+});
 
+app.controller('DepositCheck', ['Resource', '$interval', '$filter', function (service, $interval, $filter) {
+  //console.log(WPURLS.current_pageurl);
   var ctrl = this;
   var externaelTableState;
   this.displayed = [];
@@ -25,7 +37,7 @@ app.controller('DepositCheck', ['Resource', '$interval', function (service, $int
   };
 
   $interval(function() {
-    console.log('callServer');
+    //console.log('callServer');
     //ctrl.isLoading = true;
     var tableState = externaelTableState;
     var pagination = tableState.pagination;
@@ -88,7 +100,24 @@ app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, 
         randomsItems[x].hide_deposit_account = hide_username(randomsItems[x].deposit_account);
       }
 
-      var filtered = params.search.predicateObject ? $filter('filter')(randomsItems, params.search.predicateObject) : randomsItems;
+      var randomsItems2 = randomsItems;
+
+      randomsItems = $filter('dayFilter')(randomsItems, 3);
+
+      //var filtered = params.search.predicateObject ? $filter('filter')(randomsItems2, params.search.predicateObject) : randomsItems;
+
+      //console.log(params.search.predicateObject);
+      var filtered;
+      if(angular.isUndefined(params.search.predicateObject)){
+        params.search.predicateObject = {};
+      }
+      //console.log(Object.keys(params.search.predicateObject).length);
+      if(Object.keys(params.search.predicateObject).length != 0){
+        filtered = $filter('filter')(randomsItems2, params.search.predicateObject);
+      }else {
+        filtered = randomsItems;
+
+      }
 
   		if (params.sort.predicate) {
   			filtered = $filter('orderBy')(filtered, params.sort.predicate, params.sort.reverse);

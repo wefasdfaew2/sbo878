@@ -38,47 +38,12 @@ Template Name: promotion
                  <img src="<?php echo get_template_directory_uri()?>/images/100_per_bonus.png" style="display: none;width:30%;height:auto;"/>
                </div>
              </div>
-              <div class="row" style="margin:16px;">
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <table class="table" style="margin:0 auto;">
-                      <tr style="background-color:#387ef5;color:white;">
-                        <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:#6BDA8B;color:black;">
-                          ตัวอย่างที่ 1
-                        </td>
-                        <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:white;color:black;">
-                          สมัครสมาชิกใหม่ 1,000 บาท
-                        </td>
-                        <th style="text-align: center;">เครดิตที่ได้รับ</th>
-                        <th style="text-align: center;">ยอด Turnover ที่บังคับ</th>
-                      </tr>
-                      <tr style="background-color:#d8e6fe;">
-                        <td style="text-align: center;">2,000 บาท</td>
-                        <td style="text-align: center;">16,000 บาท</td>
-                      </tr>
-                  </table>
-                </div>
-              </div>
-
-              <div class="row" style="margin:16px;">
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                  <table class="table" style="margin:0 auto;">
-                      <tr style="background-color:#387ef5;color:white;">
-                        <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:#6BDA8B;color:black;">
-                          ตัวอย่างที่ 2
-                        </td>
-                        <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:white;color:black;">
-                          สมัครสมาชิกใหม่ 3,000 บาท
-                        </td>
-                        <th style="text-align: center;">เครดิตที่ได้รับ</th>
-                        <th style="text-align: center;">ยอด Turnover ที่บังคับ</th>
-                      </tr>
-                      <tr style="background-color:#d8e6fe;">
-                        <td style="text-align: center;">4,500 บาท</td>
-                        <td style="text-align: center;">24,000 บาท</td>
-                      </tr>
-                  </table>
-                </div>
-              </div>
+           
+		   <div class="row" style="margin-top:16px;">
+             <div class="col-md-12 col-xs-12 col-sm-12" align="center">
+               <img src="<?php echo get_template_directory_uri()?>/images/Promotion1.jpg">
+             </div>
+           </div>
 
               <div class="row" style="margin:25px 16px 16px 16px;">
                 <div class="col-md-12 col-xs-12 col-sm-12" style="color:red;">
@@ -92,7 +57,11 @@ Template Name: promotion
                 </div>
               </div>
            </div>
-
+			<div align="right">
+          <a href="<?php echo get_page_link(129);?>">
+             <button style="margin:15px;background-color:#387ef5;" type="button" class="btn btn-primary">สมัครสมาชิก</button>
+          </a>
+         </div>
        </div>
        <div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
          <img src="<?php echo get_template_directory_uri()?>/images/promo-bar-2.png">
@@ -108,69 +77,12 @@ Template Name: promotion
                <img src="<?php echo get_template_directory_uri()?>/images/100_per_bonus.png" style="display: none;width:30%;height:auto;"/>
              </div>
            </div>
-            <div class="row" style="margin:16px;">
-              <div class="col-md-12 col-xs-12 col-sm-12">
-                <table class="table" style="margin:0 auto;">
-                    <tr style="background-color:#387ef5;color:white;">
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:#6BDA8B;color:black;">
-                        ตัวอย่างที่ 1
-                      </td>
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:white;color:black;">
-                        สมัครสมาชิกใหม่ 5,000 บาท
-                      </td>
-                      <th style="text-align: center;">เครดิตที่ได้รับ</th>
-                      <th style="text-align: center;">ยอด Turnover ที่บังคับ</th>
-                    </tr>
-                    <tr style="background-color:#d8e6fe;">
-                      <td style="text-align: center;">5,250 บาท</td>
-                      <td style="text-align: center;">26,250 บาท</td>
-                    </tr>
-                </table>
-              </div>
-            </div>
-
-            <div class="row" style="margin:16px;">
-              <div class="col-md-12 col-xs-12 col-sm-12">
-                <table class="table" style="margin:0 auto;">
-                    <tr style="background-color:#387ef5;color:white;">
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:#6BDA8B;color:black;">
-                        ตัวอย่างที่ 2
-                      </td>
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:white;color:black;">
-                        สมัครสมาชิกใหม่ 10,000 บาท
-                      </td>
-                      <th style="text-align: center;">เครดิตที่ได้รับ</th>
-                      <th style="text-align: center;">ยอด Turnover ที่บังคับ</th>
-                    </tr>
-                    <tr style="background-color:#d8e6fe;">
-                      <td style="text-align: center;">11,000 บาท</td>
-                      <td style="text-align: center;">55,000 บาท</td>
-                    </tr>
-                </table>
-              </div>
-            </div>
-
-            <div class="row" style="margin:16px;">
-              <div class="col-md-12 col-xs-12 col-sm-12">
-                <table class="table" style="margin:0 auto;">
-                    <tr style="background-color:#387ef5;color:white;">
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:#6BDA8B;color:black;">
-                        ตัวอย่างที่ 3
-                      </td>
-                      <td rowspan="2" style="text-align:center;vertical-align: middle;background-color:white;color:black;">
-                        สมัครสมาชิกใหม่ 50,000 บาท
-                      </td>
-                      <th style="text-align: center;">เครดิตที่ได้รับ</th>
-                      <th style="text-align: center;">ยอด Turnover ที่บังคับ</th>
-                    </tr>
-                    <tr style="background-color:#d8e6fe;">
-                      <td style="text-align: center;">55,000 บาท</td>
-                      <td style="text-align: center;">275,000 บาท</td>
-                    </tr>
-                </table>
-              </div>
-            </div>
-
+             <div class="row" style="margin-top:16px;">
+             <div class="col-md-12 col-xs-12 col-sm-12" align="center">
+               <img src="<?php echo get_template_directory_uri()?>/images/Promotion2.jpg">
+             </div>
+           </div>
+		   
             <div class="row" style="margin:25px 16px 16px 16px;">
               <div class="col-md-12 col-xs-12 col-sm-12" style="color:red;">
                 <p style="text-indent: 2em;" id="pro_lotto">
@@ -182,7 +94,11 @@ Template Name: promotion
               </div>
             </div>
          </div>
-
+	<div align="right">
+          <a href="<?php echo get_page_link(279);?>">
+             <button style="margin:15px;background-color:#387ef5;" type="button" class="btn btn-primary">เติมเครดิต (ระบบ Auto)</button>
+          </a>
+         </div>
        </div>
        <!--<div style="background-color:#f0f0f0;border-radius:10px;margin-top:10px;">
          <img src="<?php echo get_template_directory_uri()?>/images/promo-bar-3.png">
@@ -208,6 +124,13 @@ Template Name: promotion
                <img src="<?php echo get_template_directory_uri()?>/images/100_per_bonus.png" style="display: none;width:30%;height:auto;"/>
              </div>
            </div>
+		   
+		             <div class="row" style="margin-top:16px;">
+             <div class="col-md-12 col-xs-12 col-sm-12" align="center">
+               <img src="<?php echo get_template_directory_uri()?>/images/Promotion3.jpg">
+             </div>
+           </div>
+		   
            <div class="row" style="margin:25px 16px 16px 16px;">
              <div class="col-md-12 col-xs-12 col-sm-12" style="color:red;">
                <p style="text-indent: 2em;">
@@ -218,6 +141,7 @@ Template Name: promotion
                  <li>ทางเราจะตัดสินผลรางวัล หลังจากมีการประกาศผลสลากกินแบ่งรัฐบาลอย่างเป็นทางการภายใน 5 วัน</li>
                  <li>ท่านจะต้องมียอด Turn Over ไม่ต่ำกว่า 5 เท่าของยอดรางวัล ในรอบ 15 วันก่อนหวยออก</li>
                  <li>ระบบจะปรับยอดเครดิตให้ท่านที่ถูกรางวัลโดยอัตโนมัติ</li>
+				 <li>รางวัลเลขท้าย 3 ตัวบน อ้างอิงจากเลขท้ายของรางวัลที่ 1 ของสลากกินแบ่งรัฐบาล</li>
                </ol>
              </div>
            </div>
@@ -242,11 +166,16 @@ Template Name: promotion
            <div class="row sameheight">
              <div class="col-md-8 col-xs-8 col-sm-8" style="margin: auto;">
                <ul>
-                 <li>แนะนำเพื่อนมาเป็นสมาชิกกับเรา ท่านที่แนะนำรับทันทีเครติด 10% จากยอดที่เพื่อนสมัคร</li>
+                 <li>เพียงแนะนำเพื่อนหรือโปรโมท เพื่อหาสมาชิกใหม่เพิ่มให้กับเรา ท่านที่แนะนำรับ 5% จากยอดเสียตลอดชีพ</li>
                </ul>
              </div>
              <div class="col-md-4 col-xs-4 col-sm-4" align="center">
                <img src="<?php echo get_template_directory_uri()?>/images/100_per_bonus.png" style="display: none;width:30%;height:auto;"/>
+             </div>
+           </div>
+		           <div class="row" style="margin-top:16px;">
+             <div class="col-md-12 col-xs-12 col-sm-12" align="center">
+               <img src="<?php echo get_template_directory_uri()?>/images/Promotion4.jpg">
              </div>
            </div>
            <div class="row" style="margin:25px 16px 16px 16px;">
@@ -255,12 +184,19 @@ Template Name: promotion
                  เงื่อนไขการรับโปรโมชั่นนี้
                </p>
                <ol type="1" id="pro_cashback">
-                 <li>ผู้แนะนำ จะต้องให้เพื่อนกรอกข้อมูลในช่องข้อความ ในหน้าสมัครสมาชิกว่า Account ไหนแนะนำมา
-                    เช่น Account “ zkc86..... แนะนำมา”
-                 </li>
+                 <li>จะต้องเป็นสมาชิกกับทาง SBOBET878 เพื่อใช้ในการรับเงินปันผลในแต่ละเดือน</li>
+				 <li>ท่านจะต้องนำ Link ที่ทางเราจัดทำไว้ให้ นำไปใช้ในการแนะนำเพื่อนหรือโปรโมทหาสมาชิกให้กับเรา ซึ่ง</li>
+				 <li>ระบบจะตรวจสอบให้อัตโนมัติ ว่าสมาชิกที่สมัครใหม่นั้น สมัครมาจาก Link ที่ท่านโปรโมทไว้</li>
+				 <li>ทางเราจะจัดเก็บยอดเงินที่ท่านได้ แสดงให้ท่านดูใน account สมาชิกของท่านเอง</li>
+				 <li>ทางเราจะสรุปยอดให้ท่านทุกๆสิ้นเดือน ท่านสามารถถอนเงินได้ทันทีหลังจากสรุปยอด</li>
                </ol>
              </div>
            </div>
+         </div>
+		  <div align="right">
+          <a href="<?php echo get_page_link(263);?>">
+             <button style="margin:15px;background-color:#387ef5;" type="button" class="btn btn-primary">เริ่มต้นแนะนำเพื่อนคลิกที่นี่</button>
+          </a>
          </div>
        </div>
 

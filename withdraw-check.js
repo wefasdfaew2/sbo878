@@ -1,6 +1,18 @@
 var app = angular.module('MyWithdrawCheck', ['ngMaterial', 'ngMessages', 'smart-table']);
 
-app.controller('WithdrawCheck', ['Resource', '$interval', function (service, $interval) {
+app.filter('dayFilter', function() {
+    return function(input, last_number_day) {
+        var filterFunction = function (item) {
+          var d = new Date();
+          d.setDate(d.getDate()-last_number_day);
+          var timestamp = new Date(item.withdraw_regis);
+          return timestamp >= d;
+        };
+    	return input.filter(filterFunction);
+    };
+});
+
+app.controller('WithdrawCheck', ['Resource', '$interval', '$filter', function (service, $interval, $filter) {
 
   var ctrl = this;
   var externaelTableState;
@@ -12,7 +24,7 @@ app.controller('WithdrawCheck', ['Resource', '$interval', function (service, $in
     ctrl.isLoading = true;
 
     var pagination = tableState.pagination;
-    //console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
+    ////console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
     var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
     var number = pagination.number || 10;  // Number of entries showed per page.
 
@@ -25,11 +37,11 @@ app.controller('WithdrawCheck', ['Resource', '$interval', function (service, $in
   };
 
   $interval(function() {
-    console.log('callServer');
+    //console.log('callServer');
     //ctrl.isLoading = true;
     var tableState = externaelTableState;
     var pagination = tableState.pagination;
-    //console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
+    ////console.log(Math.floor(tableState.pagination.start / tableState.pagination.number) + 1);
     var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
     var number = pagination.number || 10;  // Number of entries showed per page.
 
@@ -93,7 +105,19 @@ app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, 
         randomsItems[x].hide_withdraw_account = hide_username(randomsItems[x].withdraw_account);
       }
 
-      var filtered = params.search.predicateObject ? $filter('filter')(randomsItems, params.search.predicateObject) : randomsItems;
+      var randomsItems2 = randomsItems;
+      randomsItems = $filter('dayFilter')(randomsItems, 3);
+      //var filtered = params.search.predicateObject ? $filter('filter')(randomsItems, params.search.predicateObject) : randomsItems;
+
+      var filtered;
+      if(angular.isUndefined(params.search.predicateObject)){
+        params.search.predicateObject = {};
+      }
+      if(Object.keys(params.search.predicateObject).length != 0){
+        filtered = $filter('filter')(randomsItems2, params.search.predicateObject);
+      }else {
+        filtered = randomsItems;
+      }
 
   		if (params.sort.predicate) {
   			filtered = $filter('orderBy')(filtered, params.sort.predicate, params.sort.reverse);
@@ -163,7 +187,7 @@ app.controller('WithdrawCheck', function($scope, $http, $filter, $interval) {
 
 
   $interval(function() {
-    console.log('interval');
+    //console.log('interval');
     var request_withdraw_state = $http({
       method: "get",
       url: WPURLS.templateurl + "/php/get-withdraw-state.php",

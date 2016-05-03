@@ -6,7 +6,7 @@ app.run(['$anchorScroll', function($anchorScroll) {
 
 app.controller('DepositWithdrawMove', function($scope, $http, $filter, $state) {
 
-  //console.log("Deposit !!!");
+  ////console.log("Deposit !!!");
   $state.go("step1");
 
 
@@ -46,7 +46,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }else if ($scope.step1_option == '4') {
             $state.go("credit_move");
           }else if ($scope.step1_option == '5') {
-            $window.location.href = 'http://sbogroup.t-wifi.co.th/wordpress/index.php/user_inform_transfer';
+            $window.location.href = WPURLS.home_url + '/user_inform_transfer';
           }
         }
 
@@ -98,7 +98,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           check_req.success(function(check_req_data) {
-            console.log(check_req_data);
+            ////console.log(check_req_data);
             $scope.showSpin = false;
             if(check_req_data.check_status == 'pass'){
 
@@ -160,12 +160,12 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                     };
                     $state.go("step3_withdraw", params);
                   }else {
-                    console.log('cancel failed');
+                    ////console.log('cancel failed');
                     alert('cancel failed');
                   }
                 });
               }, function() {
-                console.log('cancel');
+                ////console.log('cancel');
 
               });
             }
@@ -209,9 +209,9 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if(otp_ref_data.otp_ref != 'error'){
             $scope.otp_ref = otp_ref_data.otp_ref;
             //send_sms($stateParams.tel, $scope.otp_ref);
-            console.log("sms sended");
+            //console.log("sms sended");
           }else {
-            console.log('otp error');
+            //console.log('otp error');
             alert('error');
           }
 
@@ -220,7 +220,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
         $scope.check_otp = function(ev){
           $scope.showSpin = true;
-          console.log($scope.user.user_otp);
+          //console.log($scope.user.user_otp);
           var check_otp = $http({
             method: "post",
             url: WPURLS.templateurl + "/php/withdraw-sms-otp.php",
@@ -236,7 +236,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           });
           check_otp.success(function(check_otp_data) {
 
-            console.log(check_otp_data);
+            //console.log(check_otp_data);
             if(check_otp_data.check_otp_status == 'pass'){
               var set_withdraw_money = $http({
                 method: "post",
@@ -251,8 +251,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               });
               set_withdraw_money.success(function(res_data) {
                 $scope.showSpin = false;
-                //console.log(res_data);
-                //console.log(res_data.set_status);
+                ////console.log(res_data);
+                ////console.log(res_data.set_status);
                 if(res_data.set_status == 'success'){
                   var params = {
                     'withdraw_username': $stateParams.withdraw_username,
@@ -261,7 +261,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                   };
                   $state.go("step4_withdraw", params);
                 }else{
-                  console.log('insert not success');
+                  //console.log('insert not success');
                   alert('error');
                 }
               });
@@ -296,7 +296,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           sms_send.success(function(sms_status_data) {
-            console.log(sms_status_data);
+            //console.log(sms_status_data);
           });
         }
       }
@@ -377,14 +377,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
             });
           }, function() {
-            console.log('cancel');
+            //console.log('cancel');
           });
 
         }
 
         $scope.check_input_money = function(){
 
-          console.log($scope.current_amount);
+          //console.log($scope.current_amount);
           if(angular.isUndefined($scope.current_amount)){
             $scope.show_withdraw_error = true;
             $scope.error_text = 'ไม่พบยอดที่สามารถถอนได้';
@@ -428,12 +428,12 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           check_withdraw_money.success(function(res_data) {
-            //console.log(res_data);
+            ////console.log(res_data);
             $scope.account = $stateParams.withdraw_username;
             $scope.bank_account = res_data[0].withdraw_bank_account;
             $scope.bank_name = res_data[0].withdraw_bank_name;
             $scope.nickname = res_data[0].withdraw_nickname;
-            //console.log(res_data[0].withdraw_status_id);
+            ////console.log(res_data[0].withdraw_status_id);
             if(res_data[0].withdraw_status_id == 9){
               $interval.cancel(interval);
               interval = undefined;
@@ -486,8 +486,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           get_account_type.success(function(res_data) {
-            //console.log(res_data);
-            //console.log(res_data.get_account_type);
+            ////console.log(res_data);
+            ////console.log(res_data.get_account_type);
             if(res_data.get_account_type == 'no_account'){
               $scope.account_type = 'Username หรือ เบอร์โทรศัพท์ไม่ถูกต้อง';
 
@@ -543,8 +543,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         get_auto_type.success(function(res_data) {
-          //console.log(res_data);
-          //console.log(res_data[0].deposit_type_name);
+          ////console.log(res_data);
+          ////console.log(res_data[0].deposit_type_name);
           //$scope.auto_type = res_data;
           $scope.internet_bank = [];
           $scope.mobile_bank = [];
@@ -654,10 +654,10 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.e_wallet.push(res_data[key]);
             }
           });
-          console.log($scope.internet_bank);
+          //console.log($scope.internet_bank);
 
         $scope.auto_type_change = function(auto_type_value){
-          console.log(auto_type_value);
+          //console.log(auto_type_value);
           if(auto_type_value == 58){
             var target = document.querySelector('#e_wallet');
             target.style.height = 'auto';
@@ -757,16 +757,16 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $scope.money_placeholder = 'กรุณากรอกยอดที่ท่านต้องการเติมเครดิต';
         }
 
-        //console.log(timeStamp);
-        //console.log(date);
-        //console.log(time);
+        ////console.log(timeStamp);
+        ////console.log(date);
+        ////console.log(time);
         //var randomStang = Math.random().toString();
         //var stang = randomStang.substr(randomStang.length-2, randomStang.length);
 
         $scope.cal_credit_money = function(credit_money,e){
 
             $scope.user.credit_money = Math.floor($scope.user.credit_money);
-            //console.log($scope.user.credit_money);
+            ////console.log($scope.user.credit_money);
             if($scope.user.credit_money == 0){
               $scope.user.credit_money = '';
             }
@@ -829,7 +829,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           set_account_req.success(function(res_data) {
-            console.log(res_data);
+            //console.log(res_data);
             if(res_data.set_status == 'success'){
               var params = {
                 'deposit_username': $stateParams.deposit_username,
@@ -889,7 +889,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         check_deposit_account.success(function(res_data) {
-          //console.log(res_data);
+          ////console.log(res_data);
           if(res_data.account_is_deposited == '0'){
             $scope.big_bonun_text = 'ขอแสดงความยินดีคุณได้รับโบนัส 100% จากยอดเงินฝากครั้งแรก';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 8 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
@@ -929,7 +929,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           return;
         }
         $scope.template_directory_uri = WPURLS.templateurl;
-        //console.log($stateParams.auto_type_option);
+        ////console.log($stateParams.auto_type_option);
         $scope.user = {};
         $scope.user.id_username = $stateParams.insert_id + '-' + $stateParams.deposit_username;
         $scope.user.username = $stateParams.deposit_username;
@@ -961,9 +961,9 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           return;
         }
         $scope.template_directory_uri = WPURLS.templateurl;
-        console.log($stateParams.deposit_username);
-        console.log($stateParams.amount);
-        console.log($stateParams.deposit_regis);
+        //console.log($stateParams.deposit_username);
+        //console.log($stateParams.amount);
+        //console.log($stateParams.deposit_regis);
         if($stateParams.auto_type_option == 33 || $stateParams.auto_type_option == 45 ||
             $stateParams.auto_type_option == 44 || $stateParams.auto_type_option == 40 ){
           $scope.notify_us1 = 'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมล';
@@ -1010,7 +1010,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         get_pay_info.success(function(res_data) {
-          console.log(res_data);
+          //console.log(res_data);
           //$scope.bank_wellknown_name = res_data[0].deposit_type_wellknown_name;
           $scope.bank_wellknown_name = res_data[0].selected_bank_wellknown_name;
           $scope.money_amount = $stateParams.amount;
@@ -1061,7 +1061,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         get_pay_info.success(function(res_data) {
-          console.log(res_data);
+          //console.log(res_data);
           $scope.from_wallet_img = WPURLS.templateurl + res_data[0].deposit_type_emailnotify_image;
           $scope.arrow = WPURLS.templateurl + "/images/arrow_BW_thick_right_T.png";
           $scope.to_wallet_img = WPURLS.templateurl + res_data[1].deposit_type_emailnotify_image;
@@ -1108,7 +1108,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         get_pay_info.success(function(res_data) {
-          console.log(res_data);
+          //console.log(res_data);
           $scope.from_bank_name = res_data[0].from_bank_name;
           $scope.to_bank_name = res_data[0].deposit_bank_name;
           $scope.to_bank_number = res_data[0].deposit_bank_account;
@@ -1134,7 +1134,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           sms_send.success(function(sms_status_data) {
-            console.log(sms_status_data);
+            //console.log(sms_status_data);
           });
         }
       }
@@ -1185,7 +1185,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               params.bank_name_3 = $scope.bank_info[x].bank_name;
             }
           }
-          console.log(params);
+          //console.log(params);
           $state.go("step3_deposit_man", params);
         }
 
@@ -1203,8 +1203,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           get_account_type.success(function(res_data) {
-            console.log(res_data);
-            //console.log(res_data.get_account_type);
+            //console.log(res_data);
+            ////console.log(res_data.get_account_type);
             if(res_data.get_account_type == 'no_account'){
               $scope.account_corect = false;
               $scope.account_type = 'Username ไม่ถูกต้อง';
@@ -1238,7 +1238,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                 }
               });
               get_bank.success(function(res_data) {
-                console.log(res_data);
+                //console.log(res_data);
                 $scope.bank_info = [];
                 $scope.bank_info.push({
                   'bank_number': res_data[0].member_bank_account,
@@ -1260,7 +1260,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                     'bank_name': res_data[0].member_bank_name_3
                   });
                 }
-                console.log($scope.bank_info);
+                //console.log($scope.bank_info);
                 $scope.account_corect = true;
               });
             }
@@ -1278,12 +1278,13 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         deposit_username: null,
       },
       templateUrl: WPURLS.templateurl + '/sub_page/add_bank.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $interval, $window) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $scope.show_ok = true;
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.user = {};
         $scope.user.bank_number_2 = '';
@@ -1313,7 +1314,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
           });
           check_otp.success(function(res_data) {
-            console.log(res_data);
+            //console.log(res_data);
 
             if(res_data.check_otp_status == 'pass'){
               var save_bank = $http({
@@ -1332,10 +1333,13 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                 }
               });
               save_bank.success(function(res_data) {
-                console.log(res_data);
+                //console.log(res_data);
                 if(res_data.update_bank == 'success'){
                   $scope.show_success = true;
                   $scope.show_otp = false;
+                  $interval(function(){
+                    $window.location.href = WPURLS.home_url + '/deposit-withdraw-move';
+                  }, 2000, 1);
                 }else {
                   $mdDialog.show(
                     $mdDialog.alert()
@@ -1367,7 +1371,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         }
 
         $scope.bank_save = function(){
-          console.log($scope.user.bank_name_3);
+          //console.log($scope.user.bank_name_3);
           if($scope.user.bank_name_3 == ''){
             $scope.user.bank_name_3 = null;
           }
@@ -1377,19 +1381,19 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
           if(($scope.user.bank_number_3 == '') && ($scope.user.bank_name_3 == null)){
             $scope.form_error = false;
-            console.log(1);
+            //console.log(1);
           }else if (($scope.user.bank_number_3 == '' || typeof $scope.user.bank_number_3 == "undefined") && ($scope.user.bank_name_3 == null)) {
             $scope.form_error = true;
-            console.log(2);
+            //console.log(2);
           }else if (($scope.user.bank_number_3 == '' || typeof $scope.user.bank_number_3 == "undefined") && ($scope.user.bank_name_3 != null)) {
             $scope.form_error = true;
-            console.log(3);
+            //console.log(3);
           }else if ($scope.user.bank_number_3 != '' && ($scope.user.bank_name_3 != null)) {
             $scope.form_error = false;
-            console.log(4);
+            //console.log(4);
           }else if ($scope.user.bank_number_3 != '' && ($scope.user.bank_name_3 == null)) {
             $scope.form_error = true;
-            console.log(5);
+            //console.log(5);
           }
 
           if(($scope.user.bank_number_2 == '') && ($scope.user.bank_name_2 == null)){
@@ -1405,6 +1409,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
 
           if($scope.form_error2 == false && $scope.form_error == false){
+            $scope.form_error3 = true;
             var gen_otp = $http({
               method: "post",
               url: WPURLS.templateurl + "/php/get-set-bank.php",
@@ -1418,9 +1423,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               }
             });
             gen_otp.success(function(res_data) {
-              console.log(res_data);
+              //console.log(res_data);
+              $scope.form_error3 = false;
               if(res_data.otp_ref != 'error'){
                 $scope.show_otp = true;
+                $scope.show_ok = false;
                 $scope.otp_ref = res_data.otp_ref;
               }
 
@@ -1440,7 +1447,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         get_bank.success(function(res_data) {
-          console.log(res_data);
+          //console.log(res_data);
 
           $scope.tel = res_data[0].member_telephone_1;
 
@@ -1506,14 +1513,15 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               bank_name_2: $stateParams.bank_name_2,
               bank_number_3: $stateParams.bank_number_3,
               bank_name_3: $stateParams.bank_name_3,
-              bonus_type: $scope.user.bonus_type
+              bonus_type: $scope.user.bonus_type,
+              notify_transfer_url: WPURLS.home_url + '/user_inform_transfer'
             },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           });
           set_account_req.success(function(res_data) {
-            console.log(res_data);
+            //console.log(res_data);
             if(res_data.set_status == 'success'){
               var params = {
                 'deposit_username': $stateParams.deposit_username,
@@ -1542,7 +1550,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.cal_credit_money = function(credit_money,e){
 
           $scope.user.credit_money = Math.floor($scope.user.credit_money);
-          //console.log($scope.user.credit_money);
+          ////console.log($scope.user.credit_money);
           if($scope.user.credit_money == 0){
             $scope.user.credit_money = '';
           }
@@ -1588,7 +1596,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         check_deposit_account.success(function(res_data) {
-          //console.log(res_data);
+          ////console.log(res_data);
           if(res_data.account_is_deposited == '0'){
             $scope.big_bonun_text = 'ขอแสดงความยินดีคุณได้รับโบนัส 100% จากยอดเงินฝากครั้งแรก';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 8 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
@@ -1628,6 +1636,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $state.go("step1");
           return;
         }
+        $scope.notify_transfer = WPURLS.home_url + '/user_inform_transfer';
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount = $stateParams.amount;
         $scope.bank_number = $stateParams.bank_number;

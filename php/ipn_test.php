@@ -158,9 +158,10 @@ if (strcmp ($res, "VERIFIED") == 0) {
 					$sql = "UPDATE backend_deposit_money SET deposit_status_id = 4 WHERE deposit_id = $deposit_id";
 					if ($conn->query($sql) === TRUE) {
 					    //error_log("deposit_status_id = 4 updated successfully");
-							$add_result = add_credit($deposit_id,$deposit_account,$data[0]['deposit_bank_account'],$payment_amountString);
-							$result = preg_match("/200/",$add_result);
-							if($result == true){
+							$add_result = json_decode(add_credit($deposit_id,$deposit_account,$data[0]['deposit_bank_account'],$payment_amountString), true);
+							//$result = preg_match("/200/",$add_result);
+							$result = $add_result["status"];
+							if($result == '200'){
 								$sql = "UPDATE backend_deposit_money SET deposit_status_id = 5, deposit_note = 'อ้างอิง txn=$txn_idString' WHERE deposit_id = $deposit_id";
 								if ($conn->query($sql) === TRUE) {
 

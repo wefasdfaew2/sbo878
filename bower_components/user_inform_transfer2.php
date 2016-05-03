@@ -5,14 +5,14 @@ Template Name: user_inform_transfer2
 ?>
 <?php
 //prevent direct access
- if ( ! defined( 'ABSPATH' ) ) die( 'Error!' );
+ //if ( ! defined( 'ABSPATH' ) ) die( 'Error!' );
 //prevent direct get data from outsite
-$http_refer ='http://sbogroup.t-wifi.co.th/wordpress/index.php/user_inform_transfer';
-if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] == $http_refer){
-}else{
- die( 'Error!2' );
-}
-
+    if(!isset($_SERVER['HTTP_REFERER'])){
+     die(); //exit page after outputting the message.
+	 }else{
+$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
+if($check_direct_access === false)die('Restricted access');
+ }
 
 get_header();
 ?>
@@ -31,7 +31,16 @@ get_header();
    <div class="content">
 
    <?php
-   	$user_name=$_GET['data'];
+   
+   if(!isset($_GET['data'])){
+     //die(); //exit page after outputting the message.
+$user_name='';
+	 }else{
+	 $user_name=$_GET['data'];
+}
+
+   
+   
 
 	//echo $user_name;
    // echo '<div ng-app="app_user_inform_transfer" ng-controller="cont_user_inform_transfer" ng-cloak="" ng-init="user_waiting_list('.$user_name.')">';
@@ -67,13 +76,13 @@ get_header();
 	  <td>{{u_list.deposit_bank_account}}</td>
 	  <td>{{u_list.deposit_bank_name}}</td>
 	  <td>
-	  <img ng-show="u_list.deposit_firstpayment_promotion_mark=='Yes'"  ng-src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/03/yes_24px.png"/>
-	  <img ng-show="u_list.deposit_firstpayment_promotion_mark=='No'"  ng-src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/03/no_24px.png"/>
+	  <img ng-show="u_list.deposit_firstpayment_promotion_mark=='Yes'"  ng-src="<?php echo  content_url(); ?>/uploads/2016/03/yes_24px.png"/>
+	  <img ng-show="u_list.deposit_firstpayment_promotion_mark=='No'"  ng-src="<?php echo  content_url(); ?>/uploads/2016/03/no_24px.png"/>
 	  </td>
 
 	   <td>
-	   <img ng-show="u_list.deposit_nextpayment_promotion_mark=='Yes'"  ng-src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/03/yes_24px.png"/>
-	  <img ng-show="u_list.deposit_nextpayment_promotion_mark=='No'"  ng-src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/03/no_24px.png"/>
+	   <img ng-show="u_list.deposit_nextpayment_promotion_mark=='Yes'"  ng-src="<?php echo  content_url(); ?>/uploads/2016/03/yes_24px.png"/>
+	  <img ng-show="u_list.deposit_nextpayment_promotion_mark=='No'"  ng-src="<?php echo  content_url(); ?>/uploads/2016/03/no_24px.png"/>
 	   </td>
 
 	  <td><md-button ng-if="num_row>0" ng-click="confirm_trans(u_list.deposit_id)" class=" md-raised md-primary" >แจ้งฝากรายการนี้</md-button></td>

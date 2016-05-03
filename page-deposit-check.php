@@ -53,7 +53,7 @@ Template Name: deposit-check
       	</tr>
         <thead>
       	<tr>
-      		<th style="white-space:nowrap;width:150px;text-align: center;">วันที่ทำรายการ</th>
+      		<th st-sort="deposit_regis" st-sort-default="reverse" style="white-space:nowrap;width:150px;text-align: center;">วันที่ทำรายการ</th>
       		<th style="white-space:nowrap;width:150px;text-align: center;">Username</th>
       		<th style="white-space:nowrap;width:160px;text-align: center;">ช่องทางชำระเงิน</th>
       		<th style="white-space:nowrap;width:180px;text-align: center;">สถานะรายการ</th>
