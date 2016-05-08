@@ -172,7 +172,7 @@ if ($result->num_rows > 0)
                      'กรุณาแจ้งโอนเงินที่%0A%0A'.$notify_transfer_url;
         //$daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท';
 
-        $member_telephone_1 = '0894287401';
+        
       sendsms($member_telephone_1, $daifaan_sms, 3 );
 
 
