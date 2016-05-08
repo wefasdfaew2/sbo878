@@ -1,9 +1,9 @@
-<div style="padding: 0 0 16px 0;">
+<div id="form_section" style="padding: 0 0 16px 0;">
   <center>
     <img ng-src="{{ template_directory_uri }}/images/deposit_cc-Step4.png" width="929" height="50" />
   </center>
 </div>
-<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:5%;">
+<div ng-if="!direct_access"  layout="column" layout-align="center center" style="margin-bottom:5%;">
   <div layout="column" layout-align="center center" style="background-color:#b1f4c5;padding:16px;width:70%;border-radius:4px;">
     <div style="font-size:1.4vw;font-weight:bold;">กรุณาโอนยอดจำนวน <span style="color:#ef473a;font-size:2vw;font-weight:bold;">{{ amount }}</span> บาท</div>
     <div style="font-size:1.4vw;font-weight:bold;margin-top:10px;">ไปยังเลขบัญชี <span style="color:#ef473a;">{{ bank_number }}</span> ธนาคาร{{ bank_name }}</div>

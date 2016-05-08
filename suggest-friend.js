@@ -39,10 +39,10 @@ app.controller('SuggestFriend', function($scope, $filter, $http, $mdDialog, $win
       }
     });
     refer_set_call.success(function(refer_set_data) {
-      //console.log(refer_set_data);
+      console.log(refer_set_data);
       if(refer_set_data.insert == 'success'){
         $scope.waiting_text = 'ทำรายการถอนเสร็จสมบูรณ์';
-        $window.location.href = '/wordpress/index.php/link-for-friend?url_link=' + $scope.promo_link;
+        $window.location.href = '/index.php/link-for-friend?url_link=' + $scope.promo_link;
       }
     });
 

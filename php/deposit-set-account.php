@@ -24,6 +24,7 @@ if(!empty($request->time))$time = $request->time;
 if(!empty($request->bonus_type))$bonus_type = $request->bonus_type;
 if(!empty($request->deposit_amount))$deposit_amount = $request->deposit_amount;
 if(!empty($request->deposit_telephone))$deposit_telephone = $request->deposit_telephone;
+if(!empty($request->user_priority))$user_priority = $request->user_priority;
 
 $deposit_bot_tunover_check_mark = '';
 $deposit_firstpayment_promotion_mark = '';
@@ -53,7 +54,7 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM backend_bank_account";
+$sql = "SELECT * FROM backend_bank_account WHERE bank_enable = 'Yes' AND bank_use_onweb = 'Yes' AND bank_priority = '$user_priority'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0)
 {
@@ -148,7 +149,7 @@ if($deposit_type == '46'){
   }
 }elseif ($deposit_type == '58' || $deposit_type == '59' || $deposit_type == '60') {
 
-  $sql = "SELECT wallet_number FROM backend_wallet_account WHERE wallet_deposit_type_id = '$deposit_type' ORDER BY wallet_amount ASC LIMIT 1";
+  /**$sql = "SELECT wallet_number FROM backend_wallet_account WHERE wallet_deposit_type_id = '$deposit_type' ORDER BY wallet_amount ASC LIMIT 1";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0)
@@ -163,7 +164,8 @@ if($deposit_type == '46'){
   {
     $result_data = array("set_status" => "fail to get wallet");
     print json_encode($result_data);
-  }
+  }**/
+  $bank_account = '7777777777';
   if($deposit_type == '58'){
     $bank_name = 'TrueMoney Wallet';
   }elseif ($deposit_type == '59') {

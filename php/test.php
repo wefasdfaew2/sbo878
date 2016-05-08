@@ -15,7 +15,27 @@
 
 <?php
 
+$custom1 = 	'56-zkc8688002';//$_POST['option_selection2'];//'214-zkc8688000';//
+$custom1String = mysqli_real_escape_string($conn, addslashes($custom1));
+$custom1String = htmlspecialchars($custom1String);
 
+
+$payment_amount = '530.00';//$_POST['mc_gross'];
+$payment_amountString = mysqli_real_escape_string($conn, addslashes($payment_amount));
+$payment_amountString = htmlspecialchars($payment_amountString);
+
+$txn_id = '6NW88401L9632242X';//$_POST['txn_id'];
+$txn_idString = mysqli_real_escape_string($conn, addslashes($txn_id));
+$txn_idString = htmlspecialchars($txn_idString);
+
+$deposit_id = substr($custom1String,0,strpos($custom1String,'-'));
+$deposit_account = substr($custom1String,strpos($custom1String,'-')+1);
+
+echo $data[0]['deposit_amount'];
+echo $payment_amountString;
+echo $data[0]['txn'];
+echo $deposit_id;
+echo $deposit_account;
 
 header('Content-Type: text/html; charset=utf-8');
 

@@ -65,6 +65,30 @@ if ($result->num_rows > 0)
     }
 
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
+
+      $sql = "SELECT member_status_id FROM backend_member_account WHERE member_sbobet_account_id
+        IN (SELECT sbobet_account_id FROM backend_sbobet_account WHERE sbobet_username = '$account')";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+          while($row = $result->fetch_assoc())
+          {
+            if($row['member_status_id'] == 4){
+              $result_data = array("check_status" => "4");
+              print json_encode($result_data);
+              exit();
+            }elseif ($row['member_status_id'] == 5) {
+              $result_data = array("check_status" => "5");
+              print json_encode($result_data);
+              exit();
+            }
+          }
+        }else {
+          echo("Error description: " . mysqli_error($conn));
+          echo "0 results";
+        }
+
       $sql = "SELECT a.withdraw_status_id,
           COUNT(a.withdraw_account) as withdraw_account_num ,
           (SELECT withdraw_status_name FROM backend_withdraw_status c

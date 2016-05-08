@@ -11,9 +11,10 @@
 header('Content-Type: text/html; charset=utf-8');
 
 
-include("php_sms_class/sms_sbobet878.php");
 
+include('php_call_api/call-add-credit-api.php');
 $configs = include('php_db_config/config.php');
+
 
 $servername = $configs['servername'];
 $username = $configs['username'];
@@ -22,9 +23,9 @@ $dbname = "sbobet878";
 
 
 
-define("DEBUG", 1);
+define("DEBUG", 0);
 // Set to 0 once you're ready to go live
-define("USE_SANDBOX", 1);
+define("USE_SANDBOX", 0);
 //define("LOG_FILE", "./ipn.log");
 // Read POST data
 // reading posted data directly from $_POST causes serialization
@@ -45,8 +46,10 @@ if(function_exists('get_magic_quotes_gpc')) {
 foreach ($myPost as $key => $value) {
 	if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
 		$value = urlencode(stripslashes($value));
+		$value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);
 	} else {
 		$value = urlencode($value);
+		$value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);
 	}
 	$req .= "&$key=$value";
 }
@@ -79,7 +82,8 @@ if(DEBUG == true) {
 //curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
 // Set TCP timeout to 30 seconds
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
+//curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close', 'User-Agent: company-name'));
 // CONFIG: Please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set the directory path
 // of the certificate as shown below. Ensure the file is readable by the webserver.
 // This is mandatory for some environments.
@@ -106,6 +110,9 @@ if (curl_errno($ch) != 0) // cURL error
 $tokens = explode("\r\n\r\n", trim($res));
 $res = trim(end($tokens));
 if (strcmp ($res, "VERIFIED") == 0) {
+//if (true) {
+
+	//error_log('VERIFIED');
 	// check whether the payment_status is Completed
 	// check that txn_id has not been previously processed
 	// check that receiver_email is your PayPal email
@@ -116,9 +123,11 @@ if (strcmp ($res, "VERIFIED") == 0) {
   $conn = new mysqli($servername, $username, $password, $dbname);
   $conn->set_charset("utf8");
 
+
   $custom1 = 	$_POST['option_selection2'];//'214-zkc8688000';//
   $custom1String = mysqli_real_escape_string($conn, addslashes($custom1));
   $custom1String = htmlspecialchars($custom1String);
+
 
   $payment_amount = $_POST['mc_gross'];
   $payment_amountString = mysqli_real_escape_string($conn, addslashes($payment_amount));
@@ -149,8 +158,14 @@ if (strcmp ($res, "VERIFIED") == 0) {
       $data[] = $row;
     }
 
+/**error_log($data[0]['deposit_amount']);
+error_log($payment_amountString);
+error_log($data[0]['txn']);
+error_log($deposit_id);
+error_log($deposit_account);**/
+
     $db_txn = substr($data[0]['deposit_note'],strpos($data[0]['deposit_note'],'txn=') + 4);
-    if($data[0]['deposit_amount'] == $payment_amountString && $data[0]['txn'] == 0){
+    if($data[0]['txn'] == 0){
 
 			$sql = "UPDATE backend_deposit_money SET deposit_status_id = 2 WHERE deposit_id = $deposit_id";
 			if ($conn->query($sql) === TRUE) {
@@ -158,33 +173,32 @@ if (strcmp ($res, "VERIFIED") == 0) {
 					$sql = "UPDATE backend_deposit_money SET deposit_status_id = 4 WHERE deposit_id = $deposit_id";
 					if ($conn->query($sql) === TRUE) {
 					    //error_log("deposit_status_id = 4 updated successfully");
-							$add_result = json_decode(add_credit($deposit_id,$deposit_account,$data[0]['deposit_bank_account'],$payment_amountString), true);
+							$add_res = add_credit($deposit_id,$deposit_account,$data[0]['deposit_bank_account'],$payment_amountString, $data[0]['deposit_telephone']);
 							//$result = preg_match("/200/",$add_result);
-							$result = $add_result["status"];
-							if($result == '200'){
+							//$result = $add_result["status"];
+							if($add_res == '200'){
 								$sql = "UPDATE backend_deposit_money SET deposit_status_id = 5, deposit_note = 'อ้างอิง txn=$txn_idString' WHERE deposit_id = $deposit_id";
 								if ($conn->query($sql) === TRUE) {
 
 									//error_log("update deposit_status_id = 5 and txn successfully");
-
-									$msisdn_sms_1 = $data[0]['deposit_telephone'];
-									$message_sms_1 = 'เติมเครดิเข้าบัญชี '.$deposit_account.' จำนวน '.$payment_amountString.' บาท สำเร็จแล้ว';
-									$result_sms = send_sms($msisdn_sms_1,$message_sms_1);
-									if($result_sms != 1){
-										error_log('sms not send');
-									}
+									//$msisdn_sms_1 = $data[0]['deposit_telephone'];
+									//$message_sms_1 = 'เติมเครดิเข้าบัญชี '.$deposit_account.' จำนวน '.$payment_amountString.' บาท สำเร็จแล้ว';
+									//$result_sms = sendsms($msisdn_sms_1,$message_sms_1,1);
+									//if($result_sms != 1){
+									//	error_log('sms not send');
+									//}
 
 								}else {
-								  error_log("Error updating record: " . $conn->error);
+								  error_log("Error updating record1: " . $conn->error);
 								}
 							}else{
 								error_log("add_credit failed.");
 							}
 					} else {
-					    error_log("Error updating record: " . $conn->error);
+					    error_log("Error updating record2: " . $conn->error);
 					}
 			} else {
-			    error_log("Error updating record: " . $conn->error);
+			    error_log("Error updating record3: " . $conn->error);
 			}
 
     }else {
@@ -223,11 +237,11 @@ if (strcmp ($res, "VERIFIED") == 0) {
 	}
 }
 
-function add_credit($dp_id,$ac_name,$dest_account,$money){
+/**function add_credit($dp_id,$ac_name,$dest_account,$money){
 //call api http://zkc8688_add_value.service/140/zkc868800/<bank account>/100.xx
 //echo "http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money;
 	$res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
 	return $res;
-}
+}**/
 
 ?>

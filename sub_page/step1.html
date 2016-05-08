@@ -9,11 +9,11 @@
   <img ng-if="step1_option == 2" ng-src="{{ template_directory_uri }}/images/deposit_cc-Step1.png" width="929" height="50" />
   <img ng-if="step1_option == 3" ng-src="{{ template_directory_uri }}/images/withdraw-Step1.png" width="929" height="50" />
 </center>
-<div class="md-padding"></div>
+<div class="md-padding" id="form_section"></div>
 <div layout="row" layout-align="center center"  >
   <md-radio-group ng-model="step1_option">
   <div class="alert alert-info" >
-    <md-radio-button value="1" class="md-primary"> ฝากเงินสด (แบบอัตโนมัติ ไม่ต้องแจ้งหลังโอนเสร็จ) </md-radio-button>
+    <md-radio-button ng-disabled="dep_auto_status" value="1" class="md-primary"> ฝากเงินสด (แบบอัตโนมัติ ไม่ต้องแจ้งหลังโอนเสร็จ) {{ dep_auto_text }}</md-radio-button>
     <md-radio-button value="2" class="md-primary"> ฝากเงินสด (แบบแจ้ง Call Center หลังโอนเสร็จ) </md-radio-button>
     <md-radio-button value="3"class="md-primary" > ถอนเครดิตเป็นเงินสด </md-radio-button>
     <md-radio-button value="4" class="md-primary"> ย้ายเครดิต </md-radio-button>

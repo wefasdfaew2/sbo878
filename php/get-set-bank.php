@@ -166,7 +166,7 @@ if($option == 'get'){
 
 
     $message_sms_1 = 'รหัส OTP = '. $otp .' Ref Code : '.$otp_ref;
-    $result_sms = send_sms($tel,$message_sms_1);
+    $result_sms = sendsms($tel,$message_sms_1, 2);
 
     //$daifaan_sms = 'รหัส%20OTP%20=%20'.$otp.'%20Ref%20Code%20:%20'.$otp_ref;
     //SendMessage_daifaan($tel, $daifaan_sms );

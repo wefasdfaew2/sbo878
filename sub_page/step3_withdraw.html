@@ -24,7 +24,7 @@
   <img ng-src="{{ template_directory_uri }}/images/withdraw-Step3.png" width="929" height="50" />
 </center>
 <div class="md-padding"></div>
-<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:20px;">
+<div ng-if="!direct_access" id="form_section" layout="column" layout-align="center center" style="margin-bottom:20px;">
   <md-input-container class="md-block">
     <label style="color:black;">OTP:</label>
     <input ng-model="user.user_otp" type="text" placeholder="กรุณาใส่หมายเลข OTP ที่ได้รับในโทรศัพท์มือถือ" style="width:300px;">

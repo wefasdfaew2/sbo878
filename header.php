@@ -66,6 +66,10 @@
   echo 'Unable to get info';
  }
 
+  include('php/check-notify-text.php');
+  $announce_data = get_announce_data();
+
+
 ?>
 <!DOCTYPE html>
 <html  <?php language_attributes(); ?> >
@@ -103,6 +107,15 @@
 			<div style="height:80px;"></div>
 			<div id="sticky-anchor"></div>
 			<!--<div class="sticky-text" >ยอดสมาชิกแทงได้วันนี้</div>-->
+      <?php if($announce_data['announce_enable'] == 'Yes'){ ?>
+
+        <div id="sticky" class="stick" style="padding:10px;width:100%;height:80px;background-color:white;z-index:10001;">
+          <div style="color:darkred;text-align:center;vertical-align: middle;font-weight:bold;">
+            <?php echo $announce_data['announce_text']; ?>
+          </div>
+        </div>
+
+      <?php } ?>
 			<div id="sticky" class="stick" style="width:980px;background-color:transparent;padding-top:5px;">
 
 				<div  class="box2" style="display:inline-block;margin-left:10px;width:550px;">
@@ -136,8 +149,6 @@
 						</div>
 					</center>
 				</div>
-
-
 			</div>
 
 			<div class="row">

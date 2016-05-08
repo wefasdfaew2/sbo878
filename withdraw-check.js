@@ -5,7 +5,16 @@ app.filter('dayFilter', function() {
         var filterFunction = function (item) {
           var d = new Date();
           d.setDate(d.getDate()-last_number_day);
-          var timestamp = new Date(item.withdraw_regis);
+          if(item.withdraw_regis != null){
+            var dd = item.withdraw_regis;//2016-05-05 22:34:36
+            var dateTime = dd.split(" ");
+            var day = dateTime[0];
+            var time = dateTime[1];
+            var timestamp = new Date(day.split("-")[0],day.split("-")[1],day.split("-")[2],time.split(":")[0],time.split(":")[1],time.split(":")[2]);
+          }else{
+            timestamp = null;
+          }
+          
           return timestamp >= d;
         };
     	return input.filter(filterFunction);

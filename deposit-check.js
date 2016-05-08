@@ -1,13 +1,25 @@
 var app = angular.module('MyDepositCheck', ['ngMaterial', 'ngMessages', 'smart-table']);
 
-app.filter('dayFilter', function() {
+app.filter('dayFilter', function($filter) {
     return function(input, last_number_day) {
         var filterFunction = function (item) {
           var d = new Date();
           d.setDate(d.getDate()-last_number_day);
-          var timestamp = new Date(item.deposit_regis);
+
+          if(item.deposit_regis != null){
+            var dd = item.deposit_regis;//2016-05-05 22:34:36
+            var dateTime = dd.split(" ");
+            var day = dateTime[0];
+            var time = dateTime[1];
+            var timestamp = new Date(day.split("-")[0],day.split("-")[1],day.split("-")[2],time.split(":")[0],time.split(":")[1],time.split(":")[2]);
+          }else{
+            timestamp = null;
+          }
+          //var timestamp = new Date(item.deposit_regis);
+          
           return timestamp >= d;
         };
+
     	return input.filter(filterFunction);
     };
 });
@@ -102,6 +114,8 @@ app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, 
 
       var randomsItems2 = randomsItems;
 
+
+
       randomsItems = $filter('dayFilter')(randomsItems, 3);
 
       //var filtered = params.search.predicateObject ? $filter('filter')(randomsItems2, params.search.predicateObject) : randomsItems;
@@ -110,6 +124,7 @@ app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, 
       var filtered;
       if(angular.isUndefined(params.search.predicateObject)){
         params.search.predicateObject = {};
+
       }
       //console.log(Object.keys(params.search.predicateObject).length);
       if(Object.keys(params.search.predicateObject).length != 0){

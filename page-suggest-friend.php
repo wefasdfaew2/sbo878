@@ -108,7 +108,7 @@ Template Name: suggest-friend
       </h4>
 
 
-      <div style="padding:16px;" ng-hide="loged_in" id="login_zone">
+      <div style="padding:16px;margin-bottom:16px;" ng-hide="loged_in" id="login_zone">
         <form>
           <div class="row">
             <div class="col-md-2 col-sm-2 col-xs-2 text-right" style="height:34px;">
@@ -121,10 +121,10 @@ Template Name: suggest-friend
               <label style="position: relative;top: 50%;transform: translateY(-50%);">Tel:</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3">
-              <input ng-model="login.password" type="password" class="form-control" >
+              <input ng-model="login.tel" type="password" class="form-control" >
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
-              <button ng-click="login_check(login.username, login.password)" ng-disabled="login_button_disable" type="button" class="btn btn-primary">เข้าสู่ระบบ</button>
+              <button ng-click="login_check(login.username, login.tel)" ng-disabled="login_button_disable" type="button" class="btn btn-primary">เข้าสู่ระบบ</button>
             </div>
           </div>
       </form>

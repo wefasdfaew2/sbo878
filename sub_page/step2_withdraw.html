@@ -20,11 +20,11 @@
   transform: translate(-50%, -50%);
 }
 </style>
-<center>
+<center id="form_section">
   <img ng-src="{{ template_directory_uri }}/images/withdraw-Step2.png" width="929" height="50" />
 </center>
 <div class="md-padding"></div>
-<div ng-if="!direct_access" layout="column" layout-align="center center" style="margin-bottom:20px;">
+<div ng-if="!direct_access" ng-show="user.status_ok" layout="column" layout-align="center center" style="margin-bottom:20px;">
 
     <md-input-container class="md-block">
 
@@ -42,6 +42,11 @@
   <md-button class="md-raised md-primary" ng-click="check_username_tel()">ตกลง</md-button>
 
 
+</div>
+<div ng-hide="user.status_ok" style="margin-bottom:16px;">
+  <center>
+    <img ng-src="{{ alert_img }}" />
+  </center>
 </div>
 <div  ng-show="showSpin" id="spanLoding">
   <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="100"></md-progress-circular>

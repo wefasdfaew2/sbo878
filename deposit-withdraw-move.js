@@ -30,13 +30,38 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       url: '/step1',
       abstract: false,
       templateUrl: WPURLS.templateurl + '/sub_page/step1.html',
-      controller: function($scope, $state, $window) {
+      controller: function($scope, $state, $window, $anchorScroll, $location, $http) {
         $scope.step1_option = '1';
         $scope.template_directory_uri = WPURLS.templateurl;
+        $location.hash('form_section');
+        $anchorScroll();
+        $scope.dep_auto_text = '';
+        var check_dep = $http({
+          method: "post",
+          url: WPURLS.templateurl + "/php/check-deposit-auto-enable.php",
+          data: {},
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+        check_dep.success(function(deposit_auto) {
+          //console.log(deposit_auto.deposit_auto_enable);
+          if(deposit_auto.deposit_auto_enable == 'Yes'){
+            $scope.dep_auto_status = false;
+          }else {
+            $scope.step1_option = '2';
+            $scope.dep_auto_status = true;
+            $scope.dep_auto_text = '--- ระบบอัตโนมัติขัดข้อง'
+
+          }
+
+        });
+
         $scope.nextTo = function(){
           var params = {
             'direct_access': false
           };
+
           if($scope.step1_option == '1'){
             $state.go("step2_deposit_auto", params);
           }else if ($scope.step1_option == '2') {
@@ -59,17 +84,20 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null,
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step2_withdraw.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.showSpin = false;
         $scope.user = {};
         $scope.user.username = '';//;
         $scope.user.tel = '';//'';
+        $scope.user.status_ok = true;
         $scope.check_username_tel = function (ev) {
 
           if($scope.user.username.length == 0 || $scope.user.tel.length == 0){
@@ -130,6 +158,12 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                   .ok('OK')
                   .targetEvent(ev)
               );
+            }else if (check_req_data.check_status == '4') {
+              $scope.user.status_ok = false;
+              $scope.alert_img = WPURLS.templateurl + '/images/alert_member_status_4.jpg';
+            }else if (check_req_data.check_status == '5') {
+              $scope.user.status_ok = false;
+              $scope.alert_img = WPURLS.templateurl + '/images/alert_member_status_5.jpg';
             }else{
               var confirm = $mdDialog.confirm()
               .parent(angular.element(document.querySelector('body')))
@@ -184,12 +218,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null,
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step3_withdraw.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.showSpin = true;
         $scope.user = {};
@@ -198,7 +234,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           url: WPURLS.templateurl + "/php/withdraw-sms-otp.php",
           data: {
             username: $stateParams.withdraw_username,
-            check_otp: false
+            check_otp: false,
           },
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -208,7 +244,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $scope.showSpin = false;
           if(otp_ref_data.otp_ref != 'error'){
             $scope.otp_ref = otp_ref_data.otp_ref;
-            //send_sms($stateParams.tel, $scope.otp_ref);
+            send_sms($stateParams.tel, $scope.otp_ref);
             //console.log("sms sended");
           }else {
             //console.log('otp error');
@@ -310,13 +346,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_withdraw.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog, $interval) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $interval, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
-
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.withdraw_wait = true;
         $scope.withdraw_add = false;
@@ -456,18 +493,20 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step2_deposit_auto.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
         $scope.direct_access = false;
-
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.user = {};
         $scope.user.tel = '';
         $scope.user.username = '';
+        $scope.user.priority = '';
         $scope.is_logo_type = false;
         $scope.isDisable = true;
         //$scope.user.auto_type_option = 46;
@@ -501,6 +540,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.isDisable = true;
             }else {
               //$scope.account_type = res_data.get_account_type;
+              $scope.user.priority = res_data.user_priority;
               $scope.is_valid_account = false;
               $scope.logo_type = WPURLS.templateurl + res_data.get_logo_type;
               $scope.is_logo_type = true;
@@ -529,6 +569,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             'deposit_username': $scope.user.username,
             'auto_type_option': $scope.user.auto_type_option,
             'deposit_telephone': $scope.user.tel,
+            'user_priority': $scope.user.priority,
             'direct_access': false
           };
           $state.go("step3_deposit_auto", params);
@@ -729,6 +770,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         deposit_username: null,
         auto_type_option: null,
         deposit_telephone: null,
+        user_priority: null,
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step3_deposit_auto.html',
@@ -740,7 +782,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         }
         $scope.showLoading = false;
         $scope.template_directory_uri = WPURLS.templateurl;
-        $location.hash('element_3');
+        $location.hash('form_section');
         $anchorScroll();
         $scope.user = {};
         $scope.user.credit_result = 0;
@@ -780,8 +822,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                 $scope.user.credit_result = Math.floor($scope.user.credit_result);
               }
             }else if ($scope.user.bonus_type == 'get_10_per') {
-              if(credit_money >= 5000){
+              if(credit_money >= 10000){
                 $scope.user.credit_result =  credit_money + (credit_money * 10 / 100);
+                $scope.user.credit_result = Math.floor($scope.user.credit_result);
+              } else if(credit_money >= 5000){
+                $scope.user.credit_result =  credit_money + (credit_money * 5 / 100);
                 $scope.user.credit_result = Math.floor($scope.user.credit_result);
               }else{
                 $scope.user.credit_result = credit_money;
@@ -822,7 +867,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               timeStamp: timeStamp,
               date: date,
               time: time,
-              bonus_type: $scope.user.bonus_type
+              bonus_type: $scope.user.bonus_type,
+              user_priority: $stateParams.user_priority
             },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -899,9 +945,9 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.option_2_value = 'no_bonus'
             $scope.user.bonus_type = 'get_200_per';
           }else{
-            $scope.big_bonun_text = 'คุณได้รับโบนัส 10% จากยอดเงินฝาก (กรณีฝากเกิน 5000 บาทขึ้นไป)';
+            $scope.big_bonun_text = 'คุณได้รับโบนัส 10% จากยอดเงินฝาก กรณีฝากเกิน 10,000 บาทขึ้นไป หรือหากฝาก 5,000-9,999 บาทจะได้รับโบนัส 5%';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 5 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
-            $scope.bonus_option_1 = 'รับโบนัส (เฉพาะยอดเงินฝากเกิน 5000 บาทเท่านั้น)';
+            $scope.bonus_option_1 = 'รับโบนัส (เฉพาะยอดเงินฝากเกิน 10000 หรือ 5000 บาทเท่านั้น)';
             $scope.bonus_option_2 = 'ไม่รับโบนัสนี้ (ไม่ต้องการติดเงื่อนไข Turnover สามารถถอนได้ตลอดเวลา)';
             $scope.option_1_value = 'get_10_per'
             $scope.option_2_value = 'no_bonus'
@@ -922,12 +968,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_deposit_auto_credit_paypal.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         ////console.log($stateParams.auto_type_option);
         $scope.user = {};
@@ -935,11 +983,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.user.username = $stateParams.deposit_username;
 
         if($stateParams.auto_type_option == 46){
-          $scope.payType = WPURLS.templateurl + '/images/paywithcreditcard.png';
-          $scope.manualType = WPURLS.templateurl + '/images/paywithcreditcardmanual.png';
+          $scope.payType = WPURLS.templateurl + '/images/paywithcreditcard.jpg';
+          $scope.manualType = WPURLS.templateurl + '/images/paywithcreditcardmanual.jpg';
         }else if ($stateParams.auto_type_option == 48) {
-          $scope.payType = WPURLS.templateurl + '/images/paywithpaypal.png';
-          $scope.manualType = WPURLS.templateurl + '/images/paywithpaypalmanual.png';
+          $scope.payType = WPURLS.templateurl + '/images/paywithpaypal.jpg';
+          $scope.manualType = WPURLS.templateurl + '/images/paywithpaypalmanual.jpg';
         }
       }
     })
@@ -954,35 +1002,39 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         amount: null,
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_deposit_auto_interner_banking.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         //console.log($stateParams.deposit_username);
         //console.log($stateParams.amount);
         //console.log($stateParams.deposit_regis);
         if($stateParams.auto_type_option == 33 || $stateParams.auto_type_option == 45 ||
             $stateParams.auto_type_option == 44 || $stateParams.auto_type_option == 40 ){
-          $scope.notify_us1 = 'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมล';
+          $scope.notify_us1 = 'ระบุที่อยู่ Email ผู้รับ';//'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมล';
           $scope.notify_us2 = $stateParams.deposit_username + '@pay.sbobet878.com';
+          $scope.notify_us3 = WPURLS.templateurl + '/images/d-email.gif';
+          $scope.notify_us4 = $stateParams.deposit_username;
           $scope.warning_message1 = 'ระบุอีเมลตามที่ระบบแจ้งทางซ้ายมือ';
           $scope.warning_message2 = 'ลงในช่อง "บริการแจ้งผู้รับเงินปลายทาง" เพื่อให้ระบบตรวจสอบอัตโนมัติของเราตรวจสอบยอดของท่านได้รวดเร็วยิ้งชึ้น';
         }else if ($stateParams.auto_type_option == 29 || $stateParams.auto_type_option == 28) {
-          $scope.notify_us1 = 'เป็นไปอย่างอัตโนมัติกรุณาแจ้งผู้รับโอนผ่าน SMS ส่งมาที่เบอร์';
+          $scope.notify_us1 = 'ระบุเบอร์ sms ผู้รับ';//'เป็นไปอย่างอัตโนมัติกรุณาแจ้งผู้รับโอนผ่าน SMS ส่งมาที่เบอร์';
           $scope.notify_us2 = '0952353577';
-          $scope.notify_us3 = 'โดยระบุชื่อผู้ส่งเป็น';
+          $scope.notify_us3 = WPURLS.templateurl + '/images/d-SMS.gif';//'โดยระบุชื่อผู้ส่งเป็น';
           $scope.notify_us4 = $stateParams.deposit_username;
           $scope.warning_message1 = 'ส่ง SMS ตามที่ระบบแจ้งทางซ้ายมือ';
           $scope.warning_message2 = 'เพื่อให้ระบบตรวจสอบอัตโนมัติของเราตรวจสอบยอดของท่านได้รวดเร็วยิ้งชึ้น';
         }else if ($stateParams.auto_type_option == 37 || $stateParams.auto_type_option == 41 ||
             $stateParams.auto_type_option == 52 ||
             $stateParams.auto_type_option == 51) {
-          $scope.notify_us1 = 'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมลเป็น';
+          $scope.notify_us1 = 'ระบุที่อยู่ Email ผู้รับ';//'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมลเป็น';
           $scope.notify_us2 = $stateParams.deposit_username + '@pay.sbobet878.com';
-          $scope.notify_us3 = 'ระบุชื่อผู้โอนเป็น';
+          $scope.notify_us3 = WPURLS.templateurl + '/images/d-email.gif';//'ระบุชื่อผู้โอนเป็น';
           $scope.notify_us4 = $stateParams.deposit_username;
           $scope.warning_message1 = 'ระบุอีเมลและชื่อผู้โอนตามที่ระบบแจ้งทางซ้ายมือ';
           $scope.warning_message2 = 'เพื่อให้ระบบตรวจสอบอัตโนมัติของเราตรวจสอบยอดของท่านได้รวดเร็วยิ้งชึ้น';
@@ -1037,12 +1089,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         wallet_number: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_deposit_auto_e_wallet.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount_wallet = $stateParams.amount;
         $scope.from_wallet_tel = $stateParams.deposit_telephone;
@@ -1084,12 +1138,14 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         amount: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_deposit_auto_atm_normal.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount_atm = $stateParams.amount;
         $scope.tel = $stateParams.deposit_telephone;
@@ -1115,8 +1171,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $scope.how_to = WPURLS.templateurl + res_data[0].how_to_img;
           var message = 'กรุณาโอนยอดจำนวน%0A' + $scope.amount_atm + '%20บาท%0A%0Aไปยังเลขบัญชีที่%0A' +
           $scope.to_bank_number + '%0A(ธนาคาร'+$scope.to_bank_name+')%0A%0Aหลังจากโอนเงินเสร็จ%0A'+
-          'แล้วกรุณาใช้บริการ%20SMS%20แจ้งผู้รับโดยระบุเบอร์มือถือของผู้ส่งเป็นหมายเลข%20'+$scope.tel
-          //send_sms($scope.tel, message);
+          'แล้วกรุณาใช้บริการ%20SMS%20แจ้งผู้รับโดยระบุเบอร์มือถือของผู้ส่งเป็นหมายเลข%20'+$scope.tel;
+          send_sms($scope.tel, message);
 
         });
 
@@ -1151,13 +1207,16 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         amount: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step2_deposit_man.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.user = {};
+        $scope.user.priority = '';
         $scope.account_corect = false;
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.check_input = function(){
@@ -1172,6 +1231,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
           var params = {};
           params.deposit_username = $scope.user.username;
+          params.user_priority = $scope.user.priority;
           params.direct_access = false;
           for(var x in $scope.bank_info){
             if(x == 0){
@@ -1207,7 +1267,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             ////console.log(res_data.get_account_type);
             if(res_data.get_account_type == 'no_account'){
               $scope.account_corect = false;
-              $scope.account_type = 'Username ไม่ถูกต้อง';
+              $scope.account_type = 'Username หรือ เบอร์โทรศัพท์ไม่ถูกต้อง';
 
 
               if($scope.user.username.length == 0 && $scope.user.tel.length == 0){
@@ -1221,6 +1281,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else {
 
               //$scope.account_type = res_data.get_account_type;
+              $scope.user.priority = res_data.user_priority;
               $scope.is_valid_account = false;
               $scope.logo_type = WPURLS.templateurl + res_data.get_logo_type;
               $scope.is_logo_type = true;
@@ -1484,15 +1545,18 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         bank_name_2: null,
         bank_number_3: null,
         bank_name_3: null,
+        user_priority: null,
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step3_deposit_man.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
+        $location.hash('form_section');
+        $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.user = {};
         $scope.invalid_number = true;
@@ -1514,7 +1578,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               bank_number_3: $stateParams.bank_number_3,
               bank_name_3: $stateParams.bank_name_3,
               bonus_type: $scope.user.bonus_type,
-              notify_transfer_url: WPURLS.home_url + '/user_inform_transfer'
+              user_priority: $stateParams.user_priority,
+              notify_transfer_url: 'http://goo.gl/1KpPqn' //WPURLS.home_url + '/user_inform_transfer'
             },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -1564,8 +1629,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.user.credit_result = Math.floor($scope.user.credit_result);
             }
           }else if ($scope.user.bonus_type == 'get_10_per') {
-            if(credit_money >= 5000){
+            if(credit_money >= 10000){
               $scope.user.credit_result =  credit_money + (credit_money * 10 / 100);
+              $scope.user.credit_result = Math.floor($scope.user.credit_result);
+            } else if(credit_money >= 5000){
+              $scope.user.credit_result =  credit_money + (credit_money * 5 / 100);
               $scope.user.credit_result = Math.floor($scope.user.credit_result);
             }else{
               $scope.user.credit_result = credit_money;
@@ -1606,9 +1674,9 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.option_2_value = 'no_bonus'
             $scope.user.bonus_type = 'get_200_per';
           }else{
-            $scope.big_bonun_text = 'คุณได้รับโบนัส 10% จากยอดเงินฝาก (กรณีฝากเกิน 5000 บาทขึ้นไป)';
+            $scope.big_bonun_text = 'คุณได้รับโบนัส 10% จากยอดเงินฝาก กรณีฝากเกิน 10,000 บาทขึ้นไป หรือหากฝาก 5,000-9,999 บาทจะได้รับโบนัส 5%';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 5 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
-            $scope.bonus_option_1 = 'รับโบนัส (เฉพาะยอดเงินฝากเกิน 5000 บาทเท่านั้น)';
+            $scope.bonus_option_1 = 'รับโบนัส (เฉพาะยอดเงินฝากเกิน 10,000 หรือ 5,000 บาทเท่านั้น)';
             $scope.bonus_option_2 = 'ไม่รับโบนัสนี้ (ไม่ต้องการติดเงื่อนไข Turnover สามารถถอนได้ตลอดเวลา)';
             $scope.option_1_value = 'get_10_per'
             $scope.option_2_value = 'no_bonus'
@@ -1630,13 +1698,15 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_deposit_man.html',
-      controller: function($scope, $state, $stateParams, $http, $filter) {
+      controller: function($scope, $state, $stateParams, $http, $filter, $anchorScroll, $location) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
           return;
         }
-        $scope.notify_transfer = WPURLS.home_url + '/user_inform_transfer';
+        $location.hash('form_section');
+        $anchorScroll();
+        $scope.notify_transfer = 'http://goo.gl/1KpPqn'; //WPURLS.home_url + '/user_inform_transfer';
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount = $stateParams.amount;
         $scope.bank_number = $stateParams.bank_number;

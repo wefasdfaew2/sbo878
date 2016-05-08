@@ -26,6 +26,7 @@ if(!empty($request->tel)){
 
 
 
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 $conn->set_charset("utf8");
@@ -74,7 +75,7 @@ if ($result->num_rows > 0)
   }
   $sbo_account_id = $data[0]['sbobet_account_id'];
   //print json_encode($data);
-  $sql = "SELECT member_telephone_1, member_telephone_2 FROM backend_member_account WHERE $member_type = $sbo_account_id";
+  $sql = "SELECT member_telephone_1, member_telephone_2, member_bank_priority FROM backend_member_account WHERE $member_type = $sbo_account_id";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0)
@@ -85,10 +86,18 @@ if ($result->num_rows > 0)
       //echo  $row["channel"];
     }
 
+    if($data[1]['member_telephone_1'] == ''){
+      $data[1]['member_telephone_1'] = 'qwsdvhuio';
+    }
+    if($data[1]['member_telephone_2'] == ''){
+      $data[1]['member_telephone_2'] = 'qwsdvhuio';
+    }
+
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
       $result_data = array(
         "get_account_type" => $data[0]['member_type_name'],
-        "get_logo_type" => $data[0]['member_type_logo']
+        "get_logo_type" => $data[0]['member_type_logo'],
+        "user_priority" => $data[1]['member_bank_priority']
        );
       print json_encode($result_data);
     }else {

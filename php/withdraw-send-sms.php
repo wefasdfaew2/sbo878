@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
   $result_sms = SendMessage_daifaan($msisdn_sms,$message_sms);**/
   $msisdn_sms_1 = $tel;
   $message_sms_1 = 'รหัส OTP = '. $data[0]['withdraw_otp'] .' Ref Code : '.$otp_ref;
-  $result_sms = send_sms($msisdn_sms_1,$message_sms_1);
+  $result_sms = sendsms($msisdn_sms_1, $message_sms_1, 2);
   //$result_sms = sms::send_sms($username_sms,$password_sms,$msisdn_sms,$message_sms,$sender_sms,$ScheduledDelivery_sms,$force_sms);
   echo $result_sms;
 } else {
