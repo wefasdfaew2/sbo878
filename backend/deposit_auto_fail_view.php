@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table class="table table-striped table-bordered table-hover" id="deposit_view">
+                    <table class="table table-striped table-bordered table-hover" id="deposit_auto">
                         <thead>
                             <tr>
                                 <th class="text-center">ลำดับ</th>
@@ -34,8 +34,10 @@
                                 <th class="text-center">ชื่อสมาชิก</th>
                                 <th class="text-center">จำนวนเงิน</th>
                                 <th class="text-center">เวลาฝากเงิน</th>
+                                <th class="text-center">ช่องทางฝากเงิน</th>
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">ตรวจสอบ</th>
+                                <th class="text-center" style="width:150px;">หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,6 +53,7 @@
                                     <td class="text-center"><?php echo $row->deposit_nickname; ?></td>
                                     <td class="text-center"><?php echo $row->deposit_amount; ?></td>
                                     <td class="text-center"><?php echo $this->mydate->date2thai($row->deposit_date . ' ' . $row->deposit_time, '%d %m %y เวลา %h:%i'); ?></td>
+                                    <td class="text-center"><?php echo $row->deposit_type_name.', '.$row->deposit_type_subtype; ?></td>
                                     <td class="text-center">
                                         <?php
                                         $lable_status = '';
@@ -70,6 +73,9 @@
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-xs dark" onclick="show_modal('deposit_model/modal_deposit_view/<?php echo $row->deposit_id; ?>');"><i class="icon-search"></i> ตรวจสอบ</button>
+                                    </td>
+                                    <td class="text-center">
+                                      <div><?php echo $row->deposit_note; ?></div>
                                     </td>
                                 </tr>
                                 <?php

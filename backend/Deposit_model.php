@@ -5,7 +5,7 @@ class Deposit_model extends CI_Model {
     public function get_deposit($deposit_id = NULL) {
         if ($deposit_id == NULL) {
 
-            $this->db->select('deposit_type_id')->from('deposit_type')->where('deposit_type_type','manual');;
+            $this->db->select('deposit_type_id')->from('deposit_type')->where('deposit_type_type','manual');
             $subQuery =  $this->db->get_compiled_select();
 
             $re = $this->db->select('*')
@@ -19,9 +19,33 @@ class Deposit_model extends CI_Model {
         } else {
             $this->db->from('deposit_money');
             $this->db->join('deposit_status', 'deposit_status.deposit_status_id = deposit_money.deposit_status_id');
+            $this->db->join('deposit_type', 'backend_deposit_type.deposit_type_id = backend_deposit_money.deposit_type');
             $this->db->where('deposit_money.deposit_id', $deposit_id);
             return $this->db->get();
         }
+    }
+
+    public function update_bonus_flag($deposit_id, $first, $next, $bonus, $turnover, $turnover_status) {
+      $data = array(
+        'deposit_amount_bonus' => $bonus,
+        'deposit_turnover' => $turnover,
+        'deposit_firstpayment_promotion_mark' => $first,
+        'deposit_nextpayment_promotion_mark' => $next,
+        'deposit_bot_tunover_check_mark' => $turnover_status
+      );
+      $this->db->where('deposit_id', $deposit_id);
+      $this->db->update('deposit_money', $data);
+
+    }
+
+    public function get_regis_bank_by_username($username) {
+      $re = $this->db->select('member_bank_name, member_bank_account')
+        ->from('sbobet_account')
+        ->join('member_account', 'member_account.member_sbobet_account_id = sbobet_account.sbobet_account_id')
+        ->where('sbobet_account.sbobet_username', $username)
+        ->get();
+
+        return $re;
     }
 
     public function get_deposit_auto_fail() {
@@ -31,6 +55,7 @@ class Deposit_model extends CI_Model {
       $re = $this->db->select('*')
         ->from('deposit_money')
         ->join('deposit_status', 'deposit_status.deposit_status_id = deposit_money.deposit_status_id')
+        ->join('deposit_type', 'backend_deposit_type.deposit_type_id = backend_deposit_money.deposit_type')
         ->where("deposit_type IN ($subQuery)", NULL, FALSE)
         ->where('backend_deposit_money.deposit_status_id = 1 OR backend_deposit_money.deposit_status_id = 9')
         //->or_where('deposit_status_id', 9)
@@ -102,3 +127,37 @@ class Deposit_model extends CI_Model {
     }
 
 }
+
+/*
+SELECT deposit_type
+FROM backend_deposit_money
+JOIN backend_deposit_type ON backend_deposit_type.deposit_type_id = backend_deposit_money.deposit_type
+
+ WHERE backend_deposit_type.deposit_type_type = 'manual' AND backend_deposit_money.deposit_status_id = 1
+
+ */
+ /*
+ SELECT phone, (SELECT COUNT(deposit_type)
+ FROM backend_deposit_money
+ JOIN backend_deposit_type ON backend_deposit_type.deposit_type_id = backend_deposit_money.deposit_type
+
+  WHERE backend_deposit_type.deposit_type_type = 'manual' AND backend_deposit_money.deposit_status_id = 1 ) as deposit_wait_number
+         FROM callcenter_number
+ */
+/*
+SELECT *
+FROM  `backend_deposit_money`
+JOIN  `backend_deposit_status` ON  `backend_deposit_status`.`deposit_status_id` =  `backend_deposit_money`.`deposit_status_id`
+JOIN  `backend_deposit_type` ON  `backend_deposit_type`.`deposit_type_id` =  `backend_deposit_money`.`deposit_type`
+WHERE deposit_type
+IN (
+
+SELECT  `deposit_type_id`
+FROM  `backend_deposit_type`
+WHERE  `deposit_type_type` =  'auto'
+)
+AND  `backend_deposit_money`.`deposit_status_id` =1
+OR  `backend_deposit_money`.`deposit_status_id` =9
+ORDER BY  `deposit_id` DESC
+LIMIT 0 , 30
+*/

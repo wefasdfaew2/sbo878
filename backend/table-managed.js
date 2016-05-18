@@ -142,6 +142,7 @@ var TableManaged = function () {
                     {"bSortable": false},
                     {"bSortable": false},
                     {"bSortable": false},
+                    {"bSortable": false},
                     {"bSortable": false}
                 ],
                 "aaSorting": [ [0,'desc'] ],
@@ -194,6 +195,8 @@ var TableManaged = function () {
                     {"bSortable": false},
                     {"bSortable": false},
                     {"bSortable": false},
+                    {"bSortable": false},
+                    {"bSortable": false},
                     {"bSortable": false}
                 ],
                 "aaSorting": [ [0,'desc'] ],
@@ -217,6 +220,25 @@ var TableManaged = function () {
                     }
                 ]
             });
+            jQuery('#deposit_auto .group-checkable').change(function () {
+                var set = jQuery(this).attr("data-set");
+                var checked = jQuery(this).is(":checked");
+                jQuery(set).each(function () {
+                    if (checked) {
+                        $(this).attr("checked", true);
+                    } else {
+                        $(this).attr("checked", false);
+                    }
+                    $(this).parents('tr').toggleClass("active");
+                });
+                jQuery.uniform.update(set);
+            });
+            jQuery('#deposit_auto tbody tr .checkboxes').change(function () {
+                $(this).parents('tr').toggleClass("active");
+            });
+            jQuery('#deposit_auto_wrapper .dataTables_filter input').addClass("form-control input-medium"); // modify table search input
+            jQuery('#deposit_auto_wrapper .dataTables_length select').addClass("form-control input-xsmall"); // modify table per page dropdown
+            jQuery('#deposit_auto_wrapper .dataTables_length select').select2();
 
             // dashboard withdraw table
             $('#withdraw').dataTable({
@@ -226,7 +248,9 @@ var TableManaged = function () {
                     {"bSortable": false},
                     {"bSortable": false},
                     {"bSortable": false},
+                    {"bSortable": false},
                     {"bSortable": false}
+
                 ],
                 "aaSorting": [ [0,'desc'] ],
                 "aLengthMenu": [
@@ -380,6 +404,7 @@ var TableManaged = function () {
                     null,
                     null,
                     null,
+                    {"bSortable": false},
                     {"bSortable": false}
                 ],
                 "aaSorting": [ [0,'desc'] ],
@@ -432,6 +457,7 @@ var TableManaged = function () {
                     null,
                     null,
                     null,
+                    {"bSortable": false},
                     {"bSortable": false}
                 ],
                 "aaSorting": [ [0,'desc'] ],

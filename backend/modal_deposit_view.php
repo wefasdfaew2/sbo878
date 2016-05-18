@@ -1,5 +1,7 @@
 ﻿<?php
     $deposit = $this->deposit_model->get_deposit($param1)->row();
+    $regis_bank = $this->deposit_model->get_regis_bank_by_username($deposit->deposit_account)->row();
+    //error_log(print_r($regis_bank));
 ?>
 
 
@@ -106,7 +108,7 @@
             <label class="col-md-6 control-label">ประเภท : </label>
             <div class="col-md-6">
                 <p class="form-control-static">
-                    <?php echo $deposit->deposit_type; ?>
+                    <?php echo $deposit->deposit_type_name.', '.$deposit->deposit_type_subtype.', '.$deposit->deposit_type_wellknown_name; ?>
                 </p>
             </div>
         </div>
@@ -166,6 +168,17 @@
                 </p>
             </div>
         </div>
+        <div class="form-group" style="margin-top:10px; margin-bottom:7px !important;">
+            <label class="col-md-6 control-label">เลขบัญชีของลูกค้าที่ลงทะเบียนไว้ : </label>
+            <div class="col-md-6">
+              <p class="form-control-static">
+                <?php
+                echo 'ธนาคาร  '.$regis_bank->member_bank_name.'<br>';
+                echo 'เลขบัญชี '.$regis_bank->member_bank_account;
+                ?>
+              </p>
+            </div>
+        </div>
         <div class="form-group" style="margin-top:20px; margin-bottom:7px !important;">
             <div class="col-lg-12 text-center">
 		            <div class="btn btn-primary" id="change_status" > เปลี่ยนสถานะเป็นกำลังตรวจสอบโดย Call Center</div>&nbsp;&nbsp;
@@ -176,23 +189,38 @@
     </form>
     <div class="clearfix"></div>
     <?php
-      $db_d_amount = floor($deposit->deposit_amount);
 
-       if($db_d_amount >= 5000){
-        if($deposit->deposit_firstpayment_promotion_mark == 'Yes'){
+
+      $deposit_amount_bonus = 0;
+      $deposit_turnover = 0;
+      $db_d_amount = floor($deposit->deposit_amount);
+      $db_d_firstpayment = $deposit->deposit_firstpayment_promotion_mark;
+      $db_d_nextpayment = $deposit->deposit_nextpayment_promotion_mark;
+      if($db_d_amount >= 5000){
+        if($db_d_firstpayment == 'Yes'){
           $deposit_amount_bonus = $db_d_amount * 2;
           $deposit_turnover = $db_d_amount * 8;
           if($deposit_amount_bonus > 1500){
             $deposit_amount_bonus = 1500;
           }
-          $db_d_amount = $db_d_amount + $deposit_amount_bonus;
-        }elseif($deposit->deposit_nextpayment_promotion_mark == 'Yes'){
+        }elseif($db_d_nextpayment == 'Yes'){
           if($db_d_amount < 10000){
             $deposit_amount_bonus = 0.05 * $db_d_amount;
+            $deposit_turnover =  ($deposit_amount_bonus + $db_d_amount) * 5;
           }elseif($db_d_amount >= 10000){
             $deposit_amount_bonus = 0.1 * $db_d_amount;
+            $deposit_turnover =  ($deposit_amount_bonus + $db_d_amount)  * 5;
           }
-          $db_d_amount = $db_d_amount + $deposit_amount_bonus;
+        }
+        $deposit_amount_bonus = round($deposit_amount_bonus, 2);
+        $deposit_turnover = round($deposit_turnover, 2);
+      }else {
+        if($db_d_firstpayment == 'Yes'){
+          $deposit_amount_bonus = $db_d_amount * 2;
+          $deposit_turnover = $db_d_amount * 8;
+          if($deposit_amount_bonus > 1500){
+            $deposit_amount_bonus = 1500;
+          }
         }
       }
 
@@ -201,12 +229,13 @@
     <script>
 
         $( document ).ready(function() {
-          var status_id = <?php echo $deposit->deposit_status_id; ?>;
-          if(status_id == 3){
+
+          var status_id = '<?php echo $deposit->deposit_status_id; ?>';
+          if(status_id == '3'){
             $( "div#ok" ).removeClass( "disabled" );
             $( "div#not_ok" ).removeClass( "disabled" );
             $( "div#change_status" ).addClass( "disabled" );
-          }else if (status_id == 5 || status_id == 6) {
+          }else if (status_id == '5' || status_id == '6') {
             $( "div#ok" ).addClass( "disabled" );
             $( "div#not_ok" ).addClass( "disabled" );
             $( "div#change_status" ).addClass( "disabled" );
@@ -224,20 +253,25 @@
           });
 
           $( "div#ok" ).on( "click", function() {
-            console.log('ok_clicked');
+            //console.log('ok_clicked');
 
             var data = {};
-            data.deposit_amount = <?php echo $db_d_amount; ?>;
-            data.deposit_firstpayment_promotion_mark = '<?php echo $deposit->deposit_firstpayment_promotion_mark ?>';
-            data.deposit_nextpayment_promotion_mark = '<?php echo $deposit->deposit_nextpayment_promotion_mark ?>';
-            data.deposit_id = '<?php echo $deposit->deposit_id ?>';
+            data.deposit_amount = '<?php echo $db_d_amount; ?>';
+            data.deposit_firstpayment_promotion_mark = '<?php echo $deposit->deposit_firstpayment_promotion_mark; ?>';
+            data.deposit_nextpayment_promotion_mark = '<?php echo $deposit->deposit_nextpayment_promotion_mark; ?>';
+            data.deposit_id = '<?php echo $deposit->deposit_id; ?>';
+
+            data.deposit_bank_account = '<?php echo $deposit->deposit_bank_account; ?>';
+            data.deposit_account = '<?php echo $deposit->deposit_account; ?>';
+            data.deposit_telephone = '<?php echo $deposit->deposit_telephone; ?>';
+
             $.ajax({
                 url: 'deposit/set_5',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function(result) {
-                    //alert(result.update_status);
+                    alert(result.update_status);
                     if(result.update_status == 'OK'){
                       $( "div#ok" ).addClass( "disabled" );
                       $( "div#not_ok" ).addClass( "disabled" );

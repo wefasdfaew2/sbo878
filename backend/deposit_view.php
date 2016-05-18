@@ -36,6 +36,7 @@
                                 <th class="text-center">เวลาฝากเงิน</th>
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">ตรวจสอบ</th>
+                                <th class="text-center">หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,10 @@
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-xs dark" onclick="show_modal('deposit_model/modal_deposit_view/<?php echo $row->deposit_id; ?>');"><i class="icon-search"></i> ตรวจสอบ</button>
+
+                                    </td>
+                                    <td class="text-center">
+                                      <div><?php echo $row->deposit_note; ?></div>
                                     </td>
                                 </tr>
                                 <?php

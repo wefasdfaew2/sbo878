@@ -104,11 +104,7 @@
 
 							 echo $sms_count." ถึง ".$sms_date;
 						 }
-
-
-
-
-                        ?>
+             ?>
                     </div>
                    <!-- <div class="desc">sms diafaan เครดิตคงเหลือ</div> -->
                 </div>
@@ -215,6 +211,7 @@
                                 <th class="text-center">เวลาฝากเงิน</th>
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">ตรวจสอบ</th>
+                                <th class="text-center">หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -249,6 +246,9 @@
                                     <td class="text-center">
                                         <button class="btn btn-xs dark" onclick="show_modal('deposit_model/modal_deposit_view/<?php echo $row->deposit_id; ?>');"><i class="icon-search"></i> ตรวจสอบ</button>
                                     </td>
+                                    <td class="text-center" >
+                                      <div><?php echo $row->deposit_note; ?></div>
+                                    </td>
                                 </tr>
                                 <?php
                             }
@@ -279,6 +279,7 @@
                                 <th class="text-center">จำนวนเงิน</th>
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">ตรวจสอบ</th>
+                                <th class="text-center">หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -310,7 +311,20 @@
                                         <span class="<?php echo $lable_status; ?>"><i class="<?php echo $icon_status; ?>"></i> <?php echo $row->withdraw_status_name; ?></span>
                                     </td>
                                     <td class="text-center">
+                                      <?php
+                                      if ($row->withdraw_status_id == 7) {
+                                      ?>
                                         <button class="btn btn-xs dark" onclick="show_modal('withdraw_model/modal_withdraw_view/<?php echo $row->withdraw_id; ?>');"><i class="icon-search"></i> ตรวจสอบ</button>
+                                      <?php
+                                      }else{
+                                      ?>
+                                        <button class="btn btn-xs label-danger disabled" onclick="show_modal('withdraw_model/modal_withdraw_view/<?php echo $row->withdraw_id; ?>');"><i class="icon-remove"></i> ตรวจสอบ</button>
+                                      <?php
+                                      }
+                                      ?>
+                                    </td>
+                                    <td class="text-center" >
+                                      <div><?php echo $row->withdraw_note; ?></div>
                                     </td>
                                 </tr>
                                 <?php
@@ -341,8 +355,10 @@
                                 <th class="text-center">ชื่อสมาชิก</th>
                                 <th class="text-center">จำนวนเงิน</th>
                                 <th class="text-center">เวลาฝากเงิน</th>
+                                <th class="text-center">ช่องทางฝากเงิน</th>
                                 <th class="text-center">สถานะ</th>
                                 <th class="text-center">ตรวจสอบ</th>
+                                <th class="text-center">หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -357,6 +373,7 @@
                                     <td class="text-center"><?php echo $row->deposit_nickname; ?></td>
                                     <td class="text-center"><?php echo $row->deposit_amount; ?></td>
                                     <td class="text-center"><?php echo $row->deposit_date . ' ' . $row->deposit_time; ?></td>
+                                    <td class="text-center"><?php echo $row->deposit_type_name.', '.$row->deposit_type_subtype; ?></td>
                                     <td class="text-center">
                                         <?php
                                         $lable_status = '';
@@ -376,6 +393,9 @@
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-xs dark" onclick="show_modal('deposit_model/modal_deposit_view/<?php echo $row->deposit_id; ?>');"><i class="icon-search"></i> ตรวจสอบ</button>
+                                    </td>
+                                    <td class="text-center">
+                                      <div><?php echo $row->deposit_note; ?></div>
                                     </td>
                                 </tr>
                                 <?php
