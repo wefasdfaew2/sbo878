@@ -30,7 +30,7 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-if($check_otp == false){
+if($check_otp == 'false'){
 
   $otp = generateRandom_otp_code(6);
   $otp_ref = generateRandom_otp_ref_code(5);
@@ -49,7 +49,7 @@ if($check_otp == false){
   print json_encode($result_data);
   $conn->close();
 
-}elseif ($check_otp == true) {
+}elseif ($check_otp == 'true') {
   $sql = "SELECT withdraw_otp FROM backend_withdraw_otp WHERE withdraw_username = '$account' AND withdraw_otp_ref = '$otp_ref'";
   $result = $conn->query($sql);
 

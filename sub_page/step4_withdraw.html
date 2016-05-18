@@ -25,13 +25,15 @@
   <div layout="row" layout-align="center center" style="margin-top:10px;" flex>
     <div ng-if="withdraw_wait" style="width:100%;height:auto;border: 2px solid red;padding: 15px">
       <center>
-        <div>กำลังตรวจสอบยอดเงินคงเหลือที่ถอนได้ในบัญชีของท่าน</div>
+        <div>กำลังตรวจสอบยอดเงินคงเหลือที่ถอนได้ในบัญชีของท่าน <br> กรุณารอสักครู่...</div>
         <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="50"></md-progress-circular>
       </center>
     </div>
     <div ng-if="withdraw_add" style="width:100%;height:auto;border: 2px solid #387ef5;padding: 15px">
       <center>
-        <div >ยอดเงินคงเหลือที่ถอนได้  {{ current_amount }} บาท</div>
+        <div>ยอดเงินคงเหลือที่ถอนได้  {{ current_amount }} บาท</div>
+        <br>
+        <div ng-show="charge_back_status">(ถูกหักโบนัสที่เคยได้รับจำนวน {{ bonus_charge_back }} บาท เนื่องจาก Turnover ไม่ถึงตามที่กำหนด)</div>
         <br>
         <md-input-container class="md-block" style="margin-top:20px;">
             <label style="color:black;">ยอดเงินที่ต้องการถอน:</label>
@@ -41,7 +43,12 @@
       </center>
     </div>
     <div ng-if="withdraw_req_complete" style="width:100%;height:auto;border: 2px solid #4cae4c;padding: 15px">
-      <label>รับรายการถอนเข้าสู่ระบบแล้ว</label>
+      <label>
+        รับรายการถอนเข้าสู่ระบบแล้ว (ตรวจสอบสถานะรายการถอนของท่านได้ที่
+        <a href="{{ home_url }}/withdraw-check">หน้าตรวจสอบรายการถอน</a>)
+      </label>
+      <br>
+      <center><img ng-src="{{ template_directory_uri }}/images/deposit-Status5.gif" /></center>
     </div>
   </div>
 

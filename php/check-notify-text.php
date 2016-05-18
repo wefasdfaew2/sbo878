@@ -3,12 +3,14 @@
     //$check_direct_access = strpos($_SERVER['HTTP_REFERER'],getenv('HTTP_HOST'));
     //if($check_direct_access === false)die('Restricted access');
 
-    header('Content-Type: text/html; charset=utf-8');
+    //header('Content-Type: text/html; charset=utf-8');
 
 
 
     function get_announce_data(){
-      $configs = include('../php_db_config/config.php');
+
+      $configs = require_once(realpath(dirname(__FILE__) . '/../php_db_config/config.php'));
+      //$configs = require_once('../php_db_config/config.php');
       $servername = $configs['servername'];
       $username = $configs['username'];
       $password = $configs['password'];

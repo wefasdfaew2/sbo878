@@ -4,7 +4,7 @@
   </center>
 </div>
 <div ng-if="!direct_access" style="margin-bottom:5%;">
-  <div  layout="row" layout-align="center center" style="margin-bottom:20px;">
+  <div  layout="row" layout-align="center center" style="margin-bottom:20px;margin-top:24px;">
   <!--ng-if="!direct_access"-->
   <div layout="column">
     <md-input-container class="md-block">
@@ -24,14 +24,18 @@
       <div ng-show="is_valid_account" style="color:red;"> {{ account_type }} </div>
     </div>
   </div>
-
-  <div layout="column" layout-align="center center">
+  <div layout="column" layout-align="center center" style="margin:0 16px 16px 16px;">
+    <div ng-show="show_wait_text" style="color:#ef473a;font-size:20px;font-weight:bold;margin-bottom:16px;">{{ wait_text }}</div>
+    <md-button ng-disabled="wait_cancel" ng-show="show_cancel_button" ng-click="cancel_deposit()" class="md-raised md-warn">ยกเลิกรายการ</md-button>
+    <div ng-show="wait_cancel" style="color:green;font-size:20px;font-weight:bold;">{{ cancel_text }}</div>
+  </div>
+  <div ng-show="show_deposit_option" layout="column" layout-align="center center" style="margin-bottom:24px;">
     <div class="text-center" style="font-size:1.2vw;font-weight: bold;">กรุณาเลือกช่องทางการเติมเครดิตแบบอัตโนมัติด้านล่างนี้</div>
     <div style="width:80%;" class="text-center">ทุกช่องทางด้านล่างนี้หลังจากชำระเงินเสร็จแล้ว ระบบจะทำการตรวจสอบยอดและเติมเครดิตสำหรับแทงบอลให้ท่านอัตโนมัติ </div>
     <div style="width:80%;" class="text-center">ท่านสมาชิกไม่จำเป็นต้องแจ้ง CallCenter แต่อย่างใด</div>
   </div>
-  <br><br>
-  <div layout="row" layout-align="center center">
+  <!--<br><br>-->
+  <div layout="row" ng-show="show_deposit_option" layout-align="center center">
     <md-radio-group md-no-ink="true" ng-model="user.auto_type_option" ng-change="auto_type_change(user.auto_type_option)">
 
       <div  style="cursor:pointer;margin-bottom:10px;border-top-right-radius:12px;border-top-left-radius:12px;border: 2px solid #4cae4c;">
@@ -45,7 +49,7 @@
               <div layout="row" layout-align="center center" style="margin-bottom:10px;">
                 <div layout="column">
                   <div layout="row" style="margin-bottom:10px;">
-                    <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                    <div>ธนาคาร{{ x.deposit_type_name }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                   </div>
                   <div layout="row">
                     <table style="width:400px;"class="table table-striped">
@@ -91,7 +95,7 @@
               <div layout="row" layout-align="center center" style="margin-bottom:10px;">
                 <div layout="column">
                   <div layout="row" style="margin-bottom:10px;">
-                    <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                    <div>ธนาคาร{{ x.deposit_type_name }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                   </div>
                   <div layout="row">
                     <table style="width:400px;"class="table table-striped">
@@ -136,7 +140,7 @@
           <md-radio-button style="margin:16px;" ng-repeat="x in atm_normal" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
               <div layout="row" layout-align="center center">
                 <div layout="row" style="width:400px;">
-                  <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                  <div>ธนาคาร{{ x.deposit_type_name }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                 </div>
                 <div layout="column" style="margin-left:20px;">
                   <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
@@ -156,7 +160,7 @@
           <md-radio-button ng-repeat="x in atm_ref_code" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
               <div layout="row" layout-align="center center">
                 <div layout="row" style="width:400px;">
-                  <div>ธนาคาร{{ x.deposit_type_name }}</div>
+                  <div>ธนาคาร{{ x.deposit_type_name }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                 </div>
                 <div layout="column" style="margin-left:20px;">
                   <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
@@ -176,7 +180,7 @@
           <md-radio-button ng-repeat="x in couterservice" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
               <div layout="row" layout-align="center center">
                 <div layout="column" style="width:400px;">
-                  <div>{{ x.name_for_show }}</div>
+                  <div>{{ x.name_for_show }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                   <div>( {{ x.note }} )</div>
                 </div>
                 <div layout="column" style="margin-left:20px;">
@@ -197,7 +201,7 @@
           <md-radio-button ng-repeat="x in credit_paypal" style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
               <div layout="row" layout-align="center center">
                 <div layout="column" style="width:400px;">
-                  <div>{{ x.name_for_show }}</div>
+                  <div>{{ x.name_for_show }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
                   <div>{{ x.note }}</div>
                 </div>
                 <div layout="column" style="margin-left:20px;">
@@ -219,8 +223,8 @@
             <md-radio-button  style="margin:16px;" value="{{ x.deposit_type_id }}" ng-disabled="x.deposit_type_status != 'enable'" class="md-primary" >
                 <div layout="row" layout-align="center center">
                   <div layout="column" style="width:400px;">
-                    <div>{{ x.deposit_type_subtype }}</div>
-                    <div>{{ x.name_for_show }}</div>
+                    <div>{{ x.deposit_type_subtype }} <span ng-show="x.deposit_type_status != 'enable'">{{ dep_text }}</span></div>
+                    <div>{{ x.name_for_show }} </div>
                   </div>
                   <div layout="column" style="margin-left:20px;">
                     <img ng-src="{{ template_directory_uri + x.deposit_type_logo_large }}" />
@@ -230,17 +234,23 @@
             <center>
               <div ng-show="e_wallet_selected_{{x.deposit_type_id}}" ng-style="wallet_style">
                 <div>
-                  ท่านสมาชิกจะต้องใช้ {{ x.deposit_type_subtype }} ที่ผูกกับหมายเลข {{ user.tel }}
+                  ท่านสมาชิกจะต้องใช้ {{ x.deposit_type_subtype }} ที่ผูกกับหมายเลข {{ user.tel_1 }}
                 </div>
                 <div>
-                  ในการส่งเงินให้ทีมงานเท่านั้น
+                  หรือ {{ user.tel_2 }} ในการส่งเงินให้ทีมงานเท่านั้น
                 </div>
-                <br>
-                <div>
-                  หากท่านสมาชิกยังไม่มี {{ x.deposit_type_subtype }} สามารถสมัคร
+                <br><!--หากท่านสมาชิกยังไม่มี {{ x.deposit_type_subtype }} สามารถสมัคร-->
+                <div layout="row" layout-align="center center">
+                  <a href="{{ x.link_manual_1 }}" target="_blank">
+                    <img ng-src="{{ x.link_manual_img_1 }}" />
+                  </a>
+                  <span flex="5"></span>
+                  <a href="{{ x.link_manual_2 }}" target="_blank">
+                    <img ng-src="{{ x.link_manual_img_2 }}" />
+                  </a>
                 </div>
-                <div>
-                  <a style="color:#0c60ee;" href="http://www.truemoney.com/wallet/" target="_blank">ได้ที่นี่ หรือ อ่านคู่มือได้ที่นี่</a>
+                <div style="margin-top:5px;">
+                  <a style="color:#0c60ee;" href="{{ x.link_site }}" target="_blank">สมัคร {{ x.deposit_type_subtype }} คลิกที่นี่</a>
                 </div>
               </div>
             </center>
@@ -251,7 +261,7 @@
     </md-radio-group>
   </div>
 
-  <div layout-align="center center" layout="row" style="margin-top:3%;">
+  <div layout-align="center center" layout="row" style="margin-top:3%;" ng-show="show_deposit_option">
     <md-button ng-disabled="isDisable" class="md-raised md-primary" ng-click="nextStep()">ตกลง</md-button>
   </div>
 </div>

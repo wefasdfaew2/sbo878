@@ -14,7 +14,7 @@ app.filter('dayFilter', function() {
           }else{
             timestamp = null;
           }
-          
+
           return timestamp >= d;
         };
     	return input.filter(filterFunction);
@@ -109,6 +109,9 @@ app.factory('Resource', ['$http', '$q', '$filter', '$timeout', function ($http, 
       randomsItems = withdraw_state;
 
       for(x in randomsItems){
+        //if(randomsItems[x].withdraw_type_name == null){
+        //  randomsItems[x].withdraw_type_name = '/images/WaitTransfer.gif';
+        //}
         randomsItems[x].withdraw_bank_account = hide_bank_number(randomsItems[x].withdraw_bank_account);
         //randomsItems[x].withdraw_account = hide_username(randomsItems[x].withdraw_account);
         randomsItems[x].hide_withdraw_account = hide_username(randomsItems[x].withdraw_account);

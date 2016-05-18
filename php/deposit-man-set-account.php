@@ -22,10 +22,14 @@ if(!empty($request->bonus_type))$bonus_type = $request->bonus_type;
 if(!empty($request->deposit_amount))$deposit_amount = $request->deposit_amount;
 if(!empty($request->bank_number))$bank_number = $request->bank_number;
 if(!empty($request->bank_name))$bank_name = $request->bank_name;
-if(!empty($request->bank_number_2))$bank_number_2 = $request->bank_number_2;
-if(!empty($request->bank_name_2))$bank_name_2 = $request->bank_name_2;
-if(!empty($request->bank_number_3))$bank_number_3 = $request->bank_number_3;
-if(!empty($request->bank_name_3))$bank_name_3 = $request->bank_name_3;
+//if(!empty($request->bank_number_2))$bank_number_2 = $request->bank_number_2;
+//if(!empty($request->bank_name_2))$bank_name_2 = $request->bank_name_2;
+(!empty($request->bank_number_2)) ? $bank_number_2 = $request->bank_number_2 : $bank_number_2 = '';
+(!empty($request->bank_name_2)) ? $bank_name_2 = $request->bank_name_2 : $bank_name_2 = '';
+//if(!empty($request->bank_number_3))$bank_number_3 = $request->bank_number_3;
+//if(!empty($request->bank_name_3))$bank_name_3 = $request->bank_name_3;
+(!empty($request->bank_number_3)) ? $bank_number_3 = $request->bank_number_3 : $bank_number_3 = '';
+(!empty($request->bank_name_3)) ? $bank_name_3 = $request->bank_name_3 : $bank_name_3 = '';
 if(!empty($request->notify_transfer_url))$notify_transfer_url = $request->notify_transfer_url;
 if(!empty($request->user_priority))$user_priority = $request->user_priority;
 
@@ -58,7 +62,14 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM backend_bank_account WHERE bank_enable = 'Yes' AND bank_use_onweb = 'Yes' AND bank_priority = '$user_priority'";
+if($user_priority == 'low'){
+  $sql = "SELECT * FROM backend_bank_account WHERE bank_enable = 'Yes' AND bank_use_onweb = 'Yes' AND bank_priority = 'low'";
+}elseif ($user_priority == 'medium') {
+  $sql = "SELECT * FROM backend_bank_account WHERE bank_enable = 'Yes' AND bank_use_onweb = 'Yes' AND (bank_priority = 'medium' OR bank_priority = 'low')";
+}elseif ($user_priority == 'high') {
+  $sql = "SELECT * FROM backend_bank_account WHERE bank_enable = 'Yes' AND bank_use_onweb = 'Yes' AND (bank_priority = 'high' OR bank_priority = 'medium' OR bank_priority = 'low')";
+}
+
 $result = $conn->query($sql);
 if ($result->num_rows > 0)
 {
@@ -78,12 +89,24 @@ $bank_number_show = '';
 
 foreach ($data_bank as $value) {
   if($bank_name == $value['bank_name'] || $bank_name_2 == $value['bank_name'] || $bank_name_3 == $value['bank_name']){
-    $bank_name_show = $value['bank_name'];
-    $bank_number_show = $value['bank_account_number'];
-    break;
+    if($value['bank_priority'] == $user_priority){
+      $bank_name_show = $value['bank_name'];
+      $bank_number_show = $value['bank_account_number'];
+      break;
+    }else {
+      $bank_name_show = $value['bank_name'];
+      $bank_number_show = $value['bank_account_number'];
+    }
+    //$bank_name_show = $value['bank_name'];
+    //$bank_number_show = $value['bank_account_number'];
+    //
   }else {
-    $bank_name_show = $data_bank[0]['bank_name'];
-    $bank_number_show = $data_bank[0]['bank_account_number'];
+    if($value['bank_priority'] == $user_priority){
+      $bank_name_show = $value['bank_name'];
+      $bank_number_show = $value['bank_account_number'];
+    }
+    //$bank_name_show = $data_bank[0]['bank_name'];
+    //$bank_number_show = $data_bank[0]['bank_account_number'];
   }
 }
 
@@ -156,24 +179,45 @@ if ($result->num_rows > 0)
             '$deposit_nextpayment_promotion_mark')";
 
     if ($conn->query($sql) === TRUE) {
+      /**$sql = "SELECT phone, (SELECT COUNT(deposit_status_id)
+        FROM backend_deposit_money WHERE deposit_status_id = 1 OR deposit_status_id = 3 ) as deposit_wait_number
+        FROM callcenter_number";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+          while($row = $result->fetch_assoc())
+          {
+            $deposit_wait_number = $row['deposit_wait_number'];
+            $sms_text = "มีรายการแจ้งฝากใหม่%201%20รายการ%20และมีของเดิมค้าง%20$deposit_wait_number%20รายการ";
+            //sendsms( $row['phone'], $sms_text, 3 ); //ไม่ใช้แล้ว
+          }
+        }else {
+          $result_data = array("set_status" => "Error description: " . mysqli_error($conn));
+          print json_encode($result_data);
+        }**/
+
+
 
       $result_data = array(
         "amount" => $deposit_amount,
         "bank_number" => $bank_number_show,
         "bank_name" => $bank_name_show,
-        "set_status" => "success");
+        "set_status" => "success"
+      );
         print json_encode($result_data);
 
       //$daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท%0A%0Aไปยังบัญชีเลขที่%0A'.
       //              $bank_number_show.'%0A(ธนาคาร'.$bank_name_show.')%0A%0Aหลังจากโอนเงินเสร็จเรียบร้อย%0A'.
       //              'แล้วกรุณาแจ้งการโอนเงินผ่าน%0Aแบบฟอร์มได้ที่%0A%0A'.$notify_transfer_url;
-      $daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท%0A%0Aไปยังบัญชีเลขที่%0A'.
-                     $bank_number_show.'%0A(ธนาคาร'.$bank_name_show.')%0A%0Aหลังจากโอนเงินเสร็จแล้ว%0A'.
-                     'กรุณาแจ้งโอนเงินที่%0A%0A'.$notify_transfer_url;
+      $daifaan_sms = 'โอนยอดจำนวน%0A'.$deposit_amount.'%20บาท%0A%0Aไปบัญชีเลขที่%0A'.
+                     $bank_number_show.'%0Aธนาคาร'.$bank_name_show.'%0A%0Aเมื่อโอนเงินเสร็จแล้วแจ้งโอนเงินที่%0A'.
+                     $notify_transfer_url;
         //$daifaan_sms = 'กรุณาโอนยอดจำนวน%0A'.$deposit_amount.'%20บาท';
 
-        
-      sendsms($member_telephone_1, $daifaan_sms, 3 );
+
+      sendsms($member_telephone_1, $daifaan_sms, 3 ); //มี 2 ที่
 
 
     } else {

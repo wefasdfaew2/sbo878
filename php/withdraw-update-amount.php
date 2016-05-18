@@ -18,6 +18,7 @@ $request = json_decode($postdata);
 
 if(!empty($request->username))$account = $request->username;
 if(!empty($request->amount))$amount = $request->amount;
+if(!empty($request->insert_id))$insert_id = $request->insert_id;
 
 
 
@@ -30,8 +31,8 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE backend_withdraw_money SET withdraw_amount = '$amount', withdraw_status_id = '1'
-  WHERE withdraw_account = '$account'";
+$sql = "UPDATE backend_withdraw_money SET withdraw_amount = '$amount', withdraw_status_id = '3'
+  WHERE withdraw_account = '$account' AND withdraw_id = '$insert_id'";
 
 if ($conn->query($sql) === TRUE) {
     //echo "Record updated successfully";

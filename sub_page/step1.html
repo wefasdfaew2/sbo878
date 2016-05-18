@@ -15,7 +15,7 @@
   <div class="alert alert-info" >
     <md-radio-button ng-disabled="dep_auto_status" value="1" class="md-primary"> ฝากเงินสด (แบบอัตโนมัติ ไม่ต้องแจ้งหลังโอนเสร็จ) {{ dep_auto_text }}</md-radio-button>
     <md-radio-button value="2" class="md-primary"> ฝากเงินสด (แบบแจ้ง Call Center หลังโอนเสร็จ) </md-radio-button>
-    <md-radio-button value="3"class="md-primary" > ถอนเครดิตเป็นเงินสด </md-radio-button>
+    <md-radio-button ng-disabled="withdraw_enable_status" value="3"class="md-primary" > ถอนเครดิตเป็นเงินสด {{ wid_auto_text }}</md-radio-button>
     <md-radio-button value="4" class="md-primary"> ย้ายเครดิต </md-radio-button>
 	</div>
 	  <div class="alert alert-success" >

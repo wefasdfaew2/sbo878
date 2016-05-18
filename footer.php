@@ -197,6 +197,36 @@
 </footer><!--footer-->
 
 <?php $postid = get_the_ID(); if($postid=='46') {?>
+<!--newspaper -->
+
+<div style="margin-bottom:16px;">
+	<center>
+		<a href="<?php echo get_permalink(352);?>" target="_blank">
+			<div style="position:relative;">
+				<img style="" src="<?php echo get_template_directory_uri(); ?>/images/Newspaper_border.png"/>
+				<div style="position:absolute;z-index:5;top:18%;left:30px;width:930px;">
+					<span style="margin:0 15px 15px;display: inline-block;">
+						<img id="sportpool_img" style="width:170px;" src="https://tded.sbobet878.com/real/sportpool/cover.jpg"/>
+						<div id="sportpool_date"></div>
+					</span>
+					<span style="margin:0 15px 15px;display: inline-block;">
+						<img id="sportman_img" style="width:170px;" src="https://tded.sbobet878.com/real/sportman/cover.jpg"/>
+						<div id="sportman_date"></div>
+					</span>
+					<span style="margin:0 15px 15px;display: inline-block;">
+						<img id="tarad_img" style="width:170px;" src="https://tded.sbobet878.com/real/tarad/cover.jpg"/>
+						<div id="tarad_date"></div>
+					</span>
+					<span style="margin:0 15px 15px;display: inline-block;">
+						<img id="starsoccer_img" style="width:170px;" src="https://tded.sbobet878.com/real/starsoccer/cover.jpg"/>
+						<div id="starsoccer_date"></div>
+					</span>
+				</div>
+			</div>
+		</a>
+	<center>
+</div>
+
 <!--lotto-->
 <div class="carousel" style="height:40px;margin-bottom:10px;">
  <div class="row " >
@@ -327,36 +357,36 @@
 <table style="width:100%"  >
 <tr align="center">
     <td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/3BB.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/3BB.jpg" alt="sbobet878">
 	 </td>
     <td>
 	 <a target="_blank" href="<?php echo $link_3bb_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_3bb_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 		</td>
 		<!--x -->
 	<td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/True.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/True.jpg" alt="sbobet878">
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_trueonline_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_trueonline_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 	</td>
 </tr>
 <tr align="center">
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_3bb">ทางเข้าทั้งหมดผ่าน3bb</a>
+	<a href="<?php echo  get_permalink(198); ?>">ทางเข้าทั้งหมดผ่าน3bb</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_3bb_s;?>">
@@ -370,7 +400,7 @@
   </td>
   <!--x -->
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_trueonline">ทางเข้าทั้งหมดผ่านทรู</a>
+	<a href="<?php echo  get_permalink(200); ?>">ทางเข้าทั้งหมดผ่านทรู</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_trueonline_s;?>">
@@ -388,36 +418,36 @@
 <table style="width:100%"  >
 <tr align="center">
     <td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TOT.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/TOT.jpg" alt="sbobet878">
 	 </td>
     <td>
 	<a target="_blank" href="<?php echo $link_tot_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_tot_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 		</td>
 		<!--x -->
 	<td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/CAT.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/CAT.jpg" alt="sbobet878">
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_cat_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_cat_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 	</td>
 </tr>
 <tr align="center">
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_tot">ทางเข้าทั้งหมดผ่านทีโอที</a>
+	<a href="<?php echo  get_permalink(202); ?>">ทางเข้าทั้งหมดผ่านทีโอที</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_tot_s;?>">
@@ -431,7 +461,7 @@
   </td>
   <!--x -->
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_cat">ทางเข้าทั้งหมดผ่านแคท</a>
+	<a href="<?php echo  get_permalink(204); ?>">ทางเข้าทั้งหมดผ่านแคท</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_cat_s;?>">
@@ -449,36 +479,36 @@
 <table style="width:100%"  >
 <tr align="center">
     <td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/AIS.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/AIS.jpg" alt="sbobet878">
 	 </td>
     <td>
 	<a target="_blank" href="<?php echo $link_ais_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_ais_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 		</td>
 		<!--x -->
 	<td>
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/Dtac.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/Dtac.jpg" alt="sbobet878">
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_dtac_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td>
 	<a target="_blank" href="<?php echo $link_dtac_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 	</td>
 </tr>
 <tr align="center">
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_ais">ทางเข้าทั้งหมดผ่านเอไอเอส</a>
+	<a href="<?php echo  get_permalink(206); ?>">ทางเข้าทั้งหมดผ่านเอไอเอส</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_ais_s;?>">
@@ -492,7 +522,7 @@
   </td>
   <!--x -->
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_dtac">ทางเข้าทั้งหมดผ่านดีแทค</a>
+	<a href="<?php echo  get_permalink(210); ?>">ทางเข้าทั้งหมดผ่านดีแทค</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_dtac_s;?>">
@@ -509,16 +539,16 @@
 <table style="width:100%" >
 <tr align="center">
     <td  >
-		<img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/TrueH.jpg" alt="sbobet878">
+		<img src="<?php echo  content_url(); ?>/uploads/2016/02/TrueH.jpg" alt="sbobet878">
 	 </td>
     <td style="padding-left: 4px;">
 	<a target="_blank" href="<?php echo $link_truemove_s;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/SBOBET.jpg" alt="sbobet878">
 		</a>
 	</td>
     <td style="padding-left: 1px;">
 	<a target="_blank" href="<?php echo $link_truemove_g;?>">
-		<img height="84" width="117" src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
+		<img height="84" width="117" src="<?php echo  content_url(); ?>/uploads/2016/02/royalgclub.jpg" alt="sbobet878">
 		</a>
 		</td>
 		<!--x -->
@@ -526,8 +556,8 @@
 
 	</td>
     <td>
-		 <a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_all">
-      <img src="http://sbogroup.t-wifi.co.th/wordpress/wp-content/uploads/2016/02/LinkEntry.png" alt="sbobet878" align="middle" >
+		 <a href="<?php echo  get_permalink(215); ?>">
+      <img src="<?php echo  content_url(); ?>/uploads/2016/02/LinkEntry.png" alt="sbobet878" align="middle" >
      </a>
 	</td>
     <td>
@@ -537,7 +567,7 @@
 </tr>
 <tr align="center">
   <td>
-	<a href="http://sbogroup.t-wifi.co.th/wordpress/index.php/page_link_truemove">ทางเข้าทั้งหมดผ่านทรูมูฟเฮช</a>
+	<a href="<?php echo  get_permalink(212); ?>">ทางเข้าทั้งหมดผ่านทรูมูฟเฮช</a>
   </td>
   <td>
   <a target="_blank" href="<?php echo $link_truemove_s;?>">
@@ -562,7 +592,7 @@
 
 
 
-<?php mts_copyrights_credit(); ?>
+<?php mts_copyrights_credit();?>
 <?php wp_footer(); ?>
 
 </div><!-- main-container -->

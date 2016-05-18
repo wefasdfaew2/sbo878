@@ -36,23 +36,31 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $location.hash('form_section');
         $anchorScroll();
         $scope.dep_auto_text = '';
-        var check_dep = $http({
+        $scope.wid_auto_text = '';
+
+        var check_wid_dep = $http({
           method: "post",
-          url: WPURLS.templateurl + "/php/check-deposit-auto-enable.php",
+          url: WPURLS.templateurl + "/php/check-deposit-auto-withdraw-enable.php",
           data: {},
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         });
-        check_dep.success(function(deposit_auto) {
+        check_wid_dep.success(function(enable_status) {
           //console.log(deposit_auto.deposit_auto_enable);
-          if(deposit_auto.deposit_auto_enable == 'Yes'){
+          if(enable_status.deposit_auto_enable == 'Yes'){
             $scope.dep_auto_status = false;
           }else {
             $scope.step1_option = '2';
             $scope.dep_auto_status = true;
             $scope.dep_auto_text = '--- ระบบอัตโนมัติขัดข้อง'
+          }
 
+          if(enable_status.withdraw_enable == 'Yes'){
+            $scope.withdraw_enable_status = false;
+          }else {
+            $scope.withdraw_enable_status = true;
+            $scope.wid_auto_text = ' --- ระบบถอนขัดข้องชั่วคราว ทีมงานกำลังดำเนินการแก้ไข';
           }
 
         });
@@ -84,7 +92,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         direct_access: null,
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step2_withdraw.html',
-      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location) {
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location, $mdMedia) {
         if($stateParams.direct_access != false){
           $scope.direct_access = true;
           $state.go("step1");
@@ -103,13 +111,13 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if($scope.user.username.length == 0 || $scope.user.tel.length == 0){
             $mdDialog.show(
               $mdDialog.alert()
-                .parent(angular.element(document.querySelector('body')))
+                .parent(angular.element(document.querySelector('#di')))
                 .clickOutsideToClose(true)
                 .title('ข้อมูลไม่สมบูรณ์')
                 .textContent('กรุณากรอกข้อมูลให้ครบ')
                 .ariaLabel('Alert Dialog')
                 .ok('OK')
-                .targetEvent(ev)
+                //.targetEvent(angular.element(document.querySelector('#form_section')))
             );
             return;
           }
@@ -139,7 +147,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else if (check_req_data.check_status == 'wait_another_withdraw') {
               $mdDialog.show(
                 $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('body')))
+                  .parent(angular.element(document.querySelector('#di')))
                   .clickOutsideToClose(true)
                   .title('พบรายการสั่งถอน')
                   .textContent('username ที่ท่านสมาชิกสั่งถอนมีรายการสั่งถอนที่ดำเนินการถอนอยู่ ระบบไม่อนุญาตให้ทำการสั่งถอนซ้ำ จนกว่ารายการเก่าจะเสร็จสิ้น')
@@ -150,7 +158,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else if(check_req_data.check_status == 'not pass'){
               $mdDialog.show(
                 $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('body')))
+                  //.parent(angular.element(document.querySelector('#page')))
                   .clickOutsideToClose(true)
                   .title('ข้อมูลไม่ถูกต้อง')
                   .textContent('Username หรือ เบอร์โทรศัพท์ ไม่ถูกต้อง')
@@ -165,10 +173,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.user.status_ok = false;
               $scope.alert_img = WPURLS.templateurl + '/images/alert_member_status_5.jpg';
             }else{
-              var confirm = $mdDialog.confirm()
+              /**var confirm = $mdDialog.confirm()
               .parent(angular.element(document.querySelector('body')))
-              .title('พบรายการถอนที่ดำเนินการถอนอยู่')
+              .title('พบรายการถอนที่ดำเนินการค้างอยู่')
               .textContent('ขณะนี้รายการถอนอยู่ในขั้นตอน ' + check_req_data.check_status + ' ท่านต้องการยกเลิกรายการถอนนี้หรือไม่')
+              .textContent('หากท่านสมาชิกต้องการสั่งถอนใหม่อีกครั้ง กรุณายกเลิกรายการถอนที่ค้างอยู่ในระบบนี้ก่อน ' + check_req_data.check_status + ' ท่านต้องการยกเลิกรายการถอนนี้หรือไม่')
               .ariaLabel('Lucky day')
               .targetEvent(ev)
               .ok('ต้องการ')
@@ -179,7 +188,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                   url: WPURLS.templateurl + "/php/withdraw-cancel.php",
                   data: {
                     username: $scope.user.username,
-                    tel: $scope.user.tel
+                    tel: $scope.user.tel,
+                    w_id: check_req_data.w_id
                   },
                   headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -201,7 +211,53 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               }, function() {
                 ////console.log('cancel');
 
-              });
+              });**/
+
+              $mdDialog.show({
+                  clickOutsideToClose: true,
+                  scope: $scope,
+                  preserveScope: true,
+                  clickOutsideToClose:true,
+                  templateUrl: WPURLS.templateurl + '/sub_page/withdraw_dialog.html',
+                  parent: angular.element(document.querySelector('#form_section')),
+                  controller: function DialogController($scope, $mdDialog) {
+
+                    $scope.w_id = check_req_data.w_id;
+                    $scope.check_status = check_req_data.check_status;
+                     $scope.closeDialog = function() {
+                        $mdDialog.hide();
+                     }
+
+                     $scope.answer = function(answer) {
+                       var set_cancel = $http({
+                         method: "post",
+                         url: WPURLS.templateurl + "/php/withdraw-cancel.php",
+                         data: {
+                           username: $scope.user.username,
+                           tel: $scope.user.tel,
+                           w_id: check_req_data.w_id
+                         },
+                         headers: {
+                           'Content-Type': 'application/x-www-form-urlencoded'
+                         }
+                       });
+                       set_cancel.success(function(set_cancel_data) {
+                         if(set_cancel_data.withdraw_status == 'successfully'){
+                           var params = {
+                             'withdraw_username': $scope.user.username,
+                             'tel': $scope.user.tel,
+                             'direct_access': false,
+                           };
+                           $state.go("step3_withdraw", params);
+                         }else {
+                           ////console.log('cancel failed');
+                           alert('cancel failed');
+                         }
+                       });
+                     };
+                  }
+               });
+              ////////
             }
           });
 
@@ -234,7 +290,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           url: WPURLS.templateurl + "/php/withdraw-sms-otp.php",
           data: {
             username: $stateParams.withdraw_username,
-            check_otp: false,
+            check_otp: 'false',
           },
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -262,7 +318,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             url: WPURLS.templateurl + "/php/withdraw-sms-otp.php",
             data: {
               username: $stateParams.withdraw_username,
-              check_otp: true,
+              check_otp: 'true',
               otp_ref: $scope.otp_ref,
               otp: $scope.user.user_otp
             },
@@ -274,6 +330,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
             //console.log(check_otp_data);
             if(check_otp_data.check_otp_status == 'pass'){
+
               var set_withdraw_money = $http({
                 method: "post",
                 url: WPURLS.templateurl + "/php/withdraw-otp-passed.php",
@@ -293,6 +350,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                   var params = {
                     'withdraw_username': $stateParams.withdraw_username,
                     'tel': $stateParams.tel,
+                    'insert_id': res_data.insert_id,
                     'direct_access': false,
                   };
                   $state.go("step4_withdraw", params);
@@ -305,7 +363,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.showSpin = false
               $mdDialog.show(
                 $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('body')))
+                  .parent(angular.element(document.querySelector('#form_section')))
                   .clickOutsideToClose(true)
                   .title('ข้อมูลไม่ถูกต้อง')
                   .textContent('เลข OTP ไม่ถูกต้อง')
@@ -343,6 +401,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
       params: {
         withdraw_username: null,
         tel: null,
+        insert_id: null,
         direct_access: null
       },
       templateUrl: WPURLS.templateurl + '/sub_page/step4_withdraw.html',
@@ -352,9 +411,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $state.go("step1");
           return;
         }
+        console.log($stateParams.insert_id);
         $location.hash('form_section');
         $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
+        $scope.home_url = WPURLS.home_url;
         $scope.withdraw_wait = true;
         $scope.withdraw_add = false;
         $scope.withdraw_req_complete = false;
@@ -371,7 +432,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
         $scope.send_withdraw_req = function(withdraw_money, ev){
           var confirm = $mdDialog.confirm()
-          .parent(angular.element(document.querySelector('body')))
+          .parent(angular.element(document.querySelector('#form_section')))
           .title('ยืนยันการถอนเงิน ?')
           .textContent('คุณต้องการถอนเงินเป็นจำนวน ' + withdraw_money + ' บาท')
           .ariaLabel('Lucky day')
@@ -386,7 +447,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               url: WPURLS.templateurl + "/php/withdraw-update-amount.php",
               data: {
                 username: $stateParams.withdraw_username,
-                amount: withdraw_money
+                amount: withdraw_money,
+                insert_id: $stateParams.insert_id
               },
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -402,7 +464,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                 $scope.showLoading = false;
                 $mdDialog.show(
                   $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('body')))
+                    .parent(angular.element(document.querySelector('#form_section')))
                     .clickOutsideToClose(true)
                     .title('เกิดความผิดพลาด')
                     .textContent('ระบบขัดข้องบางประการ')
@@ -458,7 +520,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             url: WPURLS.templateurl + "/php/withdraw-check-status.php",
             data: {
               username: $stateParams.withdraw_username,
-              tel: $stateParams.tel
+              tel: $stateParams.tel,
+              insert_id: $stateParams.insert_id
             },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -466,14 +529,19 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           });
           check_withdraw_money.success(function(res_data) {
             ////console.log(res_data);
+            console.log(res_data);
             $scope.account = $stateParams.withdraw_username;
             $scope.bank_account = res_data[0].withdraw_bank_account;
             $scope.bank_name = res_data[0].withdraw_bank_name;
             $scope.nickname = res_data[0].withdraw_nickname;
+            $scope.bonus_charge_back = res_data[0].bonus_charge_back;
             ////console.log(res_data[0].withdraw_status_id);
             if(res_data[0].withdraw_status_id == 9){
               $interval.cancel(interval);
               interval = undefined;
+              if(res_data[0].bonus_charge_back >= 0){
+                $scope.charge_back_status = true;
+              }
               $scope.current_amount = res_data[0].max_withdraw_amount;
               $scope.withdraw_wait = false;
               $scope.withdraw_add = true;
@@ -503,12 +571,19 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $location.hash('form_section');
         $anchorScroll();
         $scope.template_directory_uri = WPURLS.templateurl;
+        $scope.home_url = WPURLS.home_url;
         $scope.user = {};
         $scope.user.tel = '';
+        $scope.user.tel_1 = '';
+        $scope.user.tel_2 = '';
         $scope.user.username = '';
         $scope.user.priority = '';
+        $scope.cancel_text = '';
         $scope.is_logo_type = false;
         $scope.isDisable = true;
+        $scope.dep_text = '--- ปิดปรับปรุงชั่วคราว';
+
+
         //$scope.user.auto_type_option = 46;
         $scope.no_option = false;
         $scope.check_account_type = function(){
@@ -528,6 +603,10 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             ////console.log(res_data);
             ////console.log(res_data.get_account_type);
             if(res_data.get_account_type == 'no_account'){
+              $scope.wait_cancel = false;
+              $scope.show_wait_text = false;
+              $scope.show_deposit_option = false;
+              $scope.show_cancel_button = false;
               $scope.account_type = 'Username หรือ เบอร์โทรศัพท์ไม่ถูกต้อง';
 
               if($scope.user.username.length == 0 && $scope.user.tel.length == 0){
@@ -545,8 +624,51 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.logo_type = WPURLS.templateurl + res_data.get_logo_type;
               $scope.is_logo_type = true;
               $scope.isDisable = false;
+              $scope.user.tel_1 = res_data.tel_1;
+              $scope.user.tel_2 = res_data.tel_2;
+
+              if(res_data.check_deposit_q == 'must_wait'){
+                $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่กรุณารอ ' + (5 - res_data.wait_time) + ' นาทีก่อนทำรายการใหม่';
+                $scope.show_wait_text = true;
+                $scope.show_cancel_button = false;
+              }else if (res_data.check_deposit_q == 'must_cancel_before') {
+                $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่ หากต้องการเริ่มรายการใหม่กรุณายกเลิกรายการฝากก่อนหน้านี้';
+                $scope.show_cancel_button = true;
+                $scope.show_wait_text = true;
+                $scope.d_id = res_data.d_id;
+              }else {
+                $scope.show_wait_text = false;
+                $scope.show_cancel_button = false;
+                $scope.show_deposit_option = true;
+              }
             }
 
+          });
+        }
+
+        $scope.cancel_deposit = function(){
+
+          $scope.wait_cancel = true;
+          $scope.cancel_text = 'กรุณารอสักครู่';
+          var set_cancel_deposit = $http({
+            method: "post",
+            url: WPURLS.templateurl + "/php/deposit-cancel.php",
+            data: {
+              d_id: $scope.d_id
+            },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
+          set_cancel_deposit.success(function(res_data) {
+            if(res_data.cancel_status == 'complete'){
+              $scope.show_wait_text = false;
+              $scope.show_cancel_button = false;
+              $scope.show_deposit_option = true;
+              $scope.cancel_text = 'ยกเลิกรายการฝากเรียบร้อยแล้ว';
+            }else {
+              $scope.cancel_text = 'ยกเลิกรายการฝากไม่สำเร็จ';
+            }
           });
         }
 
@@ -555,7 +677,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if(angular.isUndefined($scope.user.auto_type_option)){
             $mdDialog.show(
               $mdDialog.alert()
-                .parent(angular.element(document.querySelector('body')))
+                .parent(angular.element(document.querySelector('#form_section')))
                 .clickOutsideToClose(true)
                 .title('ช่องทางการเติมเครดิต')
                 .textContent('ท่านยังไม่ได้เลือกช่องทางการเติมเครดิต')
@@ -687,10 +809,22 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
               if(value.deposit_type_id == 58){
                 res_data[key].name_for_show = 'ทรูมันนี่วอลเล็ต';
+                res_data[key].link_site = ' https://wallet.truemoney.com/register#/consumer';
+                res_data[key].link_manual_1 = WPURLS.home_url + '/true-money-manual#/truemoney-regis#form_section';
+                res_data[key].link_manual_2 = WPURLS.home_url + '/true-money-manual';
+                res_data[key].link_manual_img_1 = WPURLS.templateurl + '/images/truewallet-regis-button.png';
+                res_data[key].link_manual_img_2 = WPURLS.templateurl + '/images/truewallet-manual-button.png';
               }else if (value.deposit_type_id == 59) {
                 res_data[key].name_for_show = 'แจ๋ววอลเล็ต';
+                //res_data[key].link_site = 'http://www.truemoney.com/wallet/';
+                //res_data[key].link_manual = WPURLS.home_url + '/true-money-manual';
               }else if (value.deposit_type_id == 60) {
                 res_data[key].name_for_show = 'เอ็มเพย์วอลเล็ต';
+                res_data[key].link_site = 'http://www.ais.co.th/mpay/';
+                res_data[key].link_manual_1 = WPURLS.home_url + '/ais-mpay-manual#/mpay-regis#form_section';
+                res_data[key].link_manual_2 = WPURLS.home_url + '/ais-mpay-manual';
+                res_data[key].link_manual_img_1 = WPURLS.templateurl + '/images/mpay-regis-button.png';
+                res_data[key].link_manual_img_2 = WPURLS.templateurl + '/images/mpay-manual-button.png';
               }
               $scope.e_wallet.push(res_data[key]);
             }
@@ -706,7 +840,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               'border-radius':'7px',
               'padding':'10px',
               'margin':'20px',
-              'width':'75%',
+              'width':'85%',
               'border': '2px solid #f54600',
               'background-color':'#f58300',
               'color':'white'
@@ -811,6 +945,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             ////console.log($scope.user.credit_money);
             if($scope.user.credit_money == 0){
               $scope.user.credit_money = '';
+            }else if ($scope.user.credit_money < 5000 && $scope.user.bonus_type == 'get_10_per') {
+              $scope.user.bonus_type = 'no_bonus';
             }
             if($scope.user.bonus_type == 'get_200_per'){
               $scope.user.credit_result = credit_money * 2;
@@ -912,7 +1048,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else {
               $mdDialog.show(
                 $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('body')))
+                  .parent(angular.element(document.querySelector('#form_section')))
                   .clickOutsideToClose(true)
                   .title('เกิดข้อผิดพลาด')
                   .textContent('เกิดข้อผิดพลาด')
@@ -1217,6 +1353,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $anchorScroll();
         $scope.user = {};
         $scope.user.priority = '';
+        $scope.user.username = '';
+        $scope.user.tel = '';
         $scope.account_corect = false;
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.check_input = function(){
@@ -1600,7 +1738,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else {
               $mdDialog.show(
                 $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('body')))
+                  .parent(angular.element(document.querySelector('#form_section')))
                   .clickOutsideToClose(true)
                   .title('เกิดข้อผิดพลาด')
                   .textContent('เกิดข้อผิดพลาด')
@@ -1618,6 +1756,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           ////console.log($scope.user.credit_money);
           if($scope.user.credit_money == 0){
             $scope.user.credit_money = '';
+          }else if ($scope.user.credit_money < 5000 && $scope.user.bonus_type == 'get_10_per') {
+            $scope.user.bonus_type = 'no_bonus';
           }
           if($scope.user.bonus_type == 'get_200_per'){
             $scope.user.credit_result = credit_money * 2;

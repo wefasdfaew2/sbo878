@@ -4,8 +4,8 @@ header('Content-Type: text/html; charset=utf-8');
 
     function add_credit($dp_id,$ac_name,$dest_account,$money,$tel){
         //include('../php_sms_class/sms_sbobet878.php');
-        //$configs = include('../php_db_config/config.php');
         include(realpath(dirname(__FILE__) . '/../php_sms_class/sms_sbobet878.php'));
+        //$configs = include_once('../php_db_config/config.php');
         $configs = include(realpath(dirname(__FILE__) . '/../php_db_config/config.php'));
 
         $servername = $configs['servername'];
@@ -34,6 +34,7 @@ header('Content-Type: text/html; charset=utf-8');
               $res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
               $add_result = json_decode($res, true);
               $result = $add_result["status"];
+              //$result = '200';
               if($result == '200'){
                 $message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
                 sendsms($message, $tel, 1);
@@ -46,6 +47,7 @@ header('Content-Type: text/html; charset=utf-8');
                   $res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
                   $add_result = json_decode($res, true);
                   $result = $add_result["status"];
+                  //$result = '200';
                   if($result == '200'){
                     $message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
                     sendsms($message, $tel, 1);

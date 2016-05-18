@@ -30,7 +30,7 @@ get_header();
   if(empty($_POST["password"]))
     {
 
-        $check_p = 'false';//true
+        $check_p = 'true';
     }else {
       if($_POST["password"] == 's4722team'){
         $check_p = 'false';

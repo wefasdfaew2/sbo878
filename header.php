@@ -7,6 +7,7 @@
 
 
  require_once("php/get_browser.php");
+ require_once('php/check-notify-text.php');
 
  $brawser_info = getBrowser();
 
@@ -66,8 +67,8 @@
   echo 'Unable to get info';
  }
 
-  include('php/check-notify-text.php');
-  $announce_data = get_announce_data();
+
+ $announce_data = get_announce_data();
 
 
 ?>
@@ -132,7 +133,7 @@
 							<img src="<?php echo get_template_directory_uri(); ?>/images/VeryHeader2.png" width="38" height="29"/>
 						</div>
 					</div>
-					<div class="row" style="padding:0px;">
+					<div class="row" style="margin-top:3px;padding:0px;">
 						<div class="col-md-12 col-xs-12">
 							<marquee style="color:#FFFF00;font-size:12px;font-weight: bold;" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="120">
 								Sbobet878.com ตัวแทนโดยตรงจาก sbobet มั่นคง ปลอดภัย ระบบอัตโนมัติทั้งเว็บ ไม่ต้องรอ Call center, รีบสร้างความมั่นคงให้กับชีวิตของคุณเดี๋ยวนี้ กดสมัครได้เลย
@@ -140,7 +141,7 @@
 						</div>
 					</div>
 				</div>
-				<div style="-webkit-box-shadow: -1px 3px 3px rgba(0, 0, 0, 0.4);display:inline-block;float:right;margin-right:10px;background-color:rgba(0, 0, 0, 0.5);border-radius:3px;">
+				<div style="-webkit-box-shadow: -1px 5px 5px rgba(0, 0, 0, 0.4);display:inline-block;float:right;margin-right:10px;background-color:rgba(0, 0, 0, 0.5);border-radius:3px;">
 					<img src="<?php echo get_template_directory_uri(); ?>/images/ANDRIOD-store.png" />
 					<img src="<?php echo get_template_directory_uri(); ?>/images/IOS-store.png" />
 					<center>

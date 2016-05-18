@@ -1,0 +1,17 @@
+<md-dialog ng-class="dialog.css" class="_md md-default-theme _md-transition-in">
+  <md-dialog-content class="md-dialog-content" style="padding:24px;">
+    <h2 class="md-title" style="text-align:left">พบรายการถอนที่ดำเนินการค้างอยู่</h2>
+    <div style="text-align:left">หากท่านสมาชิกต้องการสั่งถอนใหม่อีกครั้ง กรุณายกเลิกรายการถอนที่ค้างอยู่ในระบบนี้ก่อน</div>
+    <div style="color:red;text-align:left">รายละเอียดการถอนที่ค้าง</div>
+    <div style="text-align:left">หมายเลขธุรกรรมการถอนเลขที่:  {{ w_id }} </div>
+    <div style="text-align:left">สถานะธุรกรรม: {{ check_status }} </div>
+    <br>
+    <div style="text-align:left;font-size:20px;font-weight:bold;">ท่านต้องการยกเลิกรายการถอนนี้หรือไม่ ?</div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button  ng-click="closeDialog()" class="md-primary">
+      ไม่ต้องการ
+    </md-button>
+    <md-button ng-click="answer('OK')" class="md-primary">ต้องการ</md-button>
+  </md-dialog-actions>
+</md-dialog>

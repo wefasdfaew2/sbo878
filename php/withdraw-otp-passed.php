@@ -62,20 +62,21 @@ if ($result->num_rows > 0)
       $data[] = $row;
     }
 
-    $sql = "SELECT COUNT(withdraw_account) FROM backend_withdraw_money WHERE withdraw_account = '$account'";
-    $result = $conn->query($sql);
+    //$sql = "SELECT COUNT(withdraw_account) FROM backend_withdraw_money WHERE withdraw_account = '$account'";
+    //$result = $conn->query($sql);
 
-    if ($result->num_rows > 0)
-    {
-      while($row = $result->fetch_assoc())
-      {
-        $numOfAccount[] = $row;
-      }
+  //  if ($result->num_rows > 0)
+    //{
+    //  while($row = $result->fetch_assoc())
+    //  {
+    //    $numOfAccount[] = $row;
+    //  }
 
       //เช็คว่ามี account อยู่ในตารางหรือยัง
       //echo "string";
       //print_r ($numOfAccount);
-      if($numOfAccount[0]["COUNT(withdraw_account)"] == 0){
+      //if($numOfAccount[0]["COUNT(withdraw_account)"] == 0){
+      //if(true){
 
         $withdraw_member_type_id = $data[0]['sbobet_member_type_id'];
         $withdraw_nickname = $data[1]['member_nickname'];
@@ -90,12 +91,13 @@ if ($result->num_rows > 0)
           '$withdraw_bank_name', '8')";
 
         if ($conn->query($sql) === TRUE) {
-            $result_data = array("set_status" => "success");
+            $last_id = $conn->insert_id;
+            $result_data = array("set_status" => "success", 'insert_id' => $last_id);
         } else {
             $result_data = "Error: " . $sql . "<br>" . $conn->error;
         }
         print json_encode($result_data);
-      }else {
+      /*}else {
         $sql = "UPDATE backend_withdraw_money SET withdraw_status_id = '8'
           WHERE withdraw_account = '$account'";
 
@@ -106,7 +108,7 @@ if ($result->num_rows > 0)
         } else {
             echo "Error updating record: " . $conn->error;
         }
-      }
+      }*/
 
     }else{
       echo("Error description: " . mysqli_error($conn));
@@ -114,7 +116,7 @@ if ($result->num_rows > 0)
     }
 
 
-  }
+  //}
 }
 else
 {

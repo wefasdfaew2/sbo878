@@ -89,14 +89,14 @@ if ($result->num_rows > 0)
           echo "0 results";
         }
 
-      $sql = "SELECT a.withdraw_status_id,
+      $sql = "SELECT a.withdraw_status_id, a.withdraw_id,
           COUNT(a.withdraw_account) as withdraw_account_num ,
           (SELECT withdraw_status_name FROM backend_withdraw_status c
            WHERE c.withdraw_status_id=a.withdraw_status_id
           ) as withdraw_status_text
           FROM
           backend_withdraw_money a
-          WHERE a.withdraw_account = '$account'";
+          WHERE a.withdraw_account = '$account' AND a.withdraw_status_id != 4 AND a.withdraw_status_id != 5";
 
       $result = $conn->query($sql);
 
@@ -112,14 +112,14 @@ if ($result->num_rows > 0)
           $withdraw_status_id = $account_num[0]['withdraw_status_id'];
           $withdraw_status_text = $account_num[0]['withdraw_status_text'];
 
-          if($withdraw_status_id == 1 || $withdraw_status_id == 8 || $withdraw_status_id == 9){
-            $result_data = array("check_status" => $withdraw_status_text);
+          if($withdraw_status_id == 8 || $withdraw_status_id == 9){
+            $result_data = array("check_status" => $withdraw_status_text, 'w_id' => $account_num[0]['withdraw_id'] );
           }elseif ($withdraw_status_id == 5) {
             $result_data = array("check_status" => "pass");
-          }elseif ($withdraw_status_id == 2 || $withdraw_status_id == 3) {
-            $result_data = array("check_status" => "wait_another_withdraw");
+          }elseif ($withdraw_status_id == 1 || $withdraw_status_id == 2 || $withdraw_status_id == 3 || $withdraw_status_id == 7) {
+            $result_data = array("check_status" => "wait_another_withdraw", 'w_id' => $account_num[0]['withdraw_id'] );
           }else{
-            $result_data = array("check_status" => "wait_another_withdraw");
+            $result_data = array("check_status" => "wait_another_withdraw", 'w_id' => $account_num[0]['withdraw_id'] );
           }
           //$result_data = array("check_status" => "wait_another_withdraw");
         }

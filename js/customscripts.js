@@ -655,6 +655,28 @@ jQuery(document).ready(function($) {
     }
   }
 
+  $.getJSON(WPURLS.templateurl + "/php/get-newspaper-date.php",{
+    option: "get"
+  },
+  function(res_data){
+     $.grep(res_data, function(key){
+       //console.log(e.name);
+       if(key.name == 'สปอร์ตพูล'){
+         $( "#sportpool_date" ).text( key.last_update );
+       }else if (key.name == 'สปอร์ตแมน') {
+         $( "#sportman_date" ).text( key.last_update );
+       }else if (key.name == 'ตลาดลูกหนัง') {
+         $( "#tarad_date" ).text( key.last_update );
+       }else if (key.name == 'สตาร์ซอคเกอร์') {
+         $( "#starsoccer_date" ).text( key.last_update );
+       }
+     });
+    /**$.each(res_data, function( key, value ) {
+
+
+    });**/
+  });
+
   $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
       option: "get"
     },
@@ -665,13 +687,6 @@ jQuery(document).ready(function($) {
   var money = 0;
   setInterval(function(){
 
-  //  $.get(WPURLS.templateurl + "/php/test-add-money.php",{
-  //      option: "set"
-  //    },
-  //    function(data, status){
-          //console.log("Data: " + data + "\nStatus: " + status);
-//    });
-
     $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
         option: "get"
       },
@@ -679,20 +694,7 @@ jQuery(document).ready(function($) {
           //console.log(data[0].user_money);
           odometer.innerHTML = data[0].member_current_bet;
     });
-
     //money += Math.floor(Math.random() * 3000);
-
   }, 80000);
-//  odometer.innerHTML = 456000;
-  /**var defaults = {
-  value: 100000,
-  inc: 123,
-  pace: 1000,
-  auto: false
-  };
-  var c1 = new flipCounter('c1', defaults);**/
 
-  //$('#sticky').text('วันนี้มีสมาชิกแทงได้รวม 5 บาท');
-  //$(window).scroll(sticky_relocate);
-    //sticky_relocate();
 });

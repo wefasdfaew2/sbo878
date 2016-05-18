@@ -1,0 +1,18 @@
+<div style="margin-bottom:5%;margin: 5% auto;">
+  <div layout="column" layout-align="center center" style="margin-bottom:20px;">
+    <div layout="column">
+      <md-input-container class="md-block">
+        <label style="color:black;">Username:</label>
+        <input ng-model="user.username" type="text" placeholder="กรุณาใส่ Username" style="width:250px;">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label style="color:black;">Tel:</label>
+        <input ng-model="user.tel" type="text" placeholder="กรุณาใส่เบอร์โทรศัพท์" style="width:250px;">
+      </md-input-container>
+      <md-button class="md-raised md-primary" ng-click="login($event)">OK</md-button>
+    </div>
+    <div ng-show="account_status" style="margin-top:16px;color:#ef473a;font-weight:bold;font-size:18px;">
+      ขออภัยบัญชีสมาชิกของท่านยังไม่ได้เริ่มพนันบอลกับเรา....กรุณาเริ่มพนันบอลก่อนกดดูหนังสือพิมพ์
+    </div>
+  </div>
+</div>

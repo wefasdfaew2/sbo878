@@ -24,7 +24,7 @@
   <img ng-src="{{ template_directory_uri }}/images/withdraw-Step2.png" width="929" height="50" />
 </center>
 <div class="md-padding"></div>
-<div ng-if="!direct_access" ng-show="user.status_ok" layout="column" layout-align="center center" style="margin-bottom:20px;">
+<div id="di" ng-if="!direct_access" ng-show="user.status_ok" layout="column" layout-align="center center" style="margin-bottom:20px;">
 
     <md-input-container class="md-block">
 
@@ -39,7 +39,7 @@
       <input ng-model="user.tel" type="text" placeholder="กรุณาใส่เบอร์โทรศัพท์มือถือที่ลงทะเบียนไว้" style="width:300px;">
 
   </md-input-container>
-  <md-button class="md-raised md-primary" ng-click="check_username_tel()">ตกลง</md-button>
+  <md-button class="md-raised md-primary" ng-click="check_username_tel($event)">ตกลง</md-button>
 
 
 </div>

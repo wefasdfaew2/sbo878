@@ -15,17 +15,12 @@ $dbname = "sbobet878";
 $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
 
-//if(!empty($request->username))$account = $request->username;
-(!empty($request->username)) ? $account = $request->username : $account = '';
+if(!empty($request->username))$account = $request->username;
 if(!empty($request->tel)){
     $tel = $request->tel;
 }else {
   $tel = '';
 }
-
-
-
-
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -75,7 +70,7 @@ if ($result->num_rows > 0)
   }
   $sbo_account_id = $data[0]['sbobet_account_id'];
   //print json_encode($data);
-  $sql = "SELECT member_telephone_1, member_telephone_2, member_bank_priority FROM backend_member_account WHERE $member_type = $sbo_account_id";
+  $sql = "SELECT member_telephone_1, member_telephone_2 FROM backend_member_account WHERE $member_type = $sbo_account_id";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0)
@@ -83,25 +78,35 @@ if ($result->num_rows > 0)
     while($row = $result->fetch_assoc())
     {
       $data[] = $row;
-      //echo  $row["channel"];
     }
 
-    if($data[1]['member_telephone_1'] == ''){
+    /**if($data[1]['member_telephone_1'] == ''){
       $data[1]['member_telephone_1'] = 'qwsdvhuio';
     }
     if($data[1]['member_telephone_2'] == ''){
       $data[1]['member_telephone_2'] = 'qwsdvhuio';
-    }
+    }**/
 
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
-      $result_data = array(
-        "get_account_type" => $data[0]['member_type_name'],
-        "get_logo_type" => $data[0]['member_type_logo'],
-        "user_priority" => $data[1]['member_bank_priority']
-       );
+
+      $sql = "SELECT COUNT(*) as num
+        FROM backend_deposit_money
+        WHERE deposit_status_id = 5 AND deposit_account = '$account'";
+      $result = $conn->query($sql);
+      $row = $result->fetch_assoc();
+
+      if($row['num'] > 0){
+        $result_data = array(
+          "account_status" => 'pass'
+         );
+      }else {
+        $result_data = array(
+          "account_status" => 'not_pass'
+         );
+      }
       print json_encode($result_data);
     }else {
-      $result_data = array("get_account_type" => "no_account");
+      $result_data = array("account_status" => "no_account");
       print json_encode($result_data);
     }
   }

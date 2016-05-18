@@ -16,6 +16,7 @@ $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
 $account = $request->username;
 $tel = $request->tel;
+$insert_id = $request->insert_id;
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,8 +27,10 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM backend_withdraw_money WHERE withdraw_account = '$account' AND withdraw_telephone = $tel
-  ORDER BY withdraw_regis DESC LIMIT 1";
+$sql = "SELECT * FROM backend_withdraw_money WHERE withdraw_account = '$account' AND withdraw_id = '$insert_id'";
+        /*AND withdraw_telephone = $tel*/
+
+        /*ORDER BY withdraw_regis DESC LIMIT 1";*/
 
 $result = $conn->query($sql);
 

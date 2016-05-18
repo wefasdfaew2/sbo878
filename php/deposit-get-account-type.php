@@ -97,8 +97,34 @@ if ($result->num_rows > 0)
       $result_data = array(
         "get_account_type" => $data[0]['member_type_name'],
         "get_logo_type" => $data[0]['member_type_logo'],
-        "user_priority" => $data[1]['member_bank_priority']
+        "user_priority" => $data[1]['member_bank_priority'],
+        "tel_1" => $data[1]['member_telephone_1'],
+        "tel_2" => $data[1]['member_telephone_2']
        );
+
+       $sql = "SELECT deposit_regis, deposit_id
+              FROM backend_deposit_money
+              WHERE deposit_account = '$account' AND deposit_status_id = 1 ORDER BY deposit_regis DESC LIMIT 1";
+
+       $result = $conn->query($sql);
+       if ($result->num_rows > 0){
+         while($row = $result->fetch_assoc())
+         {
+           $deposit_time = strtotime($row['deposit_regis']);
+           $current_time = strtotime(date('Y-m-d H:i:s'));
+           $timeDiff = round(abs($deposit_time - $current_time) / 60);
+           if($timeDiff < 5){
+             $result_data['check_deposit_q'] = 'must_wait';
+           }else {
+             $result_data['check_deposit_q'] = 'must_cancel_before';
+           }
+
+           $result_data['d_id'] = $row['deposit_id'];
+           $result_data['wait_time'] = $timeDiff;
+         }
+       }else {
+         $result_data['check_deposit_q'] = 'pass';
+       }
       print json_encode($result_data);
     }else {
       $result_data = array("get_account_type" => "no_account");
