@@ -26,9 +26,11 @@
       die("Connection failed: " . $conn->connect_error);
   }
 
+
   $directory =  realpath(dirname(__FILE__) . "/temp/$newspaper_name");
   $real_directory =  realpath(dirname(__FILE__) . "/real/$newspaper_name");
   $files = glob($directory . '/*.PNG');
+
   //echo "<pre>";
   //print_r($files);
   //echo "</pre>";
@@ -60,16 +62,22 @@
 
       $png = escapeshellcmd($directory."/$i.PNG");
       $jpg = escapeshellcmd($directory."/$i.jpg");
-      exec("mogrify -crop 1536x2048+0+40 $png");
-      exec("convert '$png' '$jpg'");
-      rename($directory."/$i.jpg", $real_directory."/$i.jpg");
+      $real_jpg = escapeshellcmd($real_directory."/$i.jpg");
+
+      exec("convert '$png' '$real_jpg'");
+      exec("mogrify -crop 1536x2048+0+40 '$real_jpg'");
+      //exec("mogrify -crop 1536x2048+0+40 '$png'");
+      //exec("convert '$png' '$jpg'");
+      //rename($directory."/$i.jpg", $real_directory."/$i.jpg");
     }
 
     $png = escapeshellcmd($directory."/cover.PNG");
     $jpg = escapeshellcmd($directory."/cover.jpg");
-    exec("mogrify -crop 1536x2048+0+40 $png");
-    exec("convert '$png' '$jpg'");
-    rename($directory."/cover.jpg", $real_directory."/cover.jpg");
+    $real_jpg = escapeshellcmd($real_directory."/cover.jpg");
+    exec("convert '$png' '$real_jpg'");
+    exec("mogrify -crop 1536x2048+0+40 $real_jpg");
+    //exec("mogrify -crop 1536x2048+0+40 $png");  
+    //rename($directory."/cover.jpg", $real_directory."/cover.jpg");
     echo "<center>เสร็จแล้วจ้า...กิกิ</center>";
   }else {
       //echo date("Y-m-d H:i:s");

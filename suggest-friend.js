@@ -39,7 +39,7 @@ app.controller('SuggestFriend', function($scope, $filter, $http, $mdDialog, $win
       }
     });
     refer_set_call.success(function(refer_set_data) {
-      console.log(refer_set_data);
+      //console.log(refer_set_data);
       if(refer_set_data.insert == 'success'){
         $scope.waiting_text = 'ทำรายการถอนเสร็จสมบูรณ์';
         $window.location.href = '/index.php/link-for-friend?url_link=' + $scope.promo_link;
@@ -70,7 +70,7 @@ app.controller('SuggestFriend', function($scope, $filter, $http, $mdDialog, $win
     });
     login_call.success(function(login_call_data, ev) {
       $scope.showSpin = false;
-
+      //console.log(login_call_data.check_status);
       ////console.log(login_call_data);
       if(login_call_data.check_status == 'pass'){
         //ipCookie('suggest-friend-cook-user', username, { expires: 1 });
@@ -79,9 +79,19 @@ app.controller('SuggestFriend', function($scope, $filter, $http, $mdDialog, $win
         $scope.promo_link = login_call_data.short_url;
         $scope.loged_in = true;
         $scope.login.promo_refer_info = login_call_data.promo_refer_info;
-        $scope.login.current_amount = parseInt(login_call_data.promo_refer_info[0].current_amount);
-        $scope.login.withdrawed = Math.abs(parseInt(login_call_data.promo_refer_info[0].withdrawed));
-        $scope.login.data_withdrawed = login_call_data.data_withdrawed;
+        if(login_call_data.promo_refer_info.length == 0){
+          $scope.login.current_amount = 0;
+          $scope.login.withdrawed = 0;
+        }else {
+          $scope.login.current_amount = parseInt(login_call_data.promo_refer_info[0].current_amount);
+          $scope.login.withdrawed = Math.abs(parseInt(login_call_data.promo_refer_info[0].withdrawed));
+        }
+
+        if(login_call_data.data_withdrawed == null){
+          $scope.login.data_withdrawed = 0;
+        }else {
+          $scope.login.data_withdrawed = login_call_data.data_withdrawed;
+        }
 
 
         $scope.login.can_withdraw = $scope.login.current_amount - $scope.login.withdrawed;

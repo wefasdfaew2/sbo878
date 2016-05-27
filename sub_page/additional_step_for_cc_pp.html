@@ -1,0 +1,122 @@
+
+<div ng-if="!direct_access" id="form_section" layout="column" layout-align="start start" style="margin-bottom:5%;" >
+  <div ng-if="isPaypal" style="margin:0 auto;padding:10px 0 10px 0;width:750px;">
+    <div style="color:white;font-size:18px;text-align: center;padding-left:0px;margin: 0 auto;padding: 0.4em 0.625em;background-color:#ef473a;">
+      เนื่องจากการเติมเงินนี้เป็นการเติมเงินครั้งแรกผ่านบัญชี Paypal ของบัญชี {{ user.username }}
+      ระบบป้องกันการทุจรติผ่าน Paypal จึงมีความจำเป็นต้องขอข้อมูลเพิ่มเติมจากคุณ
+    </div>
+    <div style="padding:25px;border: 2px solid #ef473a;" layout="column" layout-align="start start">
+
+        <p>กรุณาตอบแบบฟอร์มนี้</p>
+        <div>1. บัญชี PayPal ของคุณคือบัญชีอะไร (ระบุชื่ออีเมลล์ที่ใช้สมัครกับ PayPal)</div>
+        <md-input-container class="md-block">
+          <input required name="pay_email" ng-model="user.paypal_account" type="email" placeholder="กรุณาใส่บัญชี PayPal ของคุณ" style="width:250px;">
+        </md-input-container>
+        <div>2. บัญชี PayPal ของคุณมีสถานะ Verified แล้วใช่หรือไม่ ?</div>
+        <md-radio-group md-no-ink="true" ng-model="user.paypal_verified">
+          <md-radio-button style="margin:16px;" value="yes"  class="md-primary" >ใช่</md-radio-button>
+          <md-radio-button style="margin:16px;" value="no"  class="md-primary" >ไม่ใช่</md-radio-button>
+        </md-radio-group>
+        <div>3. บัญชี PayPal ของคุณลงทะเบียนด้วยประเทศใด ?</div>
+        <md-input-container>
+          <label>ประเทศ</label>
+          <md-select ng-model="user.papay_country" >
+            <md-option ng-repeat="con in country.countries" value="{{ con.name }}">
+              {{con.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <div>4. คุณเป็นเจ้าของบัญชีตามที่ได้ระบุในข้อ 1 เองหรือไม่ ?</div>
+        <md-radio-group md-no-ink="true" ng-model="user.paypal_own">
+          <md-radio-button style="margin:16px;" value="yes"  class="md-primary" >ใช่</md-radio-button>
+          <md-radio-button style="margin:16px;" value="no"  class="md-primary" >ไม่ใช่</md-radio-button>
+        </md-radio-group>
+        <div style="margin-bottom:10px;">5. คุณยอมรับเงื่อนไต่อไปนี้หรือไม่หรือไม่ ?</div>
+        <div style="margin-left:16px;">5.1 เพื่อป้องกันการดึงเงินคืนผ่าน Paypal หลังจากได้เริ่มใช้งานไปแล้วยอดเครดิตที่คุณเติมผ่าน Paypal จะไม่สามารถสั่งถอนเป็นเงินสดได้จนกว่าจะครบ
+            45 วัน (คุณยังสามารถสั่งถอนส่วนกำไรได้ตามปกติ) ยกเว้นหากบัญชี sbobet ของคุณมีอายุการใช้งานกับเรามากกว่า 90 วันขึ้นไปการเติมเงินผ่าน
+            Paypal ของคุณจะไม่ติดเงื่อนไขนี้
+        </div>
+        <br>
+        <div style="margin-left:16px;">
+          5.2 คุณจะต้องใช้บัญชี Paypal ที่ลงทะเบียนด้วยชื่อที่ตรงกับคุณได้ลงทะเบียนไว้กับเวบไซต์ sbobet878.com เท่านัน􀀞 หากคุณใช้บัญชี PayPal ชื่ออื่นทำการเติมเครดิตเข้ามา ระบบจะทำการปิดบัญชีของคุณทันที และคุณจะไม่สามารถทำธุรกรรมการใด ๆ
+          ได้อีก
+        </div>
+        <br>
+        <div style="margin-left:16px;">
+          5.3 หากคุณทำการดึงเงินคืน หรือเปิด Dispute กับทาง PayPal ทางทีมงานจะทำการปิดบัญชีของคุณโดยทันที และคุณจะไม่สามารถทำธุรกรรมการใด
+          ๆ ได้อีก ดังนั้น หากพบปัญหาใด ๆ ในธุรกรรมของ Paypal กรุณาติดต่อ Call Center เท่านัน􀀞
+        </div>
+        <div style="margin-left:50px;margin-top:50px;">
+          <md-checkbox ng-model="user.accept" aria-label="accept">
+              ยอมรับและต้องการเติมเครดิตในขั้นอนต่อไป
+          </md-checkbox>
+        </div>
+        <div style="margin:0 auto;">
+          <md-button ng-disabled="ok_disabled" class="md-raised md-primary" ng-click="nextStepPaypal($event)">ตกลง</md-button>
+          <div ng-show="ok_disabled">กรุณารอสักครู่....</div>
+        </div>
+
+    </div>
+  </div>
+
+  <div ng-if="isCredit" style="margin:0 auto;padding:10px 0 10px 0;width:750px;">
+    <div style="color:white;font-size:18px;text-align: center;padding-left:0px;margin: 0 auto;padding: 0.4em 0.625em;background-color:#ef473a;">
+      เนื่องจากการเติมเงินนี้เป็นการเติมเงินครั้งแรกผ่าน บัตรเครดิต ของบัญชี {{ user.username }}
+      ระบบป้องกันการทุจรติผ่าน บัตรเครดิต จึงมีความจำเป็นต้องขอข้อมูลเพิ่มเติมจากคุณ
+    </div>
+    <div style="padding:25px;border: 2px solid #ef473a;" layout="column" layout-align="start start">
+      <p>กรุณาตอบแบบฟอร์มนี้</p>
+      <div>1. บัตรเครดิตของคุณออกโดยธนาคารใด ?</div>
+      <md-input-container>
+        <label>ธนาคาร</label>
+        <md-select ng-model="user.credit_bank" >
+          <md-option ng-repeat="bank in thai_bank.bank" value="{{ bank.name }}">
+            {{bank.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <div>2. บัตรเครดิตของคุณเป็นประเภทอะไร ?</div>
+      <md-radio-group md-no-ink="true" ng-model="user.credit_type">
+        <md-radio-button style="margin:16px;" value="Visa"  class="md-primary" >Visa</md-radio-button>
+        <md-radio-button style="margin:16px;" value="Mastercard"  class="md-primary" >Mastercard</md-radio-button>
+        <md-radio-button style="margin:16px;" value="Amex"  class="md-primary" >Amex</md-radio-button>
+        <md-radio-button style="margin:16px;" value="JCB"  class="md-primary" >JCB</md-radio-button>
+        <md-radio-button style="margin:16px;" value="Union Pay"  class="md-primary" >Union Pay</md-radio-button>
+      </md-radio-group>
+      <div>3. คุณเคยมีประวัติการขอเงินคืนจากธนาคารเนื่องจาก ไม่ได้เป็นผู้ใช้งานบัตรเครดิตนี้หรือไม่ ? (เช่นบัตรถูกขโมยไปใช้งาน) ?</div>
+      <md-radio-group md-no-ink="true" ng-model="user.credit_payback">
+        <md-radio-button style="margin:16px;" value="yes"  class="md-primary" >เคย</md-radio-button>
+        <md-radio-button style="margin:16px;" value="no"  class="md-primary" >ไม่เคย</md-radio-button>
+      </md-radio-group>
+      <div>4. คุณเป็นเจ้าของบัตรเครดิตนี้เองหรือไม่ ?</div>
+      <md-radio-group md-no-ink="true" ng-model="user.credit_own">
+        <md-radio-button style="margin:16px;" value="yes"  class="md-primary" >ใช่</md-radio-button>
+        <md-radio-button style="margin:16px;" value="no"  class="md-primary" >ไม่ใช่</md-radio-button>
+      </md-radio-group>
+      <div style="margin-bottom:10px;">5. คุณยอมรับเงื่อนไต่อไปนี้หรือไม่หรือไม่ ?</div>
+      <div style="margin-left:16px;">5.1 เพื่อป้องกันการดึงเงินคืนผ่านบัตรเครดิตหลังจากได้เริ่มใช้งานไปแล้วยอดเครดิตที่คุณเติมผ่านบัตรเครดิตจะไม่สามารถสั่งถอนเป็นเงินสดได้จนกว่าจะครบ
+          45 วัน (คุณยังสามารถสั่งถอนส่วนกำไรได้ตามปกติ) ยกเว้นหากบัญชี sbobet ของคุณมีอายุการใช้งานกับเรามากกว่า 90 วันขึ้นไปการเติมเงินผ่านบัตรเครดิตของคุณจะไม่ติดเงื่อนไขนี้
+      </div>
+      <br>
+      <div style="margin-left:16px;">
+        5.2 คุณจะต้องใช้บัตรครดิตที่มีชื่อหน้าบัตรตรงกับที่คุณได้ลงทะเบียนไว้กับเวบไซต์ sbobet878.com เท่านัน􀀞 หากคุณใช้บัตรเครดิตชื่ออื่นทำการเติม
+        เครดิตเข้ามา ระบบจะทำการปิดบัญชีของคุณทันที และคุณจะไม่สามารถทำธุรกรรมการใด ๆ ได้อีก
+      </div>
+      <br>
+      <div style="margin-left:16px;">
+        5.3 หากคุณทำการขออายัดบัตรหรือขอเงินคืน กับทางธนาคาร ทางทีมงานจะทำการปิดบัญชีของคุณโดยทันที และคุณจะไม่สามารถทำธุรกรรมการใด ๆ
+        ได้อีก ดังนัน􀀞 หากพบปัญหาใด ๆ ในธุรกรรมของบัตรเครดิต กรุณาติดต่อ Call Center เท่านั้น
+      </div>
+      <div style="margin-left:50px;margin-top:50px;">
+        <md-checkbox ng-model="user.accept" aria-label="accept">
+            ยอมรับและต้องการเติมเครดิตในขั้นอนต่อไป
+        </md-checkbox>
+      </div>
+      <div style="margin:0 auto;">
+        <md-button ng-disabled="ok_disabled" class="md-raised md-primary" ng-click="nextStepCredit($event)">ตกลง</md-button>
+        <div ng-show="ok_disabled">กรุณารอสักครู่....</div>
+      </div>
+    </div>
+  </div>
+
+</div>

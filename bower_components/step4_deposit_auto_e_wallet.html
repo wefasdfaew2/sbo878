@@ -1,0 +1,42 @@
+<div class="md-padding">
+</div>
+<div ng-if="!direct_access" id="form_section" layout="column" layout-align="center center" style="margin-bottom:5%;">
+  <div layout="column" layout-align="center center" style="width:90%;border-radius:3px;border: 2px solid #ff8d0a;">
+    <div layout="column">
+      <div class="page-sub-title" style="font-weight:bold;font-size:1.4vw;margin:0px;padding:10px 0 10px 0;background-color:#f58300;">
+        <div class="text-center" slide-toggle="#e_wallet" style="margin: 0 auto;padding: 0.4em 0.625em;">
+          กรุณาโอนเงินจากกระเป๋าสตางค์ {{ wellknown_name }} <br> ของท่าน (หมายเลข {{ from_wallet_tel }}) ไปยังหมายเลข {{ to_wallet_tel }}
+        </div>
+      </div>
+      <div layout="row" layout-align="center start">
+        <div layout="column" style="margin:20px;padding:15px;border: 2px solid #ffe8ce;border-radius:3px;" layout-align="center center">
+          <img ng-src="{{ from_wallet_img }}" />
+          <div style="margin-top:40px;font-size:1.4vw;font-weight:bold;"> {{ from_wallet_tel }} </div>
+        </div>
+        <div layout="column" layout-align="center center" style="margin:50px;margin-top:90px;width:auto;height:50px;">
+          <img style="max-width:100%;max-height:100%;" ng-src="{{ arrow }}" />
+          <div style="margin-top:40px;font-size:20px;font-weight:bold;">โอนยอดจำนวน <span style="font-size:25px;color:#f54600">{{ amount_wallet }}</span> บาท</div>
+          <img ng-src="{{ img_r }}" />
+        </div>
+        <div layout="column" style="margin:20px;padding:15px;border: 2px solid #ffe8ce;" layout-align="center center">
+          <img ng-src="{{ to_wallet_img }}" />
+          <div style="margin-top:40px;font-size:1.4vw;font-weight:bold;"> {{ to_wallet_tel }} </div>
+        </div>
+      </div>
+      <div layout="row" layout-align="center center" style="margin-top:10px;">
+        <div layout="column" layout-align="center center" style="margin:10px;" layout-wrap>
+          <div class="text-center" style="font-size:1.3vw;font-weight:bold;padding:10px;width:100%;border-color: #e42112;background-color: #ef473a;color: #fff;" >
+            คำแนะนำเบื้องต้น
+          </div>
+          <div style="word-wrap: break-word;padding:10px 10px 10px 10px;">
+            <ol style="margin-left:0px;padding-left:20px;">
+              <li style="margin-bottom:15px;">เพื่อการตรวจสอบยอดที่รวดเร็วยิ่งขึ้น รบกวนท่านสมาชิกโอนเงินจากกระเป๋าสตางค์ {{ wellknown_name }} ของท่าน <span style="color:red;">ตามจำนวนยอดที่ระบบแจ้งด้านบนนี้ (ไม่ต้องปัดเศษ)</span></li>
+              <li style="margin-bottom:15px;">เมื่อท่านสมาชิกทำการโอนเงินเข้าบัญชี {{ wellknown_name }} ของทีมงานแล้ว ระบบจะทำการเติมเครดิตให้ท่านโดยอัตโนมัติ ท่านสมาชิกสามารถตรวจสอบสถานะการทำรายการได้ตลอดเวลาที่หน้าตรวจสอบรายการฝาก </li>
+              <li style="margin-bottom:15px;">เนื่องจากหมายเลข {{ wellknown_name }} ของเรามีการเปลี่ยนแปลงอยู่ตลอดเวลา ดังนั้นหากท่านสมาชิกต้องการเติมเครดิตครั้งถัดไป กรุณาดำเนินการกดตามขั้นตอนเดิมอีกครั้ง เพื่อตรวจสอบหมายเลข {{ wellknown_name }} ของทีมงานใหม่</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

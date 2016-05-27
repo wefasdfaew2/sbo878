@@ -16,7 +16,11 @@ $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
 
 
-if(!empty($request->username))$account = $request->username;
+if(!empty($request->username)){
+  $account = $request->username;
+  $account = strtolower($account);
+}
+
 if(!empty($request->auto_type_option))$deposit_type = $request->auto_type_option;
 if(!empty($request->timeStamp))$timeStamp = $request->timeStamp;
 if(!empty($request->date))$date = $request->date;

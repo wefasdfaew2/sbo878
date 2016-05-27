@@ -25,7 +25,7 @@
   <div layout="row" layout-align="center center" style="margin-top:10px;" flex>
     <div ng-if="withdraw_wait" style="width:100%;height:auto;border: 2px solid red;padding: 15px">
       <center>
-        <div>กำลังตรวจสอบยอดเงินคงเหลือที่ถอนได้ในบัญชีของท่าน <br> กรุณารอสักครู่...</div>
+        <div>กำลังตรวจสอบยอดเงินคงเหลือที่ถอนได้ในบัญชีของท่าน <br> กรุณารอประมาณ 30 วินาที..(อย่าปิดหน้านี้)</div>
         <md-progress-circular class="loading" md-mode="indeterminate" md-diameter="50"></md-progress-circular>
       </center>
     </div>
@@ -48,7 +48,7 @@
         <a href="{{ home_url }}/withdraw-check">หน้าตรวจสอบรายการถอน</a>)
       </label>
       <br>
-      <center><img ng-src="{{ template_directory_uri }}/images/deposit-Status5.gif" /></center>
+      <center><img ng-src="{{ template_directory_uri }}/images/withdraw-red.gif" /></center>
     </div>
   </div>
 

@@ -677,7 +677,7 @@ jQuery(document).ready(function($) {
     });**/
   });
 
-  $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
+  $.getJSON(WPURLS.templateurl + "/php/all-bet-today.php",{
       option: "get"
     },
     function(data, status){
@@ -687,7 +687,7 @@ jQuery(document).ready(function($) {
   var money = 0;
   setInterval(function(){
 
-    $.getJSON(WPURLS.templateurl + "/php/test-add-money.php",{
+    $.getJSON(WPURLS.templateurl + "/php/all-bet-today.php",{
         option: "get"
       },
       function(data, status){

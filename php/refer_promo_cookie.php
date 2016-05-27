@@ -1,4 +1,10 @@
 <?php
+/*
+Template Name: set-refercode
+*/
+?>
+<?php get_header();?>
+<?php
 
 $cookie_name = "refercode";
 
@@ -17,4 +23,7 @@ if(!isset($_COOKIE[$cookie_name])) {
     echo "Value is: " . $_COOKIE[$cookie_name];
 }
 
+header("Location:".get_page_link(129));
+die();
 ?>
+<?php get_footer(); ?>

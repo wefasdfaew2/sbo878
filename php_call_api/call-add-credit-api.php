@@ -34,10 +34,10 @@ header('Content-Type: text/html; charset=utf-8');
               $res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
               $add_result = json_decode($res, true);
               $result = $add_result["status"];
-              if($result == '200'){
-                $message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
-                sendsms($message, $tel, 1);
-              }
+              //if($result == '200'){
+                //$message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
+                //sendsms($message, $tel, 1);
+              //}
               mysqli_close($conn);
               return $result;
             }else {
@@ -46,10 +46,10 @@ header('Content-Type: text/html; charset=utf-8');
                   $res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
                   $add_result = json_decode($res, true);
                   $result = $add_result["status"];
-                  if($result == '200'){
-                    $message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
-                    sendsms($message, $tel, 1);
-                  }
+                  //if($result == '200'){
+                    //$message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
+                    //sendsms($message, $tel, 1);
+                  //}
                   mysqli_close($conn);
                   return $result;
               } else {

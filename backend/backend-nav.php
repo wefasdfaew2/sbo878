@@ -34,6 +34,13 @@
                 <span class="<?php echo ($page_name == 'deposit_auto_fail' ? 'selected' : ''); ?>"></span>
             </a>
         </li>
+        <li class="<?php echo ($page_name == 'global_setting' ? 'active' : ''); ?>">
+            <a href="<?php echo base_url('backend/global_setting'); ?>">
+                <i class="icon-cog"></i>
+                <span class="title">Global Setting</span>
+                <span class="<?php echo ($page_name == 'global_setting' ? 'selected' : ''); ?>"></span>
+            </a>
+        </li>
 		<?php /* ?>
         <li class="<?php echo ($page_name == 'member_type' ? 'active' : ''); ?>">
             <a href="<?php echo base_url('backend/member_type'); ?>">

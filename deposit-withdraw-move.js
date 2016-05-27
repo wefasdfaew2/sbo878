@@ -35,7 +35,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.template_directory_uri = WPURLS.templateurl;
         $location.hash('form_section');
         $anchorScroll();
-        $scope.dep_auto_text = '';
+        /**$scope.dep_auto_text = '';
+        $scope.dep_man_text = '';
         $scope.wid_auto_text = '';
 
         var check_wid_dep = $http({
@@ -51,9 +52,16 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if(enable_status.deposit_auto_enable == 'Yes'){
             $scope.dep_auto_status = false;
           }else {
-            $scope.step1_option = '2';
+            $scope.step1_option = null;
             $scope.dep_auto_status = true;
             $scope.dep_auto_text = '--- ระบบอัตโนมัติขัดข้อง'
+          }
+
+          if(enable_status.manual_deposit_enable == 'Yes'){
+            $scope.dep_man_status = false;
+          }else {
+            $scope.dep_man_status = true;
+            $scope.dep_man_text = ' --- ระบบฝากขัดข้องชั่วคราว';
           }
 
           if(enable_status.withdraw_enable == 'Yes'){
@@ -62,8 +70,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             $scope.withdraw_enable_status = true;
             $scope.wid_auto_text = ' --- ระบบถอนขัดข้องชั่วคราว ทีมงานกำลังดำเนินการแก้ไข';
           }
-
-        });
+        });**/
 
         $scope.nextTo = function(){
           var params = {
@@ -172,6 +179,17 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else if (check_req_data.check_status == '5') {
               $scope.user.status_ok = false;
               $scope.alert_img = WPURLS.templateurl + '/images/alert_member_status_5.jpg';
+            }else if (check_req_data.check_status == 'not_enable') {
+              $mdDialog.show(
+                $mdDialog.alert()
+                  //.parent(angular.element(document.querySelector('#page')))
+                  .clickOutsideToClose(true)
+                  .title('ระบบขัดข้อง')
+                  .textContent('ระบบถอนเงินของเว็บต้นทาง (Sbobet.Com) ขัดข้องชั่วคราวกรุณาลองใหม่ภายหลัง')
+                  .ariaLabel('Alert Dialog')
+                  .ok('OK')
+                  .targetEvent(ev)
+              );
             }else{
               /**var confirm = $mdDialog.confirm()
               .parent(angular.element(document.querySelector('body')))
@@ -627,20 +645,27 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
               $scope.user.tel_1 = res_data.tel_1;
               $scope.user.tel_2 = res_data.tel_2;
 
-              if(res_data.check_deposit_q == 'must_wait'){
-                $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่กรุณารอ ' + (5 - res_data.wait_time) + ' นาทีก่อนทำรายการใหม่';
-                $scope.show_wait_text = true;
-                $scope.show_cancel_button = false;
-              }else if (res_data.check_deposit_q == 'must_cancel_before') {
-                $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่ หากต้องการเริ่มรายการใหม่กรุณายกเลิกรายการฝากก่อนหน้านี้';
-                $scope.show_cancel_button = true;
-                $scope.show_wait_text = true;
-                $scope.d_id = res_data.d_id;
+
+              if(res_data.deposit_enable == 'Yes'){
+                if(res_data.check_deposit_q == 'must_wait'){
+                  $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่กรุณารอ ' + (5 - res_data.wait_time) + ' นาทีก่อนทำรายการใหม่';
+                  $scope.show_wait_text = true;
+                  $scope.show_cancel_button = false;
+                }else if (res_data.check_deposit_q == 'must_cancel_before') {
+                  $scope.wait_text = 'ท่านมีรายการฝากแบบอัตโนมัติค้างอยู่ หากต้องการเริ่มรายการใหม่กรุณายกเลิกรายการฝากก่อนหน้านี้';
+                  $scope.show_cancel_button = true;
+                  $scope.show_wait_text = true;
+                  $scope.d_id = res_data.d_id;
+                }else {
+                  $scope.show_wait_text = false;
+                  $scope.show_cancel_button = false;
+                  $scope.show_deposit_option = true;
+                }
               }else {
-                $scope.show_wait_text = false;
-                $scope.show_cancel_button = false;
-                $scope.show_deposit_option = true;
+                $scope.wait_text = 'ระบบฝากเงินแบบอัตโนมัติของ Sbobet ขัดข้องชั่วคราวกรุณาใช้ระบบฝากเงินแบบแจ้ง CallCenter หลังโอนเงินเสร็จแทน';
+                $scope.show_wait_text = true;
               }
+
             }
 
           });
@@ -687,14 +712,58 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             );
             return;
           }
-          var params = {
+
+          if($scope.user.auto_type_option == 46 || $scope.user.auto_type_option == 48){
+            var get_first_cc_pp = $http({
+              method: "post",
+              url: WPURLS.templateurl + "/php/deposit-check-first-cc-pp.php",
+              data: {
+                username: $scope.user.username
+              },
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            });
+            get_first_cc_pp.success(function(res_data) {
+              if(res_data.first_cc_pp == 'Yes'){
+                var params = {
+                  'deposit_username': $scope.user.username,
+                  'auto_type_option': $scope.user.auto_type_option,
+                  'deposit_telephone': $scope.user.tel,
+                  'user_priority': $scope.user.priority,
+                  'direct_access': false
+                };
+                $state.go("additional_step_for_cc_pp", params);
+              }else {
+                var params = {
+                  'deposit_username': $scope.user.username,
+                  'auto_type_option': $scope.user.auto_type_option,
+                  'deposit_telephone': $scope.user.tel,
+                  'user_priority': $scope.user.priority,
+                  'direct_access': false
+                };
+                $state.go("step3_deposit_auto", params);
+              }
+            });
+          }else {
+            var params = {
+              'deposit_username': $scope.user.username,
+              'auto_type_option': $scope.user.auto_type_option,
+              'deposit_telephone': $scope.user.tel,
+              'user_priority': $scope.user.priority,
+              'direct_access': false
+            };
+            $state.go("step3_deposit_auto", params);
+          }
+
+          /**var params = {
             'deposit_username': $scope.user.username,
             'auto_type_option': $scope.user.auto_type_option,
             'deposit_telephone': $scope.user.tel,
             'user_priority': $scope.user.priority,
             'direct_access': false
           };
-          $state.go("step3_deposit_auto", params);
+          $state.go("step3_deposit_auto", params);**/
         }
 
         var get_auto_type = $http({
@@ -724,26 +793,32 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                           res_data[key].access_way = 'https://www.scbeasy.com';
                           res_data[key].pri_color = '#4F2A81';
                           res_data[key].sec_color = '#E1D7F1';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 22:30 - 24:00)';
                         }else if (value.deposit_type_id == 29) {
                           res_data[key].access_way = 'https://www.kasikornbank.com/';
                           res_data[key].pri_color = '#0e8f33';
                           res_data[key].sec_color = '#cee8d6';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 21:30 – 23:00)';
                         }else if (value.deposit_type_id == 37) {
                           res_data[key].access_way = 'https://ibanking.bangkokbank.com';
                           res_data[key].pri_color = '#003399';
                           res_data[key].sec_color = '#b2c1e0';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
                         }else if (value.deposit_type_id == 45) {
                           res_data[key].access_way = 'https://www.ktbnetbank.com';
                           res_data[key].pri_color = '#00A4E4';
                           res_data[key].sec_color = '#99daf4';
+                          res_data[key].close_time = '';
                         }else if (value.deposit_type_id == 41) {
                           res_data[key].access_way = 'https://www.krungsrionline.com';
                           res_data[key].pri_color = '#c1a000';
                           res_data[key].sec_color = '#fbeeb2';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
                         }else if (value.deposit_type_id == 52) {
                           res_data[key].access_way = 'https://www.tmbdirect.com';
                           res_data[key].pri_color = '#006cb7';
                           res_data[key].sec_color = '#b2d2e9';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
                         }
                         $scope.internet_bank.push(res_data[key]);
 
@@ -754,23 +829,36 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                           res_data[key].access_way = 'k-mobile banking plus';
                           res_data[key].pri_color = '#0e8f33';
                           res_data[key].sec_color = '#cee8d6';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 21:30 – 23:00)';
                         }else if (value.deposit_type_id == 44) {
                           res_data[key].access_way = 'KTB netbank';
                           res_data[key].pri_color = '#00A4E4';
                           res_data[key].sec_color = '#99daf4';
+                          res_data[key].close_time = '';
                         }else if (value.deposit_type_id == 40) {
                           res_data[key].access_way = 'Krungsri';
                           res_data[key].pri_color = '#c1a000';
                           res_data[key].sec_color = '#fbeeb2';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
                         }else if (value.deposit_type_id == 51) {
                           res_data[key].access_way = 'TMB touch';
                           res_data[key].pri_color = '#006cb7';
                           res_data[key].sec_color = '#b2d2e9';
+                          res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
                         }
                         $scope.mobile_bank.push(res_data[key]);
 
             }else if (value.deposit_type_id == 38 || value.deposit_type_id == 26 || value.deposit_type_id == 34 ||
                       value.deposit_type_id == 49) {
+              if(value.deposit_type_id == 38){
+                res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
+              }else if (value.deposit_type_id == 26) {
+                res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 21:30 – 23:00)';
+              }else if (value.deposit_type_id == 34) {
+                res_data[key].close_time = '';
+              }else if (value.deposit_type_id == 49) {
+                res_data[key].close_time = '(ไม่สามารถใช้ช่องทางนี้ได้ใช่ช่วงเวลา 02:30 – 05:00 และ 22:30 – 01:00)';
+              }
               $scope.atm_normal.push(res_data[key]);
             }else if (value.deposit_type_id == 61 || value.deposit_type_id == 62 || value.deposit_type_id == 63 ||
                       value.deposit_type_id == 64 || value.deposit_type_id == 65 || value.deposit_type_id == 66 ||
@@ -1150,6 +1238,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         //console.log($stateParams.deposit_username);
         //console.log($stateParams.amount);
         //console.log($stateParams.deposit_regis);
+        $scope.img_r = WPURLS.templateurl + '/images/d-amount.gif';
         if($stateParams.auto_type_option == 33 || $stateParams.auto_type_option == 45 ||
             $stateParams.auto_type_option == 44 || $stateParams.auto_type_option == 40 ){
           $scope.notify_us1 = 'ระบุที่อยู่ Email ผู้รับ';//'เป็นไปอย่างอัตโนมัติกรุณาระบุอีเมล';
@@ -1204,6 +1293,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $scope.money_amount = $stateParams.amount;
           $scope.bank_number = res_data[0].deposit_bank_account;
           $scope.bank_name = res_data[0].deposit_bank_name;
+          //$scope.nickname = res_data[0].deposit_nickname;
+          $scope.bank_owner = res_data[0].bank_owner;
           //$scope.bank_logo = WPURLS.templateurl + res_data[0].deposit_type_logo_large;
           $scope.bank_logo = WPURLS.templateurl + res_data[0].selected_bank_logo
           //$scope.how_to_email = WPURLS.templateurl + res_data[0].deposit_type_emailnotify_image;
@@ -1236,6 +1327,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount_wallet = $stateParams.amount;
         $scope.from_wallet_tel = $stateParams.deposit_telephone;
+        $scope.img_r = WPURLS.templateurl + '/images/d-amount.gif';
         var get_pay_info = $http({
           method: "post",
           url: WPURLS.templateurl + "/php/deposit-get-payInfo-e-wallet.php",
@@ -1285,7 +1377,10 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount_atm = $stateParams.amount;
         $scope.tel = $stateParams.deposit_telephone;
-
+        $scope.img_r = WPURLS.templateurl + '/images/d-amount.gif';
+        $scope.notify_us3 = WPURLS.templateurl + '/images/d-SMS.gif';
+        $scope.notify_us1 = 'ระบุเบอร์มือถือของผู้รับ';
+        $scope.notify_us2 = '0957327076';
         var get_pay_info = $http({
           method: "post",
           url: WPURLS.templateurl + "/php/deposit-get-payInfo-atm-normal.php",
@@ -1305,6 +1400,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           $scope.to_bank_name = res_data[0].deposit_bank_name;
           $scope.to_bank_number = res_data[0].deposit_bank_account;
           $scope.how_to = WPURLS.templateurl + res_data[0].how_to_img;
+          $scope.bank_owner = res_data[0].bank_owner;
+          $scope.bank_logo = WPURLS.templateurl + res_data[0].deposit_type_logo;
           var message = 'กรุณาโอนยอดจำนวน%0A' + $scope.amount_atm + '%20บาท%0A%0Aไปยังเลขบัญชีที่%0A' +
           $scope.to_bank_number + '%0A(ธนาคาร'+$scope.to_bank_name+')%0A%0Aหลังจากโอนเงินเสร็จ%0A'+
           'แล้วกรุณาใช้บริการ%20SMS%20แจ้งผู้รับโดยระบุเบอร์มือถือของผู้ส่งเป็นหมายเลข%20'+$scope.tel;
@@ -1846,11 +1943,1176 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         }
         $location.hash('form_section');
         $anchorScroll();
+        $scope.img_r = WPURLS.templateurl + '/images/d-amount.gif';
         $scope.notify_transfer = 'http://goo.gl/1KpPqn'; //WPURLS.home_url + '/user_inform_transfer';
         $scope.template_directory_uri = WPURLS.templateurl;
         $scope.amount = $stateParams.amount;
         $scope.bank_number = $stateParams.bank_number;
         $scope.bank_name = $stateParams.bank_name;
+
+        var get_bank_owner = $http({
+          method: "post",
+          url: WPURLS.templateurl + "/php/deposit-man-get-bank-owner.php",
+          data: {
+            bank_number: $stateParams.bank_number,
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+        get_bank_owner.success(function(res_data) {
+          console.log(res_data);
+          $scope.bank_owner = res_data.bank_owner;
+        });
+
+      }
+    })
+    .state('additional_step_for_cc_pp', {
+      url: '/additional_step_for_cc_pp',
+      abstract: false,
+      params: {
+        deposit_username: null,
+        auto_type_option: null,
+        deposit_telephone: null,
+        user_priority: null,
+        direct_access: null
+      },
+      templateUrl: WPURLS.templateurl + '/sub_page/additional_step_for_cc_pp.html',
+      controller: function($scope, $state, $stateParams, $http, $mdDialog, $anchorScroll, $location) {
+        if($stateParams.direct_access != false){
+          $scope.direct_access = true;
+          $state.go("step1");
+          return;
+        }
+
+        $scope.direct_access = false;
+        $location.hash('form_section');
+        $anchorScroll();
+        $scope.user = {};
+        $scope.user.papay_country = 'Thailand';
+        $scope.user.paypal_account = '';
+        $scope.user.paypal_verified = '';
+        $scope.user.paypal_own = '';
+        $scope.user.accept = false;
+        $scope.user.credit_bank = '';
+        $scope.user.credit_type = '';
+        $scope.user.credit_payback = '';
+        $scope.user.credit_own = '';
+        $scope.ok_disabled = false;
+        $scope.country = {
+          "countries": [
+            {
+              "code": "+7 840",
+              "name": "Abkhazia"
+            },
+            {
+              "code": "+93",
+              "name": "Afghanistan"
+            },
+            {
+              "code": "+355",
+              "name": "Albania"
+            },
+            {
+              "code": "+213",
+              "name": "Algeria"
+            },
+            {
+              "code": "+1 684",
+              "name": "American Samoa"
+            },
+            {
+              "code": "+376",
+              "name": "Andorra"
+            },
+            {
+              "code": "+244",
+              "name": "Angola"
+            },
+            {
+              "code": "+1 264",
+              "name": "Anguilla"
+            },
+            {
+              "code": "+1 268",
+              "name": "Antigua and Barbuda"
+            },
+            {
+              "code": "+54",
+              "name": "Argentina"
+            },
+            {
+              "code": "+374",
+              "name": "Armenia"
+            },
+            {
+              "code": "+297",
+              "name": "Aruba"
+            },
+            {
+              "code": "+247",
+              "name": "Ascension"
+            },
+            {
+              "code": "+61",
+              "name": "Australia"
+            },
+            {
+              "code": "+672",
+              "name": "Australian External Territories"
+            },
+            {
+              "code": "+43",
+              "name": "Austria"
+            },
+            {
+              "code": "+994",
+              "name": "Azerbaijan"
+            },
+            {
+              "code": "+1 242",
+              "name": "Bahamas"
+            },
+            {
+              "code": "+973",
+              "name": "Bahrain"
+            },
+            {
+              "code": "+880",
+              "name": "Bangladesh"
+            },
+            {
+              "code": "+1 246",
+              "name": "Barbados"
+            },
+            {
+              "code": "+1 268",
+              "name": "Barbuda"
+            },
+            {
+              "code": "+375",
+              "name": "Belarus"
+            },
+            {
+              "code": "+32",
+              "name": "Belgium"
+            },
+            {
+              "code": "+501",
+              "name": "Belize"
+            },
+            {
+              "code": "+229",
+              "name": "Benin"
+            },
+            {
+              "code": "+1 441",
+              "name": "Bermuda"
+            },
+            {
+              "code": "+975",
+              "name": "Bhutan"
+            },
+            {
+              "code": "+591",
+              "name": "Bolivia"
+            },
+            {
+              "code": "+387",
+              "name": "Bosnia and Herzegovina"
+            },
+            {
+              "code": "+267",
+              "name": "Botswana"
+            },
+            {
+              "code": "+55",
+              "name": "Brazil"
+            },
+            {
+              "code": "+246",
+              "name": "British Indian Ocean Territory"
+            },
+            {
+              "code": "+1 284",
+              "name": "British Virgin Islands"
+            },
+            {
+              "code": "+673",
+              "name": "Brunei"
+            },
+            {
+              "code": "+359",
+              "name": "Bulgaria"
+            },
+            {
+              "code": "+226",
+              "name": "Burkina Faso"
+            },
+            {
+              "code": "+257",
+              "name": "Burundi"
+            },
+            {
+              "code": "+855",
+              "name": "Cambodia"
+            },
+            {
+              "code": "+237",
+              "name": "Cameroon"
+            },
+            {
+              "code": "+1",
+              "name": "Canada"
+            },
+            {
+              "code": "+238",
+              "name": "Cape Verde"
+            },
+            {
+              "code": "+ 345",
+              "name": "Cayman Islands"
+            },
+            {
+              "code": "+236",
+              "name": "Central African Republic"
+            },
+            {
+              "code": "+235",
+              "name": "Chad"
+            },
+            {
+              "code": "+56",
+              "name": "Chile"
+            },
+            {
+              "code": "+86",
+              "name": "China"
+            },
+            {
+              "code": "+61",
+              "name": "Christmas Island"
+            },
+            {
+              "code": "+61",
+              "name": "Cocos-Keeling Islands"
+            },
+            {
+              "code": "+57",
+              "name": "Colombia"
+            },
+            {
+              "code": "+269",
+              "name": "Comoros"
+            },
+            {
+              "code": "+242",
+              "name": "Congo"
+            },
+            {
+              "code": "+243",
+              "name": "Congo, Dem. Rep. of (Zaire)"
+            },
+            {
+              "code": "+682",
+              "name": "Cook Islands"
+            },
+            {
+              "code": "+506",
+              "name": "Costa Rica"
+            },
+            {
+              "code": "+385",
+              "name": "Croatia"
+            },
+            {
+              "code": "+53",
+              "name": "Cuba"
+            },
+            {
+              "code": "+599",
+              "name": "Curacao"
+            },
+            {
+              "code": "+537",
+              "name": "Cyprus"
+            },
+            {
+              "code": "+420",
+              "name": "Czech Republic"
+            },
+            {
+              "code": "+45",
+              "name": "Denmark"
+            },
+            {
+              "code": "+246",
+              "name": "Diego Garcia"
+            },
+            {
+              "code": "+253",
+              "name": "Djibouti"
+            },
+            {
+              "code": "+1 767",
+              "name": "Dominica"
+            },
+            {
+              "code": "+1 809",
+              "name": "Dominican Republic"
+            },
+            {
+              "code": "+670",
+              "name": "East Timor"
+            },
+            {
+              "code": "+56",
+              "name": "Easter Island"
+            },
+            {
+              "code": "+593",
+              "name": "Ecuador"
+            },
+            {
+              "code": "+20",
+              "name": "Egypt"
+            },
+            {
+              "code": "+503",
+              "name": "El Salvador"
+            },
+            {
+              "code": "+240",
+              "name": "Equatorial Guinea"
+            },
+            {
+              "code": "+291",
+              "name": "Eritrea"
+            },
+            {
+              "code": "+372",
+              "name": "Estonia"
+            },
+            {
+              "code": "+251",
+              "name": "Ethiopia"
+            },
+            {
+              "code": "+500",
+              "name": "Falkland Islands"
+            },
+            {
+              "code": "+298",
+              "name": "Faroe Islands"
+            },
+            {
+              "code": "+679",
+              "name": "Fiji"
+            },
+            {
+              "code": "+358",
+              "name": "Finland"
+            },
+            {
+              "code": "+33",
+              "name": "France"
+            },
+            {
+              "code": "+596",
+              "name": "French Antilles"
+            },
+            {
+              "code": "+594",
+              "name": "French Guiana"
+            },
+            {
+              "code": "+689",
+              "name": "French Polynesia"
+            },
+            {
+              "code": "+241",
+              "name": "Gabon"
+            },
+            {
+              "code": "+220",
+              "name": "Gambia"
+            },
+            {
+              "code": "+995",
+              "name": "Georgia"
+            },
+            {
+              "code": "+49",
+              "name": "Germany"
+            },
+            {
+              "code": "+233",
+              "name": "Ghana"
+            },
+            {
+              "code": "+350",
+              "name": "Gibraltar"
+            },
+            {
+              "code": "+30",
+              "name": "Greece"
+            },
+            {
+              "code": "+299",
+              "name": "Greenland"
+            },
+            {
+              "code": "+1 473",
+              "name": "Grenada"
+            },
+            {
+              "code": "+590",
+              "name": "Guadeloupe"
+            },
+            {
+              "code": "+1 671",
+              "name": "Guam"
+            },
+            {
+              "code": "+502",
+              "name": "Guatemala"
+            },
+            {
+              "code": "+224",
+              "name": "Guinea"
+            },
+            {
+              "code": "+245",
+              "name": "Guinea-Bissau"
+            },
+            {
+              "code": "+595",
+              "name": "Guyana"
+            },
+            {
+              "code": "+509",
+              "name": "Haiti"
+            },
+            {
+              "code": "+504",
+              "name": "Honduras"
+            },
+            {
+              "code": "+852",
+              "name": "Hong Kong SAR China"
+            },
+            {
+              "code": "+36",
+              "name": "Hungary"
+            },
+            {
+              "code": "+354",
+              "name": "Iceland"
+            },
+            {
+              "code": "+91",
+              "name": "India"
+            },
+            {
+              "code": "+62",
+              "name": "Indonesia"
+            },
+            {
+              "code": "+98",
+              "name": "Iran"
+            },
+            {
+              "code": "+964",
+              "name": "Iraq"
+            },
+            {
+              "code": "+353",
+              "name": "Ireland"
+            },
+            {
+              "code": "+972",
+              "name": "Israel"
+            },
+            {
+              "code": "+39",
+              "name": "Italy"
+            },
+            {
+              "code": "+225",
+              "name": "Ivory Coast"
+            },
+            {
+              "code": "+1 876",
+              "name": "Jamaica"
+            },
+            {
+              "code": "+81",
+              "name": "Japan"
+            },
+            {
+              "code": "+962",
+              "name": "Jordan"
+            },
+            {
+              "code": "+7 7",
+              "name": "Kazakhstan"
+            },
+            {
+              "code": "+254",
+              "name": "Kenya"
+            },
+            {
+              "code": "+686",
+              "name": "Kiribati"
+            },
+            {
+              "code": "+965",
+              "name": "Kuwait"
+            },
+            {
+              "code": "+996",
+              "name": "Kyrgyzstan"
+            },
+            {
+              "code": "+856",
+              "name": "Laos"
+            },
+            {
+              "code": "+371",
+              "name": "Latvia"
+            },
+            {
+              "code": "+961",
+              "name": "Lebanon"
+            },
+            {
+              "code": "+266",
+              "name": "Lesotho"
+            },
+            {
+              "code": "+231",
+              "name": "Liberia"
+            },
+            {
+              "code": "+218",
+              "name": "Libya"
+            },
+            {
+              "code": "+423",
+              "name": "Liechtenstein"
+            },
+            {
+              "code": "+370",
+              "name": "Lithuania"
+            },
+            {
+              "code": "+352",
+              "name": "Luxembourg"
+            },
+            {
+              "code": "+853",
+              "name": "Macau SAR China"
+            },
+            {
+              "code": "+389",
+              "name": "Macedonia"
+            },
+            {
+              "code": "+261",
+              "name": "Madagascar"
+            },
+            {
+              "code": "+265",
+              "name": "Malawi"
+            },
+            {
+              "code": "+60",
+              "name": "Malaysia"
+            },
+            {
+              "code": "+960",
+              "name": "Maldives"
+            },
+            {
+              "code": "+223",
+              "name": "Mali"
+            },
+            {
+              "code": "+356",
+              "name": "Malta"
+            },
+            {
+              "code": "+692",
+              "name": "Marshall Islands"
+            },
+            {
+              "code": "+596",
+              "name": "Martinique"
+            },
+            {
+              "code": "+222",
+              "name": "Mauritania"
+            },
+            {
+              "code": "+230",
+              "name": "Mauritius"
+            },
+            {
+              "code": "+262",
+              "name": "Mayotte"
+            },
+            {
+              "code": "+52",
+              "name": "Mexico"
+            },
+            {
+              "code": "+691",
+              "name": "Micronesia"
+            },
+            {
+              "code": "+1 808",
+              "name": "Midway Island"
+            },
+            {
+              "code": "+373",
+              "name": "Moldova"
+            },
+            {
+              "code": "+377",
+              "name": "Monaco"
+            },
+            {
+              "code": "+976",
+              "name": "Mongolia"
+            },
+            {
+              "code": "+382",
+              "name": "Montenegro"
+            },
+            {
+              "code": "+1664",
+              "name": "Montserrat"
+            },
+            {
+              "code": "+212",
+              "name": "Morocco"
+            },
+            {
+              "code": "+95",
+              "name": "Myanmar"
+            },
+            {
+              "code": "+264",
+              "name": "Namibia"
+            },
+            {
+              "code": "+674",
+              "name": "Nauru"
+            },
+            {
+              "code": "+977",
+              "name": "Nepal"
+            },
+            {
+              "code": "+31",
+              "name": "Netherlands"
+            },
+            {
+              "code": "+599",
+              "name": "Netherlands Antilles"
+            },
+            {
+              "code": "+1 869",
+              "name": "Nevis"
+            },
+            {
+              "code": "+687",
+              "name": "New Caledonia"
+            },
+            {
+              "code": "+64",
+              "name": "New Zealand"
+            },
+            {
+              "code": "+505",
+              "name": "Nicaragua"
+            },
+            {
+              "code": "+227",
+              "name": "Niger"
+            },
+            {
+              "code": "+234",
+              "name": "Nigeria"
+            },
+            {
+              "code": "+683",
+              "name": "Niue"
+            },
+            {
+              "code": "+672",
+              "name": "Norfolk Island"
+            },
+            {
+              "code": "+850",
+              "name": "North Korea"
+            },
+            {
+              "code": "+1 670",
+              "name": "Northern Mariana Islands"
+            },
+            {
+              "code": "+47",
+              "name": "Norway"
+            },
+            {
+              "code": "+968",
+              "name": "Oman"
+            },
+            {
+              "code": "+92",
+              "name": "Pakistan"
+            },
+            {
+              "code": "+680",
+              "name": "Palau"
+            },
+            {
+              "code": "+970",
+              "name": "Palestinian Territory"
+            },
+            {
+              "code": "+507",
+              "name": "Panama"
+            },
+            {
+              "code": "+675",
+              "name": "Papua New Guinea"
+            },
+            {
+              "code": "+595",
+              "name": "Paraguay"
+            },
+            {
+              "code": "+51",
+              "name": "Peru"
+            },
+            {
+              "code": "+63",
+              "name": "Philippines"
+            },
+            {
+              "code": "+48",
+              "name": "Poland"
+            },
+            {
+              "code": "+351",
+              "name": "Portugal"
+            },
+            {
+              "code": "+1 787",
+              "name": "Puerto Rico"
+            },
+            {
+              "code": "+974",
+              "name": "Qatar"
+            },
+            {
+              "code": "+262",
+              "name": "Reunion"
+            },
+            {
+              "code": "+40",
+              "name": "Romania"
+            },
+            {
+              "code": "+7",
+              "name": "Russia"
+            },
+            {
+              "code": "+250",
+              "name": "Rwanda"
+            },
+            {
+              "code": "+685",
+              "name": "Samoa"
+            },
+            {
+              "code": "+378",
+              "name": "San Marino"
+            },
+            {
+              "code": "+966",
+              "name": "Saudi Arabia"
+            },
+            {
+              "code": "+221",
+              "name": "Senegal"
+            },
+            {
+              "code": "+381",
+              "name": "Serbia"
+            },
+            {
+              "code": "+248",
+              "name": "Seychelles"
+            },
+            {
+              "code": "+232",
+              "name": "Sierra Leone"
+            },
+            {
+              "code": "+65",
+              "name": "Singapore"
+            },
+            {
+              "code": "+421",
+              "name": "Slovakia"
+            },
+            {
+              "code": "+386",
+              "name": "Slovenia"
+            },
+            {
+              "code": "+677",
+              "name": "Solomon Islands"
+            },
+            {
+              "code": "+27",
+              "name": "South Africa"
+            },
+            {
+              "code": "+500",
+              "name": "South Georgia and the South Sandwich Islands"
+            },
+            {
+              "code": "+82",
+              "name": "South Korea"
+            },
+            {
+              "code": "+34",
+              "name": "Spain"
+            },
+            {
+              "code": "+94",
+              "name": "Sri Lanka"
+            },
+            {
+              "code": "+249",
+              "name": "Sudan"
+            },
+            {
+              "code": "+597",
+              "name": "Suriname"
+            },
+            {
+              "code": "+268",
+              "name": "Swaziland"
+            },
+            {
+              "code": "+46",
+              "name": "Sweden"
+            },
+            {
+              "code": "+41",
+              "name": "Switzerland"
+            },
+            {
+              "code": "+963",
+              "name": "Syria"
+            },
+            {
+              "code": "+886",
+              "name": "Taiwan"
+            },
+            {
+              "code": "+992",
+              "name": "Tajikistan"
+            },
+            {
+              "code": "+255",
+              "name": "Tanzania"
+            },
+            {
+              "code": "+66",
+              "name": "Thailand"
+            },
+            {
+              "code": "+670",
+              "name": "Timor Leste"
+            },
+            {
+              "code": "+228",
+              "name": "Togo"
+            },
+            {
+              "code": "+690",
+              "name": "Tokelau"
+            },
+            {
+              "code": "+676",
+              "name": "Tonga"
+            },
+            {
+              "code": "+1 868",
+              "name": "Trinidad and Tobago"
+            },
+            {
+              "code": "+216",
+              "name": "Tunisia"
+            },
+            {
+              "code": "+90",
+              "name": "Turkey"
+            },
+            {
+              "code": "+993",
+              "name": "Turkmenistan"
+            },
+            {
+              "code": "+1 649",
+              "name": "Turks and Caicos Islands"
+            },
+            {
+              "code": "+688",
+              "name": "Tuvalu"
+            },
+            {
+              "code": "+1 340",
+              "name": "U.S. Virgin Islands"
+            },
+            {
+              "code": "+256",
+              "name": "Uganda"
+            },
+            {
+              "code": "+380",
+              "name": "Ukraine"
+            },
+            {
+              "code": "+971",
+              "name": "United Arab Emirates"
+            },
+            {
+              "code": "+44",
+              "name": "United Kingdom"
+            },
+            {
+              "code": "+1",
+              "name": "United States"
+            },
+            {
+              "code": "+598",
+              "name": "Uruguay"
+            },
+            {
+              "code": "+998",
+              "name": "Uzbekistan"
+            },
+            {
+              "code": "+678",
+              "name": "Vanuatu"
+            },
+            {
+              "code": "+58",
+              "name": "Venezuela"
+            },
+            {
+              "code": "+84",
+              "name": "Vietnam"
+            },
+            {
+              "code": "+1 808",
+              "name": "Wake Island"
+            },
+            {
+              "code": "+681",
+              "name": "Wallis and Futuna"
+            },
+            {
+              "code": "+967",
+              "name": "Yemen"
+            },
+            {
+              "code": "+260",
+              "name": "Zambia"
+            },
+            {
+              "code": "+255",
+              "name": "Zanzibar"
+            },
+            {
+              "code": "+263",
+              "name": "Zimbabwe"
+            }
+          ]
+        };
+        $scope.thai_bank = {"bank": [
+            {'name': 'กรุงเทพ'},
+            {'name': 'กรุงศรีอยุธยา'},
+            {'name': 'กสิกรไทย'},
+            {'name': 'เกียรตินาคิน'},
+            {'name': 'ซีไอเอ็มบีไทย'},
+            {'name': 'ทหารไทย'},
+            {'name': 'ทิสโก้'},
+            {'name': 'ไทยพาณิชย์'},
+            {'name': 'ธนชาต'},
+            {'name': 'ยูโอบี'},
+            {'name': 'กรุงไทย'},
+            {'name': 'ออมสิน'},
+            {'name': 'อาคารสงเคราะห์'},
+            {'name': 'อิสลามแห่งประเทศไทย'}
+          ]
+        };
+        $scope.isPaypal = false;
+        $scope.isPaypal = false;
+        if($stateParams.auto_type_option == '46'){
+          $scope.isCredit = true;
+        }else if ($stateParams.auto_type_option == '48') {
+          $scope.isPaypal = true;
+        }
+        $scope.nextStepPaypal = function(event){
+
+          if($scope.user.paypal_account == ''){
+            form_alert('กรุณากรอกบัญชี PayPal ของคุณ',event);
+            return;
+          }else if(validateEmail($scope.user.paypal_account) == false){
+            form_alert('Email ไม่ถูกต้อง',event);
+            return;
+          }
+          if($scope.user.paypal_verified == '' || $scope.user.paypal_own == ''){
+            form_alert('กรุณาเลือกสถานะ PayPal ของคุณ',event);
+            return;
+          }
+          if($scope.user.accept == false){
+            form_alert('กรุณาเลือกการยอมรับเงื่อนไข',event);
+            return;
+          }
+
+          $scope.ok_disabled = true;
+          var set_paypal_info = $http({
+            method: "post",
+            url: WPURLS.templateurl + "/php/set_paypal_info.php",
+            data: {
+              username: $stateParams.deposit_username,
+              paypal_account: $scope.user.paypal_account,
+              paypal_verified: $scope.user.paypal_verified,
+              paypal_country: $scope.user.papay_country,
+              paypal_own: $scope.user.paypal_own,
+              paypal_accpet: $scope.user.accept
+            },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
+          set_paypal_info.success(function(res_data) {
+            console.log(res_data);
+            if(res_data.set_status == 'success'){
+              var params = {
+                'deposit_username': $stateParams.deposit_username,
+                'auto_type_option': $stateParams.auto_type_option,
+                'deposit_telephone': $stateParams.deposit_telephone,
+                'user_priority': $stateParams.user_priority,
+                'direct_access': false
+              };
+              $state.go("step3_deposit_auto", params);
+            }else {
+              $scope.ok_disabled = false;
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(true)
+                  .title('Error')
+                  .textContent('บันทึกข้อมูลไม่สำเร็จ')
+                  .ariaLabel('Alert Dialog')
+                  .ok('OK')
+                  .targetEvent(event)
+              );
+            }
+          });
+
+        }
+
+        $scope.nextStepCredit = function(){
+          console.log('sssss');
+          if($scope.user.credit_bank == ''){
+            form_alert('กรุณาเลือกธนาคารของคุณ',event);
+            return;
+          }
+          if($scope.user.credit_type == ''){
+            form_alert('กรุณาเลือกประเภทบัตรของคุณ',event);
+            return;
+          }
+          if($scope.user.credit_payback == ''){
+            form_alert('กรุณาเลือกประวัติการขอเงินคืนจากธนาคาร',event);
+            return;
+          }
+          if($scope.user.credit_own == ''){
+            form_alert('กรุณาเลือกสถานะเจ้าของบัตรเครดิต',event);
+            return;
+          }
+          if($scope.user.accept == false){
+            form_alert('กรุณาเลือกการยอมรับเงื่อนไข',event);
+            return;
+          }
+
+          $scope.ok_disabled = true;
+          var set_credit_info = $http({
+            method: "post",
+            url: WPURLS.templateurl + "/php/set_credit_info.php",
+            data: {
+              username: $stateParams.deposit_username,
+              creditcards_bank: $scope.user.credit_bank,
+              creditcards_type: $scope.user.credit_type,
+              creditcards_stolen: $scope.user.credit_payback,
+              creditcards_own: $scope.user.credit_own,
+              creditcards_accpet: $scope.user.accept
+            },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          });
+          set_credit_info.success(function(res_data) {
+            if(res_data.set_status == 'success'){
+              var params = {
+                'deposit_username': $stateParams.deposit_username,
+                'auto_type_option': $stateParams.auto_type_option,
+                'deposit_telephone': $stateParams.deposit_telephone,
+                'user_priority': $stateParams.user_priority,
+                'direct_access': false
+              };
+              $state.go("step3_deposit_auto", params);
+            }else {
+              $scope.ok_disabled = false;
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .clickOutsideToClose(true)
+                  .title('Error')
+                  .textContent('บันทึกข้อมูลไม่สำเร็จ')
+                  .ariaLabel('Alert Dialog')
+                  .ok('OK')
+                  .targetEvent(event)
+              );
+            }
+          });
+        }
+
+        function validateEmail(email) {
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        }
+
+        function form_alert(text,event){
+          $mdDialog.show(
+            $mdDialog.alert()
+              //.parent(angular.element(document.querySelector('#form_section')))
+              .clickOutsideToClose(true)
+              .title('ข้อมูลไม่ครบ')
+              .textContent(text)
+              .ariaLabel('Alert Dialog')
+              .ok('OK')
+              .targetEvent(event)
+          );
+        }
       }
     })
 });

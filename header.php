@@ -7,20 +7,29 @@
 
 
  require_once("php/get_browser.php");
- require_once('php/check-notify-text.php');
-
+ require_once("php/check-notify-text.php");
+ require_once("php/check-site-underconstruction.php");
  $brawser_info = getBrowser();
+ $isConstruct = get_site_construct_status();
+
+ if($isConstruct == TRUE){
+   header("Location: ".get_page_link(356));
+   die();
+ }
+
 
  $check_browser_keyword="/chrome|Firefox|Safari|IE|Opera|Internet Explorer|android|ios|apple|google/i";
  if(preg_match($check_browser_keyword, $brawser_info['name']) == false){
-   die('เว็บนี้รองรับเฉพาะ Browser Chrome, Firefox, Safari, IE, Opera');
+   die('เว็บนี้รองรับเฉพาะ Browser Chrome, Firefox, Safari, IE, Opera หรือต้องเปิดโดยตรงจากบราวเซอร์เท่านั้น');
  }else {
-   if(preg_match("/chrome/i", $brawser_info['name']) && $brawser_info['version'] < 45){
+   if(preg_match("/chrome/i", $brawser_info['name']) && $brawser_info['version'] < 40){
      die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ <a href="http://www.google.com/intl/th/chrome/browser/desktop/index.html">Google Chrome</a>');
    }elseif (preg_match("/Firefox/i", $brawser_info['name']) && $brawser_info['version'] < 43) {
      die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
-   }elseif (preg_match("/Safar/i", $brawser_info['name']) && $brawser_info['version'] < 7) {
-     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
+   }elseif (preg_match("/Safar/i", $brawser_info['name']) && ($brawser_info['version'] == 'Line' || $brawser_info['version'] == 'line')) {
+     //die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า ('.$brawser_info['version'].') กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
+   }elseif (preg_match("/Safar/i", $brawser_info['name']) && $brawser_info['version'] < 5) {
+     die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า ('.$brawser_info['version'].') กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
    }elseif (preg_match("/Opera/i", $brawser_info['name']) && $brawser_info['version'] < 30) {
      die('เว็บไซต์ไม่รองรับบราวเซอร์รุ่นเก่า กรุณาอัพเดตบราวเซอร์ของท่าน หรือใช้ Google Chrome');
    }elseif (preg_match("/IE|Internet Explorer/i", $brawser_info['name']) && $brawser_info['version'] < 10) {
@@ -153,13 +162,15 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-6 col-sm-6 col-xs-12" style="float:left;padding:20px;padding-left:40px;">
+				<div class="col-md-6 col-sm-6 col-xs-12" style="width:455px;float:left;padding:20px;padding-left:40px;padding-right:0px;">
 				 <a href="<?php echo get_page_link(129);?>">
 					<img src="<?php echo get_template_directory_uri()?>/images/Header.gif">
 					</a>
 				</div>
-
-			<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top:20px;">
+        <div class="col-md-1 col-sm-1 col-xs-12" style="width:140px;margin-left:20px;padding:25px 0px 0px 0px;color:white;font-size:15px;">
+          <?php echo "[ IP : $userIP ]"; ?>
+        </div>
+			<div class="col-md-5 col-sm-5 col-xs-12" style="width:395px;padding-top:20px;padding-left:0px">
 					<div class="row">
 						<?php if(is_user_logged_in()){ ?>
 							<table style="border:0px;float:right;">
@@ -198,6 +209,11 @@
 												<button type="button" class="btn btn-danger">สมัครสมาชิก</button>
 											</a>
 									</td>
+                  <td style="border:0px;float:right;padding-right:5px;white-space:nowrap;">
+										<a href="<?php echo  get_permalink(263); ?>">
+											<button type="button" class="btn btn-success" >แนะนำเพื่อนรับ 5%</button>
+										</a>
+									</td>
 								</tr>
 							</table>
 						<?php } ?>
@@ -217,68 +233,127 @@
 				<?php if( is_front_page() || is_home() || is_404() ) { ?>
 					<!--<h1 id="logo" class="image-logo" itemprop="headline">-->
 						<!--<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>-->
-						<table width="980" height="60" border="0" cellpadding="0" cellspacing="0" style="margin-top:15px;margin-bottom:15px;">
-							<tr>
-								<td rowspan="2">
-									<a href="/">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.jpg" width="237" height="60" border="0" alt=""></a></td>
-								<td colspan="5">
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="657" height="26" alt=""></td>
-								<td rowspan="2">
-									<a href=" http://line.me/ti/p/FU7mQUUa_E">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.png" width="60" height="60" border="0" alt=""></a></td>
-								<td rowspan="2">
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="26" height="60" alt=""></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="313" height="34" alt=""></td>
-								<td>
-									<a href="tel://0979988214">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="162" height="34" border="0" alt=""></a></td>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="8" height="34" alt=""></td>
-								<td>
-									<a href="tel://0979988215">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05-08.gif" width="163" height="34" border="0" alt=""></a></td>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="11" height="34" alt=""></td>
-							</tr>
-						</table>
 
+            <table border="0" cellpadding="0" cellspacing="0" style="width:980px;height:60px !important;">
+            	<tr>
+            		<td rowspan="2">
+            			<a href="/">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.gif" width="294" height="59" border="0" alt=""></a></td>
+            		<td colspan="4">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="600" height="26" alt=""></td>
+            		<td rowspan="2">
+            			<a href="http://line.me/ti/p/%40dlq9546h">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02-03.gif" width="86" height="59" border="0" alt=""></a></td>
+            	</tr>
+            	<tr>
+            		<td rowspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="235" height="34" alt=""></td>
+            		<td>
+            			<a href="tel://0630300056">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="188" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<a href="tel://0630300057">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="172" height="33" border="0" alt="">
+                  </a>
+                </td>
+            		<td rowspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="5" height="34" alt=""></td>
+            	</tr>
+            <!--	<tr>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_08.gif" width="294" height="1" alt=""></td>
+            		<td colspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="360" height="1" alt=""></td>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_10.gif" width="86" height="1" alt=""></td>
+            	</tr>-->
+            </table>
+
+            <!--<table width="980" height="59" border="0" cellpadding="0" cellspacing="0">
+            	<tr>
+            		<td rowspan="2">
+            			<a href="/">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.gif" width="294" height="59" border="0" alt=""></a></td>
+            		<td colspan="4">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="600" height="26" alt=""></td>
+            		<td rowspan="2">
+            			<a href="http://line.me/ti/p/%40dlq9546h">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02-03.gif" width="86" height="59" border="0" alt=""></a></td>
+            	</tr>
+            	<tr>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="235" height="33" alt=""></td>
+            		<td>
+            			<a href="tel://06303000056">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="179" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<a href="tel://06303000057">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="181" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="5" height="33" alt=""></td>
+            	</tr>
+            </table>-->
 
 					<!--</h1>--><!-- END #logo -->
 				<?php } else { ?>
 
 						<!--<a href="<?php echo esc_url(home_url()); ?>"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></a>-->
-						<table width="980" height="60" border="0" cellpadding="0" cellspacing="0" style="margin-top:15px;margin-bottom:15px;">
-							<tr>
-								<td rowspan="2">
-									<a href="/">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.jpg" width="237" height="60" border="0" alt=""></a></td>
-								<td colspan="5">
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="657" height="26" alt=""></td>
-								<td rowspan="2">
-									<a href=" http://line.me/ti/p/FU7mQUUa_E">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.png" width="60" height="60" border="0" alt=""></a></td>
-								<td rowspan="2">
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="26" height="60" alt=""></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="313" height="34" alt=""></td>
-								<td>
-									<a href="tel://0979988238">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="162" height="34" border="0" alt=""></a></td>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="8" height="34" alt=""></td>
-								<td>
-									<a href="tel://0979988239">
-										<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05-08.gif" width="163" height="34" border="0" alt=""></a></td>
-								<td>
-									<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="11" height="34" alt=""></td>
-							</tr>
-						</table>
+            <table width="980" height="60" border="0" cellpadding="0" cellspacing="0">
+            	<tr>
+            		<td rowspan="2">
+            			<a href="/">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.gif" width="294" height="59" border="0" alt=""></a></td>
+            		<td colspan="4">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="600" height="26" alt=""></td>
+            		<td rowspan="2">
+            			<a href="http://line.me/ti/p/%40dlq9546h">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02-03.gif" width="86" height="59" border="0" alt=""></a></td>
+            	</tr>
+            	<tr>
+            		<td rowspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="235" height="34" alt=""></td>
+            		<td>
+            			<a href="tel://0630300056">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="188" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<a href="tel://0630300057">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="172" height="33" border="0" alt=""></a></td>
+            		<td rowspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="5" height="34" alt=""></td>
+            	</tr>
+            <!--	<tr>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_08.gif" width="294" height="1" alt=""></td>
+            		<td colspan="2">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_09.gif" width="360" height="1" alt=""></td>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_10.gif" width="86" height="1" alt=""></td>
+            	</tr>-->
+            </table>
+            <!--<table width="980" height="59" border="0" cellpadding="0" cellspacing="0">
+            	<tr>
+            		<td rowspan="2">
+            			<a href="/">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_01.gif" width="294" height="59" border="0" alt=""></a></td>
+            		<td colspan="4">
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02.gif" width="600" height="26" alt=""></td>
+            		<td rowspan="2">
+            			<a href="http://line.me/ti/p/%40dlq9546h">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_02-03.gif" width="86" height="59" border="0" alt=""></a></td>
+            	</tr>
+            	<tr>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_04.gif" width="235" height="33" alt=""></td>
+            		<td>
+            			<a href="tel://06303000056">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_03.gif" width="179" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<a href="tel://06303000057">
+            				<img src="<?php echo get_template_directory_uri()?>/images/Top-878_05.gif" width="181" height="33" border="0" alt=""></a></td>
+            		<td>
+            			<img src="<?php echo get_template_directory_uri()?>/images/Top-878_07.gif" width="5" height="33" alt=""></td>
+            	</tr>
+            </table>-->
 					<!-- END #logo -->
 				<?php } ?>
 			<?php } else { ?>

@@ -45,8 +45,9 @@ $sql = "SELECT a.sbobet_member_type_id, a.sbobet_account_id,
 (
  SELECT member_type_logo FROM backend_member_type c
  WHERE c.member_type_id=a.sbobet_member_type_id
-) as member_type_logo
-
+) as member_type_logo,
+(SELECT sbobet_deposit_enable FROM global_setting) as sbobet_deposit_enable,
+(SELECT sbobet_deposit_enable_by_cc FROM global_setting) as sbobet_deposit_enable_by_cc
 FROM
 backend_sbobet_account a
 WHERE
@@ -63,6 +64,11 @@ if ($result->num_rows > 0)
   }
 
   if($data[0]['sbobet_member_type_id'] == 1){
+    if($data[0]['sbobet_deposit_enable'] == 'Yes' && $data[0]['sbobet_deposit_enable_by_cc'] == 'Yes'){
+      $deposit_enable = 'Yes';
+    }else {
+      $deposit_enable = 'No';
+    }
     $member_type = 'member_sbobet_account_id';
   }elseif ($data[0]['sbobet_member_type_id'] == 2) {
     $member_type = 'member_gclub_account_id';
@@ -87,19 +93,23 @@ if ($result->num_rows > 0)
     }
 
     if($data[1]['member_telephone_1'] == ''){
-      $data[1]['member_telephone_1'] = 'qwsdvhuio';
+      $data[1]['member_telephone_1'] = 'qwsdvhuiowerfg';
     }
     if($data[1]['member_telephone_2'] == ''){
-      $data[1]['member_telephone_2'] = 'qwsdvhuio';
+      $data[1]['member_telephone_2'] = 'qwsdvhuiowerfg';
     }
 
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
+      if($data[1]['member_telephone_2'] == 'qwsdvhuiowerfg'){
+        $data[1]['member_telephone_2'] = '';
+      }
       $result_data = array(
         "get_account_type" => $data[0]['member_type_name'],
         "get_logo_type" => $data[0]['member_type_logo'],
         "user_priority" => $data[1]['member_bank_priority'],
         "tel_1" => $data[1]['member_telephone_1'],
-        "tel_2" => $data[1]['member_telephone_2']
+        "tel_2" => $data[1]['member_telephone_2'],
+        "deposit_enable" => $deposit_enable
        );
 
        $sql = "SELECT deposit_regis, deposit_id

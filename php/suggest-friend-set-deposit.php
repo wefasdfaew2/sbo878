@@ -66,7 +66,7 @@ if ($result->num_rows > 0)
       //$result = preg_match("/200/",$add_result);
       //$result = $add_result["status"];
       if($add_res == '200'){
-        $sql = "UPDATE backend_deposit_money SET deposit_status_id = '5' WHERE deposit_id = '$last_id'";
+        $sql = "UPDATE backend_deposit_money SET deposit_status_id = '4' WHERE deposit_id = '$last_id'";
         if ($conn->query($sql) === TRUE) {
           $deposit_amount = -1 * abs($deposit_amount);
           $sql = "INSERT INTO promotion_refer_transaction (promo_refer_transaction_member_id, promo_refer_transaction_type, promo_refer_transaction_amount)

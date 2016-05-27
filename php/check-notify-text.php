@@ -9,7 +9,7 @@
 
     function get_announce_data(){
 
-      $configs = require_once(realpath(dirname(__FILE__) . '/../php_db_config/config.php'));
+      $configs = require(realpath(dirname(__FILE__) . '/../php_db_config/config.php'));
       //$configs = require_once('../php_db_config/config.php');
       $servername = $configs['servername'];
       $username = $configs['username'];

@@ -67,12 +67,14 @@ if ($result->num_rows > 0)
     }
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
       $member_id = $data[1]['member_id'];
+      error_log('$member_id = '.$member_id);
       $data_refer = array();
       if($data[1]['member_refer_url'] == null || $data[1]['member_refer_url'] == ''){
         $key = 'AIzaSyCG7qGLyfF_bEV1YJBVQfQnQcLoHbFwa3A';
         $googer = new GoogleURLAPI($key);
         //$short_url = $googer->shorten("https://sbobet878.com/refer_promo_cookie.php?refercode=".$data[1]['member_id']);
-        $short_url = $googer->shorten("http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/refer_promo_cookie.php?refercode=".$data[1]['member_id']);
+        //$short_url = $googer->shorten("http://sbogroup.t-wifi.co.th/wordpress/wp-content/themes/point/php/refer_promo_cookie.php?refercode=".$data[1]['member_id']);
+        $short_url = $googer->shorten("http://www.sbobet878.com/index.php/refer-promo?refercode=".$data[1]['member_id']);
 
         $sql = "UPDATE backend_member_account SET member_refer_url = '$short_url' WHERE member_id = $member_id";
 
@@ -85,6 +87,7 @@ if ($result->num_rows > 0)
       }else {
         $short_url = $data[1]['member_refer_url'];
       }
+
 
       $sql = "SELECT a.promo_refer_transaction_timestamp, promo_refer_transaction_amount, promo_refer_transaction_type,
               (SELECT b.promo_refer_type
@@ -118,7 +121,7 @@ if ($result->num_rows > 0)
           if($row['promo_refer_transaction_type'] == 1){
             $row['promo_refer_transaction_type'] = '10%';
           }elseif ($row['promo_refer_transaction_type'] == 2) {
-            $row['promo_refer_transaction_type'] = '0.25%';
+            $row['promo_refer_transaction_type'] = '5%';
           }
           $data_refer[] = $row;
         }
@@ -141,13 +144,13 @@ if ($result->num_rows > 0)
                 }
                 else
                 {
-                  echo("Error description: " . mysqli_error($conn));
+                  echo("Error description: 1" . mysqli_error($conn));
                   echo "0 results";
                 }
       }else
       {
-        echo("Error description: " . mysqli_error($conn));
-        echo "0 results";
+        //echo("Error description: 2" . mysqli_error($conn));
+        //echo "0 results";
       }
       // Test: Expand a URL
       //$longDWName = $googer->expand($shortDWName);

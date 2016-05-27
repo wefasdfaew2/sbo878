@@ -44,15 +44,15 @@ Template Name: suggest-friend
 
 
        <div style="background-color:#f0f0f0;border-radius:10px;">
-         <h4 class="page-sub-title" style="border-top-right-radius:10px;border-top-left-radius:10px;">
+         <h4 class="page-sub-title" style="border-top-right-radius:5px;border-top-left-radius:5px;">
            <div style="margin: 0 auto;padding: 0.4em 0.625em;">
-             แนะนำเพื่อนมาแทงบอล เล่นพนันเว็บนี้รับทันที 10% + 0.25% ตลอดชีพ
+             แนะนำเพื่อนมาแทงบอล เล่นพนันเว็บนี้รับส่วนแบ่ง 5% ตลอดชีพ
            </div>
          </h4>
          <div style="padding:16px;">
            <p style="text-indent: 3em;font-size:110%;">
              เพียงคุณนำ Link, รูปป้ายโฆษณาด้านล่างนี้ไปแนะนำเพื่อนของคุณ หรือนำไปโพสแนะนำในเว็บบรอ์ด Facebook
-             หรือช่องทางอื่น ๆ ในมาเล่นพนันกับเว็บ sbobet878.com เพียงเท่านี้คุณก็จะได้ส่วนแบ่งดีงนี้
+             หรือช่องทางอื่น ๆ ให้มาเล่นพนันกับเว็บ sbobet878.com เพียงเท่านี้คุณก็จะได้ส่วนแบ่ง 5% จากยอดเสียของคนที่คุณแนะนำมา ไม่จำกัดวงเงินต่อเดือน ยิ่งแนะนำมาก ยิ่งได้มาก
            </p>
            <div style="padding:16px;">
              <ul style="font-size:110%;">
@@ -61,7 +61,7 @@ Template Name: suggest-friend
                 คุณจะได้รับ 10% เข้าบัญชีของคุณทันที (คุณได้เฉพาะยอดเงินฝากครั้งแรก)
               </li>
               <li>
-                เมื่อเพื่อนของคุณได้เล่นพนัน หรือแทงบอล คุณจะได้รับ 0.25% ไม่ว่าเพื่อนคุณจะเล่นได้หรือเสีย (คุณได้ตลอดไปที่เพื่อนที่คุณแนะนำยังเล่นกับเราอยู่)
+                เมื่อเพื่อนของคุณได้เล่นพนัน หรือแทงบอล คุณจะได้รับ 5% ไม่ว่าเพื่อนคุณจะเล่นได้หรือเสีย (คุณได้ตลอดไปที่เพื่อนที่คุณแนะนำยังเล่นกับเราอยู่)
               </li>
             </ul>
           </div>
@@ -69,33 +69,47 @@ Template Name: suggest-friend
       </div>
 
       <div style="background-color:#f0f0f0;border-radius:10px;">
-        <h4 class="page-sub-title" style="border-top-right-radius:10px;border-top-left-radius:10px;">
+        <h4 class="page-sub-title" style="border-top-right-radius:5px;border-top-left-radius:5px;">
           <div style="margin: 0 auto;padding: 0.4em 0.625em;">
-            ตัวอย่างการคำนวนรายได้
+            ตัวอย่างรายได้
           </div>
         </h4>
-        <div style="padding:16px;">
-          <p style="text-indent: 3em;font-size:110%;">
-            สมมุติว่าคุณแนะนำเพื่อนให้มาเล่นกับ sbobet878.com ได้จำนวน 10 คน และเพิ่มขึ้น 10 คน ทุก ๆ เดือน
-          </p>
-       </div>
+        <center>
+          <img src="<?php echo get_template_directory_uri()?>/images/example5percent.jpg" />
+       </center>
+       <br>
      </div>
 
      <div style="background-color:#f0f0f0;border-radius:10px;">
-       <h4 class="page-sub-title" style="border-top-right-radius:10px;border-top-left-radius:10px;">
+       <h4 class="page-sub-title" style="border-top-right-radius:5px;border-top-left-radius:5px;">
          <div style="margin: 0 auto;padding: 0.4em 0.625em;">
            คำถามที่ถามกันบ่อย ๆ
          </div>
        </h4>
        <div style="padding:16px;">
-         <p style="text-indent: 3em;font-size:110%;">
-            1 2 3
-         </p>
+         <ol type="1">
+           <li>
+              FAQ : เมื่อไหร่ถึงจะมียอดขึ้นให้ถอน<br>
+              ANS : ทุก ๆ วันที่ 1 ของทุกเดือน เวลาประมาณ 2.00 น. ระบบจะทำการคำนวณรายได้ของคุณ
+           </li>
+           <br>
+           <li>
+             FAQ : หลังจากกดถอนเงินที่ได้จากการแนะนำเพื่อนจะสามารถรับเงินได้ที่ไหน<br>
+             ANS : เครดิตจะถูกเติมเข้าบัญชี Sbobet ของท่านสมาชิก ท่านสมาชิกสามารถนำไปเล่นพนันต่อได้หรือสั่งถออนเป็นเงินสดได้
+           </li>
+           <br>
+           <li>
+             FAQ : หากนำ Link แนะนำไปแปะแล้วคนที่กดสามารถลบ Link แนะนำได้หรือไม่<br>
+             ANS : ไม่ได้ ระบบจะทำการบันทึกว่าคอมพิวเตอร์เครื่องนั้นที่กด Link ถูกแนะนำโดย ID ของคุณตลอดไป
+           </li>
+         </ol>
+
+
       </div>
     </div>
 
     <div style="background-color:#f0f0f0;border-radius:10px;">
-      <h4 class="page-title text-center" style="border-top-right-radius:10px;border-top-left-radius:10px;">
+      <h4 class="page-title text-center" style="border-top-right-radius:5px;border-top-left-radius:5px;">
 
           <div style="margin: 0 auto;padding: 0.5em 0.625em;" ng-show="loged_in">
             ท่านสามารถนำ Link หรือสื่อโฆษณาด้านล่างนี้ไปแนะนำเพื่อนได้ทันที
@@ -137,48 +151,66 @@ Template Name: suggest-friend
       </div>
       <br>
       <div layout="row">
-        <div flex="20">รูปป้าย Banner สำหรับการแนะนำเพื่อนของคุณ</div>
-        <div flex="80">
+        <div flex="18">รูปป้าย Banner สำหรับการแนะนำเพื่อนของคุณ</div>
+        <div flex="82">
           <div layout="row">
-            <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner1.png" width="728" height="90"/>
+            <a href="{{ promo_link }}" target="_blank">
+              <img ng-src="<?php echo get_template_directory_uri(); ?>/images/Banner1.gif" width="750" height="120"/>
+            </a>
           </div>
           <br>
           <div layout="row">
             <div flex="40">
               <div layout="row" layout-wrap>
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner3.png" width="120" height="600"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner3.png" width="120" height="600"/>
+                  </a>
                 </div>
                 <div flex="none" style="width:160px;height:600px;">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner4.png" width="160" height="600"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner4.png" width="160" height="600"/>
+                  </a>
                 </div>
               </div>
             </div>
             <div flex="60">
               <div layout="row" layout-wrap>
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner5.png" width="125" height="125"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner5.png" width="125" height="125"/>
+                  </a>
                 </div>
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner7.png" width="120" height="60"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner7.png" width="120" height="60"/>
+                  </a>
                 </div>
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner6.png" width="120" height="90"/>
-                </div>
-              </div>
-              <br>
-              <div layout="row">
-                <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner8.png" width="120" height="240"/>
-                </div>
-                <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner9.png" width="234" height="60"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner6.png" width="120" height="90"/>
+                  </a>
                 </div>
               </div>
               <br>
               <div layout="row">
                 <div flex="none">
-                  <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner2.png" width="468" height="60"/>
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner8.png" width="120" height="240"/>
+                  </a>
+                </div>
+                <div flex="none">
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner9.png" width="234" height="60"/>
+                  </a>
+                </div>
+              </div>
+              <br>
+              <div layout="row">
+                <div flex="none">
+                  <a href="{{ promo_link }}" target="_blank">
+                    <img ng-src="<?php echo get_template_directory_uri(); ?>/images/banner2.png" width="468" height="60"/>
+                  </a>
                 </div>
               </div>
             </div>

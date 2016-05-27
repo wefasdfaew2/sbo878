@@ -102,7 +102,7 @@
 										$sms_count = $pieces[2];
 										$sms_date = $pieces[5];
 
-							 echo $sms_count." ถึง ".$sms_date;
+							 echo $sms_count." ถึง<br>".$sms_date;
 						 }
              ?>
                     </div>
@@ -154,13 +154,13 @@
 								}else{
 									//$http_codes = parse_ini_file("http_code.ini");
 									//$msg_string = "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธ—เธณเธเธฒเธ: <br />" . $info['http_code'] . " " . $http_codes[$code['http_code']];
-									$msg_string = "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธ—เธณเธเธฒเธ: <br />" . $info['http_code'];
+									$msg_string = "เหลือ: <br />" . $info['http_code'];
 								}
 
 							}else if(function_exists('fsockopen')) {
 								$result = $this->check_credit_fsock($username,$password,$credit_type);
 								if(is_numeric($result)){
-									$msg_string = "s".$result." เน€เธเธฃเธ”เธดเธ•";
+									$msg_string = "s".$result." ----";
 								}else{
 									$msg_string = $result;
 								}
@@ -303,6 +303,9 @@
                                         } else if ($row->withdraw_status_id == 2) {
                                             $lable_status = 'label label-sm label-success';
                                             $icon_status = 'icon-ok';
+                                        } else if ($row->withdraw_status_id == 4) {
+                                            $lable_status = 'label label-sm label-success';
+                                            $icon_status = 'icon-ok';
                                         } else {
                                             $lable_status = 'label label-sm label-danger';
                                             $icon_status = 'icon-remove';
@@ -407,7 +410,7 @@
             </div>
         </div>
     </div>
-	<?php /* ?>
+
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12">
@@ -515,6 +518,7 @@
             </div>
         </div>
     </div>
+    <?php /* ?>
     <div class="clearfix"></div>
     <div class="row">
         <div class="col-md-12">

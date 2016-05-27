@@ -24,17 +24,20 @@ class Addcredit_model extends CI_Model {
           $this->db->update('deposit_money', $data);
 
         }elseif ($deposit_status_id == 3) {
-          $data = array('deposit_status_id' => '4');
-          $this->db->where('deposit_id', $dp_id);
-          $this->db->update('deposit_money', $data);
+          //$data = array('deposit_status_id' => '4');
+          //$this->db->where('deposit_id', $dp_id);
+          //$this->db->update('deposit_money', $data);
 
         }
         $res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
         $add_result = json_decode($res, true);
         $result = $add_result["status"];
         if($result == '200'){
-          $message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
-          $this->sendsms_model->sendsms($tel, $message, 1);
+          $data = array('deposit_status_id' => '4');
+          $this->db->where('deposit_id', $dp_id);
+          $this->db->update('deposit_money', $data);
+          //$message = 'เติมเครดิเข้าบัญชี '.$ac_name.' จำนวน '.$money.' บาท สำเร็จแล้ว';
+          //$this->sendsms_model->sendsms($tel, $message, 1);
         }else {
           $result = $add_result;
         }

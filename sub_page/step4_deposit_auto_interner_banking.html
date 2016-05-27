@@ -47,11 +47,14 @@
         <table style="width:620px;margin: 10px auto;" class="table_step4">
           <tr>
             <td class="td_padding" style="text-align: left;">กรุณาโอนยอดเงินจำนวน</td>
-            <td class="text-center">{{ money_amount }}</td>
+            <td class="text-center" style="font-size:17px;font-weight:bold;">
+              {{ money_amount }} <br>
+              <img ng-src="{{ img_r }}" />
+            </td>
           </tr>
           <tr>
             <td class="td_padding" style="text-align: left;">ไปยังเลขบัญชี</td>
-            <td class="text-center">{{ bank_number }}</td>
+            <td class="text-center">{{ bank_number }} <br> ({{ bank_owner }})</td>
           </tr>
           <tr>
             <td class="td_padding" style="text-align: left;">ของธนาคาร</td>
@@ -77,7 +80,7 @@
   <br>
   <table style="width:99%;" class="table_step4">
     <tr style="background-color:#ebebeb;">
-      <td class="head" style="padding-left: 7px;">วิธีการระบุเบอร์ sms ในบริการแจ้งผู้รับโอนของ K-mobile Banking Plus</td>
+      <td class="head" style="padding-left: 7px;">วิธีการ{{  notify_us1 }} ในบริการแจ้งผู้รับโอนของ {{ bank_wellknown_name }}</td>
     </tr>
     <tr class="text-center">
       <td style="padding:16px;">
@@ -93,10 +96,10 @@
     <tr>
       <td style="padding:16px;">
         <ol style="margin-left:0px;padding-left:20px;">
-          <li style="margin-bottom:15px;">เพื่อการตรวจสอบยอดที่รวดเร็วยิ่งขึ้น รบกวนท่านสมาชิกโอนเงินตามจำนวนยอดที่แจ้งทางซ้ายมือ <span style="color:red;">โดยระบุเศษสตางค์ตามที่ระบบแจ้ง (ไม่ต้องปัดเศษ)</span></li>
+          <li style="margin-bottom:15px;">เพื่อการตรวจสอบยอดที่รวดเร็วยิ่งขึ้น รบกวนท่านสมาชิกโอนเงินตามจำนวนยอดที่แจ้งทางด้านบน <span style="color:red;">โดยระบุเศษสตางค์ตามที่ระบบแจ้ง (ไม่ต้องปัดเศษ)</span></li>
           <li style="margin-bottom:15px;"><span style="color:red;">{{ warning_message1 }}</span>{{ warning_message2 }}</li>
           <li style="margin-bottom:15px;">หมายเลขบัญชีของเรามีการเปลี่ยนแปลงอยู่ตลอดเวลา หากท่านสมาชิกต้องการเติมเครดิตครั้งถัดไป กรุณาดำเนินการกดตามขั้นตอนเดิมอีกครั้ง <span style="color:red;">(อย่าโอนโดยไม่ได้กดตามขั้นตอน เนื่องจากหมายเลขบัญชีอาจถูกยกเลิกการใช้งานไปแล้ว)</span></li>
-          <li style="margin-bottom:15px;">เมื่อท่านสมาชิกทำการโอนเสร็จแล้วให้ตรวจสอบสถานะรายการฝากของท่านได้ที่หน้าตรวจสอบรายการฝาก หรือรอรับเครดิตในบัญชีของท่านได้ทันทีภายในเวลา 2 นาทีครับ</li>
+          <li style="margin-bottom:15px;">เมื่อท่านสมาชิกทำการโอนเสร็จแล้วให้ตรวจสอบสถานะรายการฝากของท่านได้ที่หน้าตรวจสอบรายการฝาก หรือรอรับเครดิตในบัญชีของท่านได้ทันทีภายในเวลา 5 นาทีครับ</li>
         </ol>
       </td>
     </tr>

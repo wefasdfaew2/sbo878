@@ -9,7 +9,7 @@ Template Name: live_streaming
 wp_register_script( 'jwplayer', 'https://content.jwplatform.com/libraries/tO4hwnMO.js', true );
 wp_enqueue_script( 'jwplayer' );
 
-function get_ip_address(){
+function get_ip_address2(){
     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
         if (array_key_exists($key, $_SERVER) === true){
             foreach (explode(',', $_SERVER[$key]) as $ip){
@@ -23,7 +23,7 @@ function get_ip_address(){
     }
 }
 
-$userIP = get_ip_address();
+$userIP = get_ip_address2();
 
 if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && isset($_GET['mode'])) {
         $id = $_GET['id']; //channel_id
@@ -88,7 +88,7 @@ if(isset($_GET['id']) && isset($_GET['server']) && isset($_GET['bitrate']) && is
 <div layout="row" layout-align="end center">
   <a href="<?php echo get_permalink(314); ?>">
     <md-button class="md-raised md-primary" md-no-focus-style="true" style="padding-left:15px;padding-right:15px;margin-right:20px;">
-      ตารางถ่ายถอดสด
+      ตารางถ่ายทอดสด
     </md-button>
   </a>
 </div>

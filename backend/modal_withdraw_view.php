@@ -109,7 +109,7 @@
         <div class="form-group" style="margin-top:20px; margin-bottom:7px !important;">
             <div class="col-lg-12 text-center">
 		<!--<button class="btn btn-primary" value="3" name="submit" type="submit" ><i class="icon-ok"></i> เปลี่ยนสถานะเป็นกำลังดำเนินการโดย Call Center</button>-->
-                <button class="btn btn-primary" value="2" name="submit" type="submit" ><i class="icon-ok"></i> อนุมัติ</button>
+                <button class="btn btn-primary" value="4" name="submit" type="submit" ><i class="icon-ok"></i> อนุมัติ</button>
                 <button class="btn btn-danger" value="5" name="submit" type="submit" ><i class="icon-remove"></i> ไม่อนุมัติ</button>
             </div>
         </div>

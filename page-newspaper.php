@@ -149,7 +149,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider, Ligh
                 });
               }
             });
-            console.log($scope.images);
+            //console.log($scope.images);
             Lightbox.openModal($scope.images,0);
           });
 
@@ -163,7 +163,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider, Ligh
 
   app.controller('Newspaper', function($scope, $http, $filter, $state, Lightbox) {
 
-    console.log("newspaper-login");
+    //console.log("newspaper-login");
     $state.go("newspaper-login");
 
   });

@@ -28,7 +28,10 @@ if ($conn->connect_error)
 }
 
 
-$sql = "SELECT sbobet_account_id, sbobet_member_type_id FROM backend_sbobet_account WHERE sbobet_username = '$account'";
+$sql = "SELECT sbobet_account_id, sbobet_member_type_id,
+  (SELECT sbobet_withdraw_enable FROM global_setting) as sbobet_withdraw_enable,
+  (SELECT sbobet_withdraw_enable_by_cc FROM global_setting) as sbobet_withdraw_enable_by_cc
+  FROM backend_sbobet_account WHERE sbobet_username = '$account'";
 //$sql = "SELECT channel_group FROM channel_category";
 $result = $conn->query($sql);
 
@@ -41,6 +44,11 @@ if ($result->num_rows > 0)
   }
   //echo $data[0]['sbobet_member_type_id'];
   if($data[0]['sbobet_member_type_id'] == 1){
+    if($data[0]['sbobet_withdraw_enable'] == 'Yes' && $data[0]['sbobet_withdraw_enable_by_cc'] == 'Yes'){
+      $withdraw_enable = 'Yes';
+    }else {
+      $withdraw_enable = 'No';
+    }
     $member_type = 'member_sbobet_account_id';
   }elseif ($data[0]['sbobet_member_type_id'] == 2) {
     $member_type = 'member_gclub_account_id';
@@ -66,6 +74,11 @@ if ($result->num_rows > 0)
 
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
 
+      if($withdraw_enable == 'No'){
+        $result_data = array("check_status" => "not_enable");
+        print json_encode($result_data);
+        exit();
+      }
       $sql = "SELECT member_status_id FROM backend_member_account WHERE member_sbobet_account_id
         IN (SELECT sbobet_account_id FROM backend_sbobet_account WHERE sbobet_username = '$account')";
         $result = $conn->query($sql);

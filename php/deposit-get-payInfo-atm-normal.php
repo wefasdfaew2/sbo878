@@ -31,8 +31,10 @@ if ($conn->connect_error)
 
 $sql = "SELECT deposit_bank_name, deposit_bank_account,
         (SELECT deposit_type_name FROM backend_deposit_type WHERE deposit_type_id = '$auto_type_option') as from_bank_name,
-        (SELECT deposit_type_emailnotify_image FROM backend_deposit_type WHERE deposit_type_id = '$auto_type_option') as how_to_img
-        FROM backend_deposit_money
+        (SELECT deposit_type_emailnotify_image FROM backend_deposit_type WHERE deposit_type_id = '$auto_type_option') as how_to_img,
+        (SELECT deposit_type_logo_large FROM backend_deposit_type WHERE deposit_type_id = '$auto_type_option') as deposit_type_logo,
+        (SELECT bank_account FROM backend_bank_account WHERE bank_account_number = a.deposit_bank_account) as bank_owner
+        FROM backend_deposit_money a
         WHERE deposit_account = '$account' AND deposit_amount = '$deposit_amount' AND deposit_regis = '$timeStamp'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0)

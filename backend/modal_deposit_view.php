@@ -1,7 +1,7 @@
 ﻿<?php
     $deposit = $this->deposit_model->get_deposit($param1)->row();
     $regis_bank = $this->deposit_model->get_regis_bank_by_username($deposit->deposit_account)->row();
-    //error_log(print_r($regis_bank));
+    $deposit_enable = $this->deposit_model->get_deposit_enable()->row();
 ?>
 
 
@@ -182,7 +182,7 @@
         <div class="form-group" style="margin-top:20px; margin-bottom:7px !important;">
             <div class="col-lg-12 text-center">
 		            <div class="btn btn-primary" id="change_status" > เปลี่ยนสถานะเป็นกำลังตรวจสอบโดย Call Center</div>&nbsp;&nbsp;
-                <div class="btn btn-primary" id="ok" ><i class="icon-ok"></i> อนุมัติ</div>&nbsp;&nbsp;
+                <div class="btn btn-primary" id="ok" ><i class="icon-ok" id="text_ok_but"></i></div>&nbsp;&nbsp;
                 <div class="btn btn-danger" id="not_ok" ><i class="icon-remove"></i> ไม่อนุมัติ</div>
             </div>
         </div>
@@ -229,7 +229,12 @@
     <script>
 
         $( document ).ready(function() {
-
+          var deposit_enable = '<?php echo $deposit_enable->sbobet_deposit_enable; ?>';
+          if(deposit_enable == 'No'){
+            $( "i#text_ok_but" ).text( "อนุมัติ (cc เติมเครดิตเองก่อนกดอนุมัติ)" );
+          }else {
+            $( "i#text_ok_but" ).text( "อนุมัติ" );
+          }
           var status_id = '<?php echo $deposit->deposit_status_id; ?>';
           if(status_id == '3'){
             $( "div#ok" ).removeClass( "disabled" );
@@ -264,14 +269,14 @@
             data.deposit_bank_account = '<?php echo $deposit->deposit_bank_account; ?>';
             data.deposit_account = '<?php echo $deposit->deposit_account; ?>';
             data.deposit_telephone = '<?php echo $deposit->deposit_telephone; ?>';
-
+            data.deposit_enable = deposit_enable;
             $.ajax({
                 url: 'deposit/set_5',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function(result) {
-                    alert(result.update_status);
+                    //alert(result.update_status);
                     if(result.update_status == 'OK'){
                       $( "div#ok" ).addClass( "disabled" );
                       $( "div#not_ok" ).addClass( "disabled" );
@@ -322,6 +327,8 @@
                     $( "div#ok" ).removeClass( "disabled" );
                     $( "div#not_ok" ).removeClass( "disabled" );
                     $( "div#change_status" ).addClass( "disabled" );
+                  }else {
+                    alert('add_credit ไม่ได้');
                   }
 
               }

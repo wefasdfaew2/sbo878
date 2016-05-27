@@ -59,6 +59,9 @@
                                         } else if ($row->withdraw_status_id == 2) {
                                             $lable_status = 'label label-sm label-success';
                                             $icon_status = 'icon-ok';
+                                        } else if ($row->withdraw_status_id == 4) {
+                                            $lable_status = 'label label-sm label-success';
+                                            $icon_status = 'icon-ok';
                                         } else {
                                             $lable_status = 'label label-sm label-danger';
                                             $icon_status = 'icon-remove';

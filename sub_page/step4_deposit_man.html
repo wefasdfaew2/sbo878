@@ -1,10 +1,88 @@
+<style>
+.table_step4{
+ border: 2px solid #dfdfdf;
+}
+
+.table_step4 table > tr{
+ border: 2px solid #dfdfdf;
+}
+
+.table_step4 tr > th{
+ border: 2px solid #dfdfdf;
+}
+
+.table_step4 tr > td{
+ border: 2px solid #dfdfdf;
+}
+
+.head {
+  color:#ef473a;
+  font-weight:bold;
+  font-size: 16px;
+}
+
+.td_padding{
+  padding-left: 7px;
+  width: 250px;
+  font-weight: bold;
+}
+</style>
 <div id="form_section" style="padding: 0 0 16px 0;">
   <center>
     <img ng-src="{{ template_directory_uri }}/images/deposit_cc-Step4.png" width="929" height="50" />
   </center>
 </div>
 <div ng-if="!direct_access"  layout="column" layout-align="center center" style="margin-bottom:5%;">
-  <div layout="column" layout-align="center center" style="background-color:#b1f4c5;padding:16px;width:70%;border-radius:4px;">
+
+  <table style="width:99%;" class="table_step4">
+    <tr class="text-center" style="background-color:#ebebeb;">
+      <th class="text-center head" >รายละเอียดการเติมเครดิตของคุณ</th>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <table style="width:620px;margin: 10px auto;" class="table_step4">
+          <tr>
+            <td class="td_padding" style="text-align: left;">กรุณาโอนยอดเงินจำนวน</td>
+            <td class="text-center" style="font-size:17px;font-weight:bold;">
+              {{ amount }} บาท <br>
+              <img ng-src="{{ img_r }}" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_padding" style="text-align: left;">ไปยังเลขบัญชี</td>
+            <td class="text-center">{{ bank_number }}<br> ({{ bank_owner }})</td>
+          </tr>
+          <tr>
+            <td class="td_padding" style="text-align: left;">ของธนาคาร</td>
+            <td class="text-center">{{ bank_name }}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <table style="width:99%;" class="table_step4">
+    <tr style="background-color:#ebebeb;">
+      <td class="head text-center" style="padding-left:">กรุณาอ่านคำแนะนำตรงนี้ด้วย</td>
+    </tr>
+    <tr>
+      <td style="padding:16px;">
+        <ol style="margin-left:0px;padding-left:20px;">
+          <li style="margin-bottom:15px;">ท่านสมาชิกสามารถใช้ช่องทางการโอนเงินใดก็ได้ที่ท่านสะดวกในการโอนเงินให้กับเรา <span style="color:red;">ยกเว้น การฝากผ่านหน้าเค้าเตอร์ธนาคารและเครื่องฝากเงินสดอัตโนมัติ (แบบไม่ใช้บัตร)</span></li>
+          <li style="margin-bottom:15px;">เพื่อการตรวจสอบยอดที่รวดเร็วยิ่งขึ้น รบกวนท่านสมาชิกโอนเงินตามจำนวนยอดที่แจ้งด้านบน โดยระบุเศษสตางค์ตามที่ระบบแจ้ง (ไม่ต้องปัดเศษ)</li>
+          <li style="margin-bottom:15px;">เมื่อท่านสมาชิกทำการโอนเงินเสร็จเรียบร้อยแล้ว ท่านสมาชิกจะต้องแจ้งให้ Call Center ทราบโดยการกรอกแบบฟอร์มที่หน้านี้</li>
+          <center>
+            <a target="_blank" href="{{ notify_transfer }}">
+              <md-button style="font-size:1.5vw;padding:12px;margin-bottom:20px;" class="md-raised md-primary" >คลิกที่นี่เพื่อแจ้งโอนเงิน</md-button>
+            </a>
+          </center>
+          <li style="margin-bottom:15px;">เนื่องจากหมายเลขบัญชีมีการเปลี่ยนแปลงอยู่ตลอดเวลา หากท่านสมาชิกต้องการโอนเงินครั้งถัดไปกรุณาดำเนินการตามขั้นตอนนี้อีกครั้ง</li>
+        </ol>
+      </td>
+    </tr>
+  </table>
+
+  <!--<div layout="column" layout-align="center center" style="background-color:#b1f4c5;padding:16px;width:70%;border-radius:4px;">
     <div style="font-size:1.4vw;font-weight:bold;">กรุณาโอนยอดจำนวน <span style="color:#ef473a;font-size:2vw;font-weight:bold;">{{ amount }}</span> บาท</div>
     <div style="font-size:1.4vw;font-weight:bold;margin-top:10px;">ไปยังเลขบัญชี <span style="color:#ef473a;">{{ bank_number }}</span> ธนาคาร{{ bank_name }}</div>
     <div layout="row" layout-align="center center" style="margin-top:10px;">
@@ -27,5 +105,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 </div>

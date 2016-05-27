@@ -44,6 +44,7 @@ if(function_exists('get_magic_quotes_gpc')) {
 	$get_magic_quotes_exists = true;
 }
 foreach ($myPost as $key => $value) {
+
 	if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
 		$value = urlencode(stripslashes($value));
 		$value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);
@@ -51,6 +52,7 @@ foreach ($myPost as $key => $value) {
 		$value = urlencode($value);
 		$value = preg_replace('/(.*[^%^0^D])(%0A)(.*)/i','${1}%0D%0A${3}',$value);
 	}
+
 	$req .= "&$key=$value";
 }
 // Post IPN data back to PayPal to validate the IPN data is genuine
@@ -72,6 +74,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
 curl_setopt($ch, CURLOPT_SSLVERSION, 6);
+//curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');//
 
 if(DEBUG == true) {
 	curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -123,7 +126,12 @@ if (strcmp ($res, "VERIFIED") == 0) {
   $conn = new mysqli($servername, $username, $password, $dbname);
   $conn->set_charset("utf8");
 
-	//$custom1 = '1-zkc8688001';
+	if ($conn->connect_error)
+  {
+      die("Connection failed: " . $conn->connect_error);
+  }
+
+	//$custom1 = '214-zkc8688000';
   $custom1 = 	$_POST['option_selection2'];//'214-zkc8688000';//
   $custom1String = mysqli_real_escape_string($conn, addslashes($custom1));
   $custom1String = htmlspecialchars($custom1String);
@@ -132,6 +140,9 @@ if (strcmp ($res, "VERIFIED") == 0) {
   $payment_amount = $_POST['mc_gross'];
   $payment_amountString = mysqli_real_escape_string($conn, addslashes($payment_amount));
   $payment_amountString = htmlspecialchars($payment_amountString);
+
+	$deposit_id = substr($custom1String,0,strpos($custom1String,'-'));
+	$deposit_account = substr($custom1String,strpos($custom1String,'-')+1);
 
 	if($payment_amountString == 530){
 		$payment_amountString = 500;
@@ -153,20 +164,41 @@ if (strcmp ($res, "VERIFIED") == 0) {
 		$payment_amountString = 20000;
 	}elseif ($payment_amountString == 31181) {
 		$payment_amountString = 30000;
+	}elseif ($payment_amountString < 0) {
+
+		$sql = "SELECT member_id FROM backend_member_account
+					JOIN backend_sbobet_account
+					ON backend_sbobet_account.sbobet_account_id = backend_member_account.member_sbobet_account_id
+					WHERE backend_sbobet_account.sbobet_username = '$deposit_account'";
+
+		$result = $conn->query($sql);
+
+	  if ($result->num_rows > 0)
+	  {
+	    while($row = $result->fetch_assoc())
+	    {
+	      $member_id[] = $row;
+	    }
+			$mem_id =  $member_id[0]['member_id'];
+			$sql = "UPDATE backend_member_account SET
+						member_status_id = '5' WHERE member_id = '$mem_id'";
+			if ($conn->query($sql) === TRUE) {
+				error_log('set member_status_id = 5');
+				return;
+			}else {
+				error_log("Error description: " . mysqli_error($conn));
+			}
+		}else {
+			error_log("Error description: " . mysqli_error($conn));
+		}
+
+	}else {
+		$payment_amountString = abs($payment_amountString);
 	}
 
   $txn_id = $_POST['txn_id'];
   $txn_idString = mysqli_real_escape_string($conn, addslashes($txn_id));
   $txn_idString = htmlspecialchars($txn_idString);
-
-  $deposit_id = substr($custom1String,0,strpos($custom1String,'-'));
-	$deposit_account = substr($custom1String,strpos($custom1String,'-')+1);
-
-
-  if ($conn->connect_error)
-  {
-      die("Connection failed: " . $conn->connect_error);
-  }
 
   $sql = "SELECT deposit_amount, deposit_bank_account, deposit_note, deposit_telephone,
 		deposit_bot_tunover_check_mark, deposit_firstpayment_promotion_mark, deposit_nextpayment_promotion_mark,
@@ -256,17 +288,26 @@ error_log($deposit_account);**/
 
 			$sql = "UPDATE backend_deposit_money SET
 						deposit_status_id = 2,
+						deposit_amount = '$payment_amountString',
 						deposit_amount_bonus = $deposit_amount_bonus,
 						deposit_turnover = $deposit_turnover
 						WHERE deposit_id = $deposit_id";
 			if ($conn->query($sql) === TRUE) {
 			    //error_log("deposit_status_id = 2 updated successfully");
-					$sql = "UPDATE backend_deposit_money SET deposit_status_id = 4 WHERE deposit_id = $deposit_id";
-					if ($conn->query($sql) === TRUE) {
 
 							$add_res = add_credit($deposit_id,$deposit_account,$data[0]['deposit_bank_account'],$money, $data[0]['deposit_telephone']);
 
 							if($add_res == '200'){
+								$sql = "UPDATE backend_deposit_money SET deposit_status_id = 4 WHERE deposit_id = $deposit_id";
+								if ($conn->query($sql) === TRUE) {
+
+								}else {
+								    error_log("Error updating record: " . $conn->error);
+								}
+							}else{
+								error_log("add_credit failed.");
+							}
+							/**if($add_res == '200'){
 								$sql = "UPDATE backend_deposit_money SET
 								deposit_amount = '$payment_amountString',
 								deposit_amount_bonus = '$deposit_amount_bonus',
@@ -289,10 +330,8 @@ error_log($deposit_account);**/
 								}
 							}else{
 								error_log("add_credit failed.");
-							}
-					} else {
-					    error_log("Error updating record2: " . $conn->error);
-					}
+							}**/
+
 			} else {
 			    error_log("Error updating record3: " . $conn->error);
 			}
@@ -309,16 +348,6 @@ error_log($deposit_account);**/
     echo "0 results";
   }
 
-
-
-	//$item_name = $_POST['item_name'];
-	//$item_number = $_POST['item_number'];
-	//$payment_status = $_POST['payment_status'];
-	//$payment_amount = $_POST['mc_gross'];
-	//$payment_currency = $_POST['mc_currency'];
-	//$txn_id = $_POST['txn_id'];
-	//$receiver_email = $_POST['receiver_email'];
-	//$payer_email = $_POST['payer_email'];
 
 	if(DEBUG == true) {
 		error_log(date('[Y-m-d H:i e] '). "Verified IPN: $req ");
@@ -338,6 +367,11 @@ error_log($deposit_account);**/
 //echo "http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money;
 	$res = file_get_contents("http://zkc8688_add_value.service/".$dp_id."/".$ac_name."/".$dest_account."/".$money."");
 	return $res;
+
+
+SELECT member_id FROM backend_member_account
+JOIN backend_sbobet_account ON backend_sbobet_account.sbobet_account_id = backend_member_account.member_sbobet_account_id WHERE backend_sbobet_account.sbobet_username = 'zkc8688000'
+
 }**/
 
 ?>

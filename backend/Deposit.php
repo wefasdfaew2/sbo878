@@ -31,6 +31,8 @@ class Deposit extends CI_Controller {
       $dest_account = $this->input->post('deposit_bank_account');
       $tel = $this->input->post('deposit_telephone');
 
+      $deposit_enable = $this->input->post('deposit_enable');
+
       $deposit_amount_bonus = 0;
       $deposit_turnover = 0;
 
@@ -81,13 +83,22 @@ class Deposit extends CI_Controller {
       }
 
         $money = $deposit_amount + $deposit_amount_bonus;
-        $result = $this->addcredit_model->add_credit($deposit_id,$ac_name,$dest_account,$money,$tel);
+        $this->deposit_model->update_bonus_flag($deposit_id, $db_d_firstpayment, $db_d_nextpayment, $deposit_amount_bonus, $deposit_turnover, $check_turnover);
+
+        if($deposit_enable == 'Yes'){
+          $result = $this->addcredit_model->add_credit($deposit_id,$ac_name,$dest_account,$money,$tel);
+        }else {
+          $data = array('update_status' => 'OK');
+          echo json_encode($data);
+          $this->deposit_model->update_depodit_status($deposit_id, 5);
+          exit();
+        }
         //$result = '200';//$add_result["status"];
         //error_log('result = '.$result);
         if($result == '200'){
 
-          $this->deposit_model->update_depodit_status($deposit_id, 5);
-          $this->deposit_model->update_bonus_flag($deposit_id, $db_d_firstpayment, $db_d_nextpayment, $deposit_amount_bonus, $deposit_turnover, $check_turnover);
+          //$this->deposit_model->update_depodit_status($deposit_id, 5);
+          //$this->deposit_model->update_bonus_flag($deposit_id, $db_d_firstpayment, $db_d_nextpayment, $deposit_amount_bonus, $deposit_turnover, $check_turnover);
 
           //if ($this->db->affected_rows() > 0)
           //{

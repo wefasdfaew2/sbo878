@@ -18,7 +18,7 @@
         die('Connection failed: '.$conn->connect_error);
     }
 
-    $sql = 'SELECT auto_deposit_enable, withdraw_enable FROM global_setting';
+    $sql = 'SELECT auto_deposit_enable, withdraw_enable, manual_deposit_enable FROM global_setting';
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -26,6 +26,7 @@
         {
             $data['deposit_auto_enable'] = $row['auto_deposit_enable'];
             $data['withdraw_enable'] = $row['withdraw_enable'];
+            $data['manual_deposit_enable'] = $row['manual_deposit_enable'];
         }
 
         print json_encode($data);

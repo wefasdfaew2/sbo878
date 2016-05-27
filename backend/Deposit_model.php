@@ -38,6 +38,17 @@ class Deposit_model extends CI_Model {
 
     }
 
+    public function get_deposit_enable(){
+      //$this->db->set_dbprefix('');
+      //$this->db->dbprefix('global_setting');
+
+      //$re = $this->db->select('sbobet_deposit_enable')
+      //->from($this->db->dbprefix('global_setting'))
+      //->get();
+      $re = $this->db->query("SELECT sbobet_deposit_enable FROM global_setting;");
+      return $re;
+    }
+
     public function get_regis_bank_by_username($username) {
       $re = $this->db->select('member_bank_name, member_bank_account')
         ->from('sbobet_account')

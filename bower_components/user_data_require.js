@@ -1,21 +1,21 @@
-
+﻿
 var app = angular.module('max_MyApp', ['ngMaterial', 'ngMessages','ng.deviceDetector','ipCookie']);
  
- 
-    
-   
-  var v_email = false;
-  var v_phone = false;
-  var v_phone2 = false;
- 
-
-
 app.controller('max_user_detail', function($scope, $http,deviceDetector,ipCookie,$timeout) {
   
-
+  
  $scope.bt_otp1 =true;
  $scope.bt_otp2 =true;
- //$scope.bt_validate=true;
+ $scope.bt_confirm_otps =true;
+ $scope.form_update_phone=false;
+ 
+  
+ $scope.call_update_phone_form= function(){
+ 
+ $scope.form_update_phone=true;
+ 
+ }
+ 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
   var mytimer =  setInterval(function () {
@@ -29,10 +29,6 @@ function startTimer(duration, display) {
 		$scope.$apply();
 		 clearInterval(mytimer);
 		}
-/* if loop
-        if (--timer < 0) {
-            timer = duration;
-        }*/
     }, 1000);
 }
 function startTimer2(duration, display) {
@@ -48,32 +44,43 @@ function startTimer2(duration, display) {
 		$scope.$apply();
 		 clearInterval(mytimer);
 		}
-/* if loop
-        if (--timer < 0) {
-            timer = duration;
-        }*/
     }, 1000);
 }
 
+ 
+
 jQuery(function ($) {
-    var fiveMinutes = 60 * 1,
+     var fiveMinutes = 5 * 1,
         display = $('#bt_time1');
     startTimer(fiveMinutes, display);
 });
 
 jQuery(function ($) {
-    var fiveMinutes = 60 * 1,
+    var fiveMinutes = 5 * 1,
         display = $('#bt_time2');
     startTimer2(fiveMinutes, display);
 });
 
  $scope.bank_name = [
-          "ธนาคารกรุงเทพ",
-          "ธนาคารกรุงศรีอยุธยา",
           "ธนาคารกสิกรไทย",
 		   "ธนาคารไทยพาณิชย์",
+		   "ธนาคารกรุงเทพ",
+		     "ธนาคารกรุงศรีอยุธยา",
 		    "ธนาคารกรุงไทย",
-          "ธนาคารทหารไทย"
+		   "ธนาคารเกียรตินาคิน",
+		   "ธนาคารซีไอเอ็มบี ไทย",
+		   "ธนาคารทหารไทย",
+		   "ธนาคารทิสโก้",
+		   "ธนาคารธนชาต",
+		   "ธนาคารยูโอบี",
+		   "ธนาคารแลนด์ แอนด์ เฮ้าส์",
+		   "ธนาคารสแตนดาร์ดชาร์เตอร์ด",
+		   "ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร",
+		   "ธนาคารออมสิน",
+		   "ธนาคารอาคารสงเคราะห์",
+		   "ธนาคารไทยเครดิต เพื่อรายย่อย"
+ 
+ 
       ];
 	  
 	   $scope.m_type = [
@@ -89,9 +96,7 @@ jQuery(function ($) {
     };
 	 
 
-  // social register create a blank object to handle form data.
         $scope.user = {};
-		      // calling our submit function.
         $scope.submitForm = function(id,ip) {
 	 
 	 	 $scope.user.REGIS_FROM = 'social';
@@ -100,12 +105,10 @@ jQuery(function ($) {
 		 $scope.user.OS = deviceDetector.os;
 		 $scope.user.DEVICE = deviceDetector.device;
 		 $scope.user.BROWSER = deviceDetector.browser;
-		 $scope.user.COOKIE = ipCookie('sbobet878', ip, { encode: function (value) { return value; } });
-		 
-		 
+	  
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data', 
 		  data    : $scope.user,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		   
@@ -113,49 +116,43 @@ jQuery(function ($) {
           .success(function(data) {
            
               $scope.message = data.message;
-			  setTimeout("location.href = ' http://sbogroup.t-wifi.co.th/wordpress/index.php/user-register-done';",500);
-		 
+			 setTimeout("location.href ='" + WPURLS.home_url +  "/user-register-done';",500);
+		      
           });
         };	  
-		  // wp register create a blank object to handle form data.
+	
         $scope.user_wp = {};
-		      // calling our submit function.
         $scope.submitForm_user_wp = function(ip) {
 	 	 $scope.user_wp.REGIS_FROM = 'wp';
 		 $scope.user_wp.IP = ip;
 		 $scope.user_wp.OS = deviceDetector.os;
 		 $scope.user_wp.DEVICE = deviceDetector.device;
 		 $scope.user_wp.BROWSER = deviceDetector.browser;
-		 $scope.user_wp.COOKIE = ipCookie('sbobet878', ip, { encode: function (value) { return value; } });
-		  //console.log(ip);
 		 
+		 
+		
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data', 
 		  data    : $scope.user_wp,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		   
          })
           .success(function(data) {
-           
               $scope.message = data.message;
-			   setTimeout("location.href = ' http://sbogroup.t-wifi.co.th/wordpress/index.php/user-register-done';",500);
-		  
-		 
+			 
+		 setTimeout("location.href ='" + WPURLS.home_url +  "/user-register-done';",500);
           });
         };	  
 	 
- 
-		//call select data
 		$scope.user_data = {};
 		$scope.submitForm_query= function(id) {
- 
         $scope.user_data.ID = id;
-		 $scope.user_data.id_cmd = id; //if query data
-		 
+		$scope.user_data.id_cmd = id;
+
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data',  
 		  data    : $scope.user_data,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		   
@@ -167,17 +164,18 @@ jQuery(function ($) {
           });
         };
 		
-		// otp 1 number create a blank object to handle form data.
-		 
+		
+		
+		
+		$scope.success_otp = {};
         $scope.user_otp = {};
-		      // calling our submit function.
         $scope.submitForm_otp_1 = function(id,ref_otp) {
 		$scope.user_otp.REGIS_FROM = 'otp';
 		$scope.user_otp.ID = id;
 		$scope.user_otp.ref_otp = ref_otp;
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data',  
 		  data    : $scope.user_otp,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
          })
@@ -185,61 +183,117 @@ jQuery(function ($) {
             $scope.message_bt_otp1 = data.message_bt_otp1;
 			$scope.message_otp1 = data.message_otp1;
 			   
-			   if (data.otp_status=='yes')//then update otp _verf db
+			   if (data.otp_status=='yes')
 				{
-				$scope.user_otp.REGIS_FROM = 'otp_update_verf';
-				  $http({
+					$scope.success_otp.REGIS_FROM = 'otp_update_verf';
+					 $scope.success_otp.OTP_VERF_CASE = data.otp_status;
+					 $scope.success_otp.ID = id;
+						if(ipCookie('sbobet878_mac')==undefined){
+							$scope.success_otp.COOKIE = 'no';
+						}else{
+							$scope.success_otp.COOKIE = ipCookie('sbobet878_mac');
+							//console.log("cookie= ",$scope.success_otp.COOKIE);
+							}
+					 
+				
+			  $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
-		  data    : $scope.user_otp,				//------------------------------------------------------------forms user object 
+         url     : WPURLS.home_url+'/update-user-data', 
+		  data    : $scope.success_otp,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		 
          }) 
 		 .success(function(data){
-		 setTimeout("location.href = ' http://sbogroup.t-wifi.co.th/wordpress/index.php/user-register-done';",500);
+		 	   if(data.new_cookie=='yes'){
+		   ipCookie('sbobet878_mac', data.new_cookie_val);
+		   }else{
+		   }
+		   		 
+		  setTimeout("location.href ='" + WPURLS.home_url +  "/user-register-done';",500);
 		});
 		 		}
 			 
           });
         };	
-	// otp 2 number create a blank object to handle form data.
-		 
+
         $scope.user_otps = {};
-		      // calling our submit function.
         $scope.submitForm_otps = function(id,ref_otp1,ref_otp2) {
 		$scope.user_otps.REGIS_FROM = 'otps';
 		$scope.user_otps.ID = id;
 		$scope.user_otps.ref_otp1 = ref_otp1;
 		$scope.user_otps.ref_otp2 = ref_otp2;
+		 
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
-		  data    : $scope.user_otps,				//------------------------------------------------------------forms user object 
+         url     : WPURLS.home_url+'/update-user-data', 
+		  data    : $scope.user_otps, 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
          })
           .success(function(data) {
             $scope.message_otps = data.message_otps;
 			$scope.message_otps1 = data.message_otps1;
 			 $scope.message_otps2 = data.message_otps2;  
-			// console.log(data);
 		 
-			   if (data.otp_status=='yes')//then update otp _verf db
+			   if (data.otp_status=='yes' || data.otp_status=='yes1' || data.otp_status=='yes2')
 				{
-				$scope.user_otps.REGIS_FROM = 'otp_update_verf';
+				$scope.success_otp.REGIS_FROM = 'otp_update_verf';
+				$scope.success_otp.OTP_VERF_CASE = data.otp_status;
+				$scope.success_otp.ID = id;
+					if(ipCookie('sbobet878_mac')==undefined){
+							$scope.success_otp.COOKIE = 'no';
+					}else{
+							$scope.success_otp.COOKIE = ipCookie('sbobet878_mac');
+					}
 				  $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
-		  data    : $scope.user_otps,				//------------------------------------------------------------forms user object 
+         url     : WPURLS.home_url+'/update-user-data', 
+		  data    : $scope.success_otp, 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		 
          }) 
 		 .success(function(data){
-		 setTimeout("location.href = ' http://sbogroup.t-wifi.co.th/wordpress/index.php/user-register-done';",500);
+		 	   if(data.new_cookie=='yes'){
+		   ipCookie('sbobet878_mac', data.new_cookie_val);
+		   }else{
+		   }
+		 setTimeout("location.href ='" + WPURLS.home_url +  "/user-register-done';",500);
 		});
-		 		}
+		 		} 
 			 
           });
+		   
         };
+		
+		$scope.otps_input_check=function(){
+		 //check empty string
+		if($scope.user_otps.user_otps1==undefined){
+		var otp_len=0;
+	 
+		}else{
+		var otp_len= (''+$scope.user_otps.user_otps1).length;
+		}
+		
+		if($scope.user_otps.user_otps2==undefined){
+		var otp2_len=0;
+	 
+		}else{
+		var otp2_len= (''+$scope.user_otps.user_otps2).length;
+		}
+	 
+		 
+		//enable bt case
+		if(otp_len==0 && otp2_len==0 ){
+		$scope.message_otps='กรุณากรอกอย่างน้อย 1 otp';
+		$scope.bt_confirm_otps=true;
+		$scope.message_otps1='';
+		$scope.message_otps2='';
+		
+		}else{
+		$scope.message_otps='';
+		$scope.bt_confirm_otps=false;
+		}
+		
+		}
 		
 			//renew_otp
 		$scope.user_otps_renew = {};
@@ -252,7 +306,7 @@ jQuery(function ($) {
 		 
         $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data',  
 		  data    : $scope.user_otps_renew,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		   
@@ -276,7 +330,7 @@ jQuery(function ($) {
           });
         };
 		
-//	//call select bet_link_url_all
+
 	$scope.ispname_bet_link_url = {};
 	  $scope.bet_link_url = function(isp_name,option) {
 	  if(option==1){
@@ -290,7 +344,7 @@ jQuery(function ($) {
 		 
     var request = $http({
       method: 'POST',
-      url: "http://sbogroup.t-wifi.co.th/wordpress/index.php/bet_link_url",
+      url: WPURLS.home_url+"/bet_link_url",
       data: $scope.ispname_bet_link_url,	
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -303,15 +357,21 @@ jQuery(function ($) {
     });  
 	};
 		
- // validate userdata
-  
+  var v_email = false;
+  var v_phone = false;
+  var v_phone2 = true;
+  var v_phone_dup = true;
+ var v_check_email =0;
   
  $scope.userdata_validate = {};
-$scope.validate_exist= function(vusedata,vtype) {
+$scope.validate_exist= function(vusedata,vtype,check_email) {
 	$scope.userdata_validate.REGIS_FROM = 'userdata_validate';
 	$scope.userdata_validate.vusedata = vusedata;
 	$scope.userdata_validate.vtype = vtype; 
 	 $scope.bt_validate=true;
+	 
+	 v_check_email=check_email;
+	 
 	if(vtype==1){
 	$scope.load_email_validate=1;
 	}else if(vtype==2){
@@ -319,41 +379,70 @@ $scope.validate_exist= function(vusedata,vtype) {
 	}else if(vtype==3){
 	$scope.load_phone_validate2=1;
 	}
- //not allow same phone NO.
- // if($scope.user_wp.phone_number===$scope.user_wp.phone_number){
+	 
+	var phone1_len= (''+$scope.user_wp.phone_number).length;
+	var phone2_len= (''+$scope.user_wp.phone_number2).length;
+	
+	
+	var phone1_social_len= (''+$scope.user.phone_number).length;
+	var phone2_social_len= (''+$scope.user.phone_number2).length;
+	
+	if(vtype==4){
+	$scope.load_phone_validate=1;
+	v_phone_dup=true;
+	}else{
+
+ if(phone1_len==10 && phone2_len==10){
+ if($scope.user_wp.phone_number.localeCompare($scope.user_wp.phone_number2)==0 ){
+ v_phone_dup=false;
+  
+	    
+ $scope.message='ไม่อนุญาติให้ใช้เบอร์ซ้ำกัน';
+ }else{
+ v_phone_dup=true;
  
- // console.log($scope.user_wp.phone_number.localeCompare($scope.user_wp.phone_number2));
+ $scope.message='';
+ }
+ }else if(phone1_len==0 || phone2_len==0){
+ v_phone_dup=true;
+ $scope.message='';
+ }
+
+  if(phone1_social_len==10 && phone2_social_len==10){//strlen str.length;
+ if($scope.user.phone_number.localeCompare($scope.user.phone_number2)==0 ){
+ v_phone_dup=false;
+   
+ $scope.message='ไม่อนุญาติให้ใช้เบอร์ซ้ำกัน';
+ }else{
+ v_phone_dup=true;
+ $scope.message='';
+ }
+ }else if(phone1_social_len==0 || phone2_social_len==0){
+ v_phone_dup=true;
+ $scope.message='';
+ }
  
-  //}
- //console.log(userdata_validate);
+  }
  
   $http({
           method  : 'POST',
-         url     : 'http://sbogroup.t-wifi.co.th/wordpress/index.php/update-user-data', 
+         url     : WPURLS.home_url+'/update-user-data',  
 		  data    : $scope.userdata_validate,				//------------------------------------------------------------forms user object 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
 		   
          })
+		  
           .success(function(data) {
-		 // console.log(data);
-		  /*
-		  var bt_onoff=true;
-		  //bt_validate=
-		  if(){
-		   bt_onoff = true;
-		  }else{
-		   bt_onoff = false;
-		  }
-		  */
+		 
            
 				if (data.email_validate=='yes'){
 					$scope.userForm.user_email_input.$setValidity("unique_email", false);
-					v_email=true;
+					v_email=false;
 					$scope.load_email_validate=0;
 				}else if(data.email_validate=='no'){
 					$scope.userForm.user_email_input.$setValidity('unique_email', true);
 					
-					v_email=false;
+					v_email=true;
 					
 					
 					$scope.load_email_validate=0;
@@ -361,14 +450,32 @@ $scope.validate_exist= function(vusedata,vtype) {
 					$scope.load_email_validate=0;
 					 
 				}
-				//
 				if(data.phone_validate=='yes'){
 					$scope.userForm.phone_number_input.$setValidity("unique_phone_number", false);
-					v_phone=true;
+					v_phone=false;
 					$scope.load_phone_validate=0;
 				}else if(data.phone_validate=='no'){
 					$scope.userForm.phone_number_input.$setValidity('unique_phone_number', true);
+					v_phone=true;
+					$scope.load_phone_validate=0;
+				}else{
+					$scope.load_phone_validate=0;
+					 
+				}
+			
+				if(data.phone_update_validate=='yes'){
+					$scope.userForm_update_phone.phone_number_input.$setValidity("unique_phone_number", false);
 					v_phone=false;
+					v_phone2=true;
+					 v_email=true;
+					v_phone_dup=true;
+					$scope.load_phone_validate=0;
+				}else if(data.phone_update_validate=='no'){
+					$scope.userForm_update_phone.phone_number_input.$setValidity('unique_phone_number', true);
+					v_phone=true;
+					v_phone2=true;
+					 v_email=true;
+					 v_phone_dup=true;
 					$scope.load_phone_validate=0;
 				}else{
 					$scope.load_phone_validate=0;
@@ -377,23 +484,64 @@ $scope.validate_exist= function(vusedata,vtype) {
 				//
 					if(data.phone_validate2=='yes'){
 					$scope.userForm.phone_number2_input.$setValidity("unique_phone_number2", false);
-					v_phone2=true;
+					v_phone2=false;
+						 
 					$scope.load_phone_validate2=0;
 				}else if(data.phone_validate2=='no'){
 					$scope.userForm.phone_number2_input.$setValidity('unique_phone_number2', true);
-					v_phone2=false;
+					v_phone2=true;
 					$scope.load_phone_validate2=0;
 				}else{
 					$scope.load_phone_validate2=0;
 				 
 				}
+				 
 				
-				//set bt_validate
-				console.log(v_mail);
-				console.log(v_phone);
-			    console.log(v_phone2);
+				if(v_check_email==false){
+				v_email=true;
+				}
+			
+				if(v_phone && v_phone2 && v_email && v_phone_dup){  
+				
+				$scope.bt_validate=false;
+			 
+			 
+				}else{
+				  
+				$scope.bt_validate=true;
+				 
+			 
+				}
+				
           });
- 
+  
 }
+
+
+	$scope.update_phone_otp = {};
+	  $scope.submitForm_update_phone = function(id,option) {
+	  $scope.update_phone_otp.REGIS_FROM = 'update_phone_otp';
+	  $scope.update_phone_otp.ID = id;
+	  
+    var request = $http({
+      method: 'POST',
+      url: WPURLS.home_url+'/update-user-data', 
+      data: $scope.update_phone_otp,	
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    request.success(function(data) {
+      $scope.json_update_phone_otp = data.update_phone_otp;
+	 
+	 $scope.json_update_phone_otp_msg = data.update_phone_otp_msg;
+	 if(data.update_phone_otp=='yes'){
+	 setTimeout("location.href ='" + WPURLS.home_url +  "/user-register-done';",100);
+	 }
+ 
+	 
+	
+    });  
+	};
    
 });

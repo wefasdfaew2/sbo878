@@ -596,15 +596,5 @@
 <?php wp_footer(); ?>
 
 </div><!-- main-container -->
-<!-- Histats.com  START  (standard)-->
-<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15_giftop.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
-<a href="http://www.histats.com" target="_blank" title="" ><script  type="text/javascript" >
-try {Histats.startgif(1,3358859,4,10040,"div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}");
-Histats.track_hits();} catch(err){};
-</script></a>
-<noscript><style type="text/css">div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}</style>
-<a href="http://www.histats.com" alt="" target="_blank" ><div id="histatsC"><img border="0" src="http://s4is.histats.com/stats/i/3358859.gif?3358859&103"></div></a>
-</noscript>
-        <!-- Histats.com  END  -->
 </body>
 </html>

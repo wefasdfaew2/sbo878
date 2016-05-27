@@ -104,8 +104,10 @@ Template Name: About-Us
            </tr>
            <tr>
              <td align="center">
-               <div>Tel. 097-9988-238</div>
-               <div>Tel. 097-9988-239</div>
+               <div>Tel. 063-030-0056</div>
+               <div>Tel. 063-030-0057</div>
+               <div>Tel. 063-030-0058</div>
+               <div>Tel. 063-030-0059</div>
              </td>
              <td align="center">
                <div>Line ID : @878BET</div>

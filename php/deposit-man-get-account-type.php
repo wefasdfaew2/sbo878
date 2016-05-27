@@ -87,13 +87,14 @@ if ($result->num_rows > 0)
     }
 
     if($data[1]['member_telephone_1'] == ''){
-      $data[1]['member_telephone_1'] = 'qwsdvhuio';
+      $data[1]['member_telephone_1'] = 'qwsdvhuiowerfg';
     }
     if($data[1]['member_telephone_2'] == ''){
-      $data[1]['member_telephone_2'] = 'qwsdvhuio';
+      $data[1]['member_telephone_2'] = 'qwsdvhuiowerfg';
     }
 
     if($tel == $data[1]['member_telephone_1'] || $tel == $data[1]['member_telephone_2']){
+      
       $result_data = array(
         "get_account_type" => $data[0]['member_type_name'],
         "get_logo_type" => $data[0]['member_type_logo'],

@@ -75,15 +75,13 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       rtmp: {
         bufferlength: 3
       },
-      file: "http://www.youtube.com/v/ylLzyHk54Z0", //www.youtube.com/v/ylLzyHk54Z0
+      file: "https://youtu.be/kbJGfZguoOw", //www.youtube.com/v/ylLzyHk54Z0
       title: "SBOBET878.COM PLAYER",
       fallback: true,
       width: "848",
       height: "480",
-      autostart: false,
+      autostart: "false",
       aspectratio: "16:9",
-      plugins: { "https://js.tv2hd.com/jwplayer/newsticker.js": { text:"sbobet878.com", scrollspeed:0, nobutton:false, position:"top", textcolor:"000000" } },
-
     });
   } else {
 
@@ -127,7 +125,12 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
         var app_stream = $filter('filter')($scope.channel_data, {id: id})[0].app_stream;
         var simname = $filter('filter')($scope.channel_data, {id: id})[0].simname;
         var tem_youtube_id = $filter('filter')($scope.channel_data, {id: id})[0].youtube_id;
-
+        var add_dotstream = $filter('filter')($scope.channel_data, {id: id})[0].add_dotstream;
+        if(add_dotstream == 'Yes'){
+          add_dotstream = '.stream';
+        }else {
+          add_dotstream = '';
+        }
         $scope.channel_title_html = 'ดูบอลฟรีช่อง ' + channel_name;
 
         if (tem_youtube_id != null && tem_youtube_id != '') {
@@ -181,14 +184,14 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
                 $scope.serverMinLoad[0].server_url.trim() + '/' +
                 app_stream.trim() + '/' +
                 "?token=" + $scope.random_string + '/' +
-                simname.trim() + '_' + bitrate + 'p';
+                simname.trim() + '_' + bitrate + 'p' + add_dotstream;
             }
 
             if (mode == 'http') {
               $scope.link_player = mode + '://' +
                 $scope.serverMinLoad[0].server_url.trim() + '/' +
                 app_stream.trim() + '/' +
-                simname.trim() + '_' + bitrate + 'p';
+                simname.trim() + '_' + bitrate + 'p' + add_dotstream;
 
               $scope.link_player += "/playlist.m3u8?token=" + $scope.random_string;
             }
@@ -227,14 +230,14 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
                 $scope.server_info[0].server_url.trim() + '/' +
                 app_stream.trim() + '/' +
                 "?token=" + $scope.random_string + '/' +
-                simname.trim() + '_' + bitrate + 'p';
+                simname.trim() + '_' + bitrate + 'p' + add_dotstream;
             }
 
             if (mode == 'http') {
               $scope.link_player = mode + '://' +
                 $scope.server_info[0].server_url.trim() + '/' +
                 app_stream.trim() + '/' +
-                simname.trim() + '_' + bitrate + 'p';
+                simname.trim() + '_' + bitrate + 'p' + add_dotstream;
 
               $scope.link_player += "/playlist.m3u8?token=" + $scope.random_string;
             }
@@ -417,19 +420,91 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
       var tem_youtube_id = $filter('filter')($scope.channel_info, {
         id: channel_id
       })[0].youtube_id;
+
+      var add_dotstream = $filter('filter')($scope.channel_info, {
+        id: channel_id
+      })[0].add_dotstream;
+      if(add_dotstream == 'Yes'){
+        add_dotstream = '.stream';
+      }else {
+        add_dotstream = '';
+      }
+
       var channel_bitrate_720 = $filter('filter')($scope.channel_info, {
         id: channel_id
       })[0]['720p'];
       var channel_bitrate_480 = $filter('filter')($scope.channel_info, {
         id: channel_id
       })[0]['480p'];
+      var channel_bitrate_360 = $filter('filter')($scope.channel_info, {
+        id: channel_id
+      })[0]['360p'];
+      var channel_bitrate_3g = $filter('filter')($scope.channel_info, {
+        id: channel_id
+      })[0]['3g'];
 
-      if(channel_bitrate_720 == 'false' && $scope.bitrate == '720p'){
+      var bitrate_info = {
+        "bitrate_info":[
+          {"bname":"channel_bitrate_720", "enable":channel_bitrate_720, bitrate: '720p'},
+          {"bname":"channel_bitrate_480",	"enable":channel_bitrate_480, bitrate: '480p'},
+          {"bname":"channel_bitrate_360", "enable":channel_bitrate_360, bitrate: '360p'},
+          {"bname":"channel_bitrate_3g", "enable":channel_bitrate_3g, bitrate: '3g'}
+        ]
+      };
+
+      var num_enable = 0;
+      angular.forEach(bitrate_info.bitrate_info, function(value, key) {
+        if(value.enable == 'true'){
+          num_enable += 1;
+        }
+      });
+
+      if(num_enable == 4){
+
+      }else if (num_enable == 1) {
+        var keepGoing = true;
+        angular.forEach(bitrate_info.bitrate_info, function(value, key) {
+          if(keepGoing){
+            if(value.enable == 'true' && $scope.bitrate == value.bitrate){
+              keepGoing = false;
+            }else if(value.enable == 'true'){
+              $scope.bitrate = value.bitrate;
+            }
+          }
+        });
+      }else if (num_enable > 1) {
+        if(channel_bitrate_720 == 'false' && $scope.bitrate == '720p'){
+          $scope.bitrate = '480p';
+        }
+        if(channel_bitrate_480 == 'false' && $scope.bitrate == '480p'){
+          $scope.bitrate = '360p';
+        }
+        if(channel_bitrate_360 == 'false' && $scope.bitrate == '360p'){
+          $scope.bitrate = '3g';
+        }
+        if(channel_bitrate_3g == 'false' && $scope.bitrate == '3g'){
+          var keepGoing = true;
+          angular.forEach(bitrate_info.bitrate_info, function(value, key) {
+            if(keepGoing){
+              if(value.enable == 'true'){
+                $scope.bitrate = value.bitrate;
+              }
+            }
+          });
+        }
+      }else if (num_enable == 0) {
+        alert('bitrate not available');
+      }
+
+      //console.log($scope.bitrate);
+      /**if(channel_bitrate_720 == 'false' && $scope.bitrate == '720p'){
         $scope.bitrate = '480p';
       }
       if(channel_bitrate_480 == 'false' && $scope.bitrate == '480p'){
         $scope.bitrate = '360p';
-      }
+      }**/
+
+
 
 
       //var channel_title = angular.element(document.querySelector('#channel_title'));
@@ -480,14 +555,14 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
               $scope.serverMinLoad[0].server_url.trim() + '/' +
               app_stream.trim() + '/' +
               "?token=" + $scope.random_string + '/' +
-              simname.trim() + '_' + $scope.bitrate.trim();
+              simname.trim() + '_' + $scope.bitrate.trim() + add_dotstream;
           }
 
           if ($scope.player_protocol.trim() == 'http') {
             $scope.link_player = $scope.player_protocol.trim() + '://' +
               $scope.serverMinLoad[0].server_url.trim() + '/' +
               app_stream.trim() + '/' +
-              simname.trim() + '_' + $scope.bitrate.trim();
+              simname.trim() + '_' + $scope.bitrate.trim() + add_dotstream;
 
             $scope.link_player += "/playlist.m3u8?token=" + $scope.random_string;
           }
@@ -510,7 +585,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
             $scope.serverurl.trim() + '/' +
             app_stream + '/' +
             "?token=" + $scope.random_string + '/' +
-            simname + '_' + $scope.bitrate.trim();
+            simname + '_' + $scope.bitrate.trim() + add_dotstream;
         }
 
 
@@ -518,7 +593,7 @@ app.controller('Player', function($scope, $sce, $http, ipCookie, $filter, $compi
           $scope.link_player = $scope.player_protocol.trim() + '://' +
             $scope.serverurl.trim() + '/' +
             app_stream + '/' +
-            simname + '_' + $scope.bitrate.trim();
+            simname + '_' + $scope.bitrate.trim() + add_dotstream;
           $scope.link_player += "/playlist.m3u8?token=" + $scope.random_string;
         }
         //console.log($scope.link_player);

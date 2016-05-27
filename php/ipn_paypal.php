@@ -2,12 +2,12 @@
 
 header('Content-Type: text/html; charset=utf-8');
 
-$configs = include('../php_db_config/config.php');
+//$configs = include('../php_db_config/config.php');
 
-$servername = $configs['servername'];
-$username = $configs['username'];
-$password = $configs['password'];
-$dbname = "sbobet878";
+//$servername = $configs['servername'];
+//$username = $configs['username'];
+//$password = $configs['password'];
+//$dbname = "sbobet878";
 
 // read the post from PayPal system and add 'cmd'
 $req = 'cmd=_notify-validate';
@@ -24,7 +24,7 @@ $header = '';
 $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
 $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-$fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+$fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
 
 // assign posted variables to local variables
 $item_name = $_POST['item_name'];
@@ -84,6 +84,8 @@ else if (strcmp ($res, "INVALID") == 0) {
 // log for manual investigation
 error_log( 'Error: Access Denied');
 echo "Error: Access Denied";
+}else {
+  error_log('qwert');
 }
 }
 fclose ($fp);

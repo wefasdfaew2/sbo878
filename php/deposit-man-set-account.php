@@ -17,7 +17,11 @@ $dbname = "sbobet878";
 $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
 
-if(!empty($request->username))$account = $request->username;
+if(!empty($request->username)){
+  $account = $request->username;
+  $account = strtolower($account);
+
+}
 if(!empty($request->bonus_type))$bonus_type = $request->bonus_type;
 if(!empty($request->deposit_amount))$deposit_amount = $request->deposit_amount;
 if(!empty($request->bank_number))$bank_number = $request->bank_number;
