@@ -95,6 +95,32 @@ if ($result->num_rows > 0)
               $result_data = array("check_status" => "5");
               print json_encode($result_data);
               exit();
+            }else {
+              $sql = "SELECT COUNT(*) as check_withdraw_24hr,
+              (SELECT COUNT(withdraw_account)
+              FROM backend_withdraw_money
+              WHERE withdraw_account = '$account') as check_first_withdraw
+              FROM backend_withdraw_money
+              WHERE withdraw_account = '$account'
+              AND withdraw_status_id = 4
+              AND withdraw_regis <= (NOW() - INTERVAL 1 DAY) ORDER BY withdraw_regis DESC LIMIT 1";
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0)
+              {
+                while($row = $result->fetch_assoc())
+                {
+                  if($row['check_first_withdraw'] > 0){
+                    if($row['check_withdraw_24hr'] == '0'){
+                      $result_data = array("check_status" => "less_than_24_hours");
+                      print json_encode($result_data);
+                      exit();
+                    }
+                  }
+                }
+              }else {
+                echo("Error description: " . mysqli_error($conn));
+                echo "Error order 24 hr";
+              }
             }
           }
         }else {
