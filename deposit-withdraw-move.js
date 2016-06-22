@@ -7,7 +7,7 @@ app.run(['$anchorScroll', function($anchorScroll) {
 app.controller('DepositWithdrawMove', function($scope, $http, $filter, $state) {
 
   ////console.log("Deposit !!!");
-  $state.go("step1");
+  $state.go("step0");
 
 
 });
@@ -26,6 +26,15 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
   //$urlRouterProvider.otherwise("/state1");
 
   $stateProvider
+    .state('step0', {
+      url: '/step0',
+      abstract: false,
+      templateUrl: WPURLS.templateurl + '/sub_page/step0.html',
+      controller: function($scope, $state, $window, $anchorScroll, $location, $http) {
+        $location.hash('form_section');
+        $anchorScroll();
+      }
+    })
     .state('step1', {
       url: '/step1',
       abstract: false,
@@ -35,10 +44,11 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.template_directory_uri = WPURLS.templateurl;
         $location.hash('form_section');
         $anchorScroll();
-        /**$scope.dep_auto_text = '';
+        $scope.dep_auto_text = '';
         $scope.dep_man_text = '';
         $scope.wid_auto_text = '';
-
+        $scope.regis_page = WPURLS.home_url + '/user_inform_transfer';
+        console.log($scope.regis_page);
         var check_wid_dep = $http({
           method: "post",
           url: WPURLS.templateurl + "/php/check-deposit-auto-withdraw-enable.php",
@@ -48,29 +58,29 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         });
         check_wid_dep.success(function(enable_status) {
-          //console.log(deposit_auto.deposit_auto_enable);
-          if(enable_status.deposit_auto_enable == 'Yes'){
+          //console.log(enable_status);
+        /*  if(enable_status.deposit_auto_enable == 'Yes'){
             $scope.dep_auto_status = false;
           }else {
             $scope.step1_option = null;
             $scope.dep_auto_status = true;
             $scope.dep_auto_text = '--- ระบบอัตโนมัติขัดข้อง'
-          }
+          }*/
 
-          if(enable_status.manual_deposit_enable == 'Yes'){
+          if(enable_status.sbobet_depositCC_enable == 'Yes'){
             $scope.dep_man_status = false;
           }else {
             $scope.dep_man_status = true;
             $scope.dep_man_text = ' --- ระบบฝากขัดข้องชั่วคราว';
           }
 
-          if(enable_status.withdraw_enable == 'Yes'){
+          if(enable_status.sbobet_withdraw_enable_by_cc == 'Yes'){
             $scope.withdraw_enable_status = false;
           }else {
             $scope.withdraw_enable_status = true;
             $scope.wid_auto_text = ' --- ระบบถอนขัดข้องชั่วคราว ทีมงานกำลังดำเนินการแก้ไข';
           }
-        });**/
+        });
 
         $scope.nextTo = function(){
           var params = {
@@ -90,6 +100,24 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
         }
 
+      }
+    })
+    .state('method_5', {
+      url: '/method_5',
+      abstract: false,
+      params: {
+        direct_access: false,
+      },
+      templateUrl: WPURLS.templateurl + '/sub_page/method_5.html',
+      controller: function($scope, $state, $stateParams, $anchorScroll, $location, $http) {
+        if($stateParams.direct_access != false){
+          $scope.direct_access = true;
+          $state.go("step1");
+          return;
+        }
+        $location.hash('form_section');
+        $anchorScroll();
+        $scope.template_directory_uri = WPURLS.templateurl;
       }
     })
     .state('step2_withdraw', {
@@ -114,7 +142,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         $scope.user.tel = '';//'';
         $scope.user.status_ok = true;
         $scope.check_username_tel = function (ev) {
-
+          $scope.user.username = $scope.user.username.toLowerCase();
           if($scope.user.username.length == 0 || $scope.user.tel.length == 0){
             $mdDialog.show(
               $mdDialog.alert()
@@ -179,6 +207,9 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }else if (check_req_data.check_status == '5') {
               $scope.user.status_ok = false;
               $scope.alert_img = WPURLS.templateurl + '/images/alert_member_status_5.jpg';
+            }else if (check_req_data.check_status == 'less_than_24_hours') {
+              $scope.user.status_ok = false;
+              $scope.alert_img = WPURLS.templateurl + '/images/withdraw24hr.jpg';
             }else if (check_req_data.check_status == 'not_enable') {
               $mdDialog.show(
                 $mdDialog.alert()
@@ -191,45 +222,6 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
                   .targetEvent(ev)
               );
             }else{
-              /**var confirm = $mdDialog.confirm()
-              .parent(angular.element(document.querySelector('body')))
-              .title('พบรายการถอนที่ดำเนินการค้างอยู่')
-              .textContent('ขณะนี้รายการถอนอยู่ในขั้นตอน ' + check_req_data.check_status + ' ท่านต้องการยกเลิกรายการถอนนี้หรือไม่')
-              .textContent('หากท่านสมาชิกต้องการสั่งถอนใหม่อีกครั้ง กรุณายกเลิกรายการถอนที่ค้างอยู่ในระบบนี้ก่อน ' + check_req_data.check_status + ' ท่านต้องการยกเลิกรายการถอนนี้หรือไม่')
-              .ariaLabel('Lucky day')
-              .targetEvent(ev)
-              .ok('ต้องการ')
-              .cancel('ไม่ต้องการ');
-              $mdDialog.show(confirm).then(function() {
-                var set_cancel = $http({
-                  method: "post",
-                  url: WPURLS.templateurl + "/php/withdraw-cancel.php",
-                  data: {
-                    username: $scope.user.username,
-                    tel: $scope.user.tel,
-                    w_id: check_req_data.w_id
-                  },
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                  }
-                });
-                set_cancel.success(function(set_cancel_data) {
-                  if(set_cancel_data.withdraw_status == 'successfully'){
-                    var params = {
-                      'withdraw_username': $scope.user.username,
-                      'tel': $scope.user.tel,
-                      'direct_access': false,
-                    };
-                    $state.go("step3_withdraw", params);
-                  }else {
-                    ////console.log('cancel failed');
-                    alert('cancel failed');
-                  }
-                });
-              }, function() {
-                ////console.log('cancel');
-
-              });**/
 
               $mdDialog.show({
                   clickOutsideToClose: true,
@@ -449,7 +441,47 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         }, 5000);
 
         $scope.send_withdraw_req = function(withdraw_money, ev){
-          var confirm = $mdDialog.confirm()
+          var r = confirm('คุณต้องการถอนเงินเป็นจำนวน ' + withdraw_money + ' บาท ?');
+          if (r == true) {
+            $scope.showLoading = true;
+            $scope.disable_ok = true;
+            var send_req = $http({
+              method: "post",
+              url: WPURLS.templateurl + "/php/withdraw-update-amount.php",
+              data: {
+                username: $stateParams.withdraw_username,
+                amount: withdraw_money,
+                insert_id: $stateParams.insert_id
+              },
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            });
+            send_req.success(function(res_data) {
+              if(res_data.withdraw_status == 'successfully'){
+                $scope.withdraw_add = false;
+                $scope.withdraw_req_complete = true;
+                $scope.show_button = false;
+                $scope.showLoading = false;
+              }else{
+                $scope.showLoading = false;
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#form_section')))
+                    .clickOutsideToClose(true)
+                    .title('เกิดความผิดพลาด')
+                    .textContent('ระบบขัดข้องบางประการ')
+                    .ariaLabel('Alert Dialog')
+                    .ok('OK')
+                    .targetEvent(ev)
+                );
+              }
+
+            });
+          } else {
+              //txt = "You pressed Cancel!";
+          }
+        /**  var confirm = $mdDialog.confirm()
           .parent(angular.element(document.querySelector('#form_section')))
           .title('ยืนยันการถอนเงิน ?')
           .textContent('คุณต้องการถอนเงินเป็นจำนวน ' + withdraw_money + ' บาท')
@@ -495,7 +527,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             });
           }, function() {
             //console.log('cancel');
-          });
+          });**/
 
         }
 
@@ -1028,8 +1060,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
         //var stang = randomStang.substr(randomStang.length-2, randomStang.length);
 
         $scope.cal_credit_money = function(credit_money,e){
-
-            $scope.user.credit_money = Math.floor($scope.user.credit_money);
+            var credit_money = parseInt(credit_money);
+            $scope.user.credit_money = Math.floor(credit_money);
             ////console.log($scope.user.credit_money);
             if($scope.user.credit_money == 0){
               $scope.user.credit_money = '';
@@ -1038,7 +1070,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
             }
             if($scope.user.bonus_type == 'get_200_per'){
               $scope.user.credit_result = credit_money * 2;
-              if($scope.user.credit_result >= 1500){
+              if(credit_money >= 1500){
                 $scope.user.credit_result = credit_money + 1500;
                 $scope.user.credit_result = Math.floor($scope.user.credit_result);
               }else{
@@ -1163,7 +1195,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if(res_data.account_is_deposited == '0'){
             $scope.big_bonun_text = 'ขอแสดงความยินดีคุณได้รับโบนัส 100% จากยอดเงินฝากครั้งแรก';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 8 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
-            $scope.bonus_option_1 = 'รับโบนัส (สูงสุดไม่เกิน 200% จากยอดเงินฝาก สูงสุดไม่เกิน 1500 บาท)';
+            $scope.bonus_option_1 = 'รับโบนัส (สูงสุดไม่เกิน 100% จากยอดเงินฝาก สูงสุดไม่เกิน 1500 บาท)';
             $scope.bonus_option_2 = 'ไม่รับโบนัสนี้ (ไม่ต้องการติดเงื่อนไข Turnover สามารถถอนได้ตลอดเวลา)';
             $scope.option_1_value = 'get_200_per'
             $scope.option_2_value = 'no_bonus'
@@ -1849,7 +1881,8 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
         $scope.cal_credit_money = function(credit_money,e){
 
-          $scope.user.credit_money = Math.floor($scope.user.credit_money);
+          var credit_money = parseInt(credit_money);
+          $scope.user.credit_money = Math.floor(credit_money);
           ////console.log($scope.user.credit_money);
           if($scope.user.credit_money == 0){
             $scope.user.credit_money = '';
@@ -1858,10 +1891,15 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           }
           if($scope.user.bonus_type == 'get_200_per'){
             $scope.user.credit_result = credit_money * 2;
-            if($scope.user.credit_result >= 1500){
+            //console.log('a');
+          //  console.log($scope.user.credit_result);
+            if(credit_money >= 1500){
+            //  console.log('b');
+              //console.log($scope.user.credit_result);
               $scope.user.credit_result = credit_money + 1500;
               $scope.user.credit_result = Math.floor($scope.user.credit_result);
             }else{
+              console.log($scope.user.credit_result);
               //$scope.user.credit_result = $scope.user.credit_result + credit_money;
               $scope.user.credit_result = Math.floor($scope.user.credit_result);
             }
@@ -1905,7 +1943,7 @@ app.config(function($mdThemingProvider, $stateProvider, $urlRouterProvider) {
           if(res_data.account_is_deposited == '0'){
             $scope.big_bonun_text = 'ขอแสดงความยินดีคุณได้รับโบนัส 100% จากยอดเงินฝากครั้งแรก';
             $scope.small_bonun_text = 'ต้องการรับโบนัสหรือไม่ ? (หากรับคุณจะต้องมียอด Turnover เกิน 8 เท่าก่อนจึงจะถอนเงินได้ หากถอนก่อนจะถูกยึดโบนัสคืน)';
-            $scope.bonus_option_1 = 'รับโบนัส (สูงสุดไม่เกิน 200% จากยอดเงินฝาก สูงสุดไม่เกิน 1500 บาท)';
+            $scope.bonus_option_1 = 'รับโบนัส (สูงสุดไม่เกิน 100% จากยอดเงินฝาก สูงสุดไม่เกิน 1500 บาท)';
             $scope.bonus_option_2 = 'ไม่รับโบนัสนี้ (ไม่ต้องการติดเงื่อนไข Turnover สามารถถอนได้ตลอดเวลา)';
             $scope.option_1_value = 'get_200_per'
             $scope.option_2_value = 'no_bonus'
