@@ -15,7 +15,11 @@ $dbname = "sbobet878";
 $postdata = file_get_contents('php://input');
 $request = json_decode($postdata);
 
-if(!empty($request->username))$account = $request->username;
+if(!empty($request->username)){
+  $account = $request->username;
+}else{
+  exit();
+}
 if(!empty($request->tel)){
     $tel = $request->tel;
 }else {
